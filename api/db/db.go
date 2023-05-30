@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/h00s/newsfuse/api/config"
+	"github.com/h00s/newsfuse/api/db/migrations"
 	"github.com/h00s/newsfuse/api/db/sql"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -19,9 +20,10 @@ type Database struct {
 
 func NewDatabase(config *config.Database) *Database {
 	return &Database{
-		config:     config,
+		config: config,
 		migrations: map[int]string{
-			//1: migrations.Create...,
+			1: migrations.CreateSourcesTable,
+			2: migrations.CreateHeadlinesTable,
 		},
 	}
 }

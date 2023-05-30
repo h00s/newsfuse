@@ -1,6 +1,11 @@
 package models
 
+import "time"
+
 type Headline struct {
-	Title string `json:"title"`
-	Link  string `json:"link"`
+	ID         int64     `json:"id"`
+	SourceID   int       `json:"source_id"`
+	Title      string    `json:"title"`
+	URL        string    `json:"link"`
+	InsertedAt time.Time `json:"inserted_at"`
 }
