@@ -9,14 +9,8 @@ type Scraper interface {
 	GetHeadlines() ([]models.Headline, error)
 }
 
-type Scrapers struct {
-	Scrapers []Scraper
-}
-
-func NewScrapers() *Scrapers {
-	return &Scrapers{
-		Scrapers: []Scraper{
-			&scrapers.RadioDaruvar{},
-		},
+func NewScrapers() []Scraper {
+	return []Scraper{
+		scrapers.NewRadioDaruvar(),
 	}
 }

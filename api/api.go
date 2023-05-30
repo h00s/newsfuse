@@ -44,6 +44,8 @@ func (api *API) Start() {
 			api.services.Logger.Fatal("Error starting server: " + err.Error())
 		}
 	}()
+	// REMOVE THIS
+	api.services.Scrapers[0].GetHeadlines()
 }
 
 func (api *API) WaitForShutdown() {
