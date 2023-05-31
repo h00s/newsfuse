@@ -5,13 +5,13 @@ import (
 
 	"github.com/h00s/newsfuse/api/config"
 	"github.com/h00s/newsfuse/api/db"
-	"github.com/h00s/newsfuse/api/scrapers"
+	"github.com/h00s/newsfuse/api/robot"
 )
 
 type Services struct {
-	DB       *db.Database
-	Logger   *log.Logger
-	Scrapers []scrapers.Scraper
+	DB     *db.Database
+	Logger *log.Logger
+	Robot  *robot.Robot
 }
 
 func NewServices(config *config.Config, logger *log.Logger) *Services {
@@ -24,9 +24,9 @@ func NewServices(config *config.Config, logger *log.Logger) *Services {
 	}
 
 	return &Services{
-		DB:       db,
-		Logger:   logger,
-		Scrapers: scrapers.NewScrapers(),
+		DB:     db,
+		Logger: logger,
+		Robot:  robot.NewRobot(),
 	}
 }
 

@@ -1,4 +1,4 @@
-package scrapers
+package sources
 
 import (
 	"fmt"
@@ -8,15 +8,21 @@ import (
 )
 
 type RadioDaruvar struct {
-	ID      int    `json:"id"`
-	BaseURL string `json:"base_url"`
+	ID       int    `json:"id"`
+	BaseURL  string `json:"base_url"`
+	Interval int    `json:"interval"`
 }
 
 func NewRadioDaruvar() *RadioDaruvar {
 	return &RadioDaruvar{
-		ID:      1,
-		BaseURL: "http://www.radio-daruvar.hr/",
+		ID:       1,
+		BaseURL:  "http://www.radio-daruvar.hr/",
+		Interval: 30,
 	}
+}
+
+func (r *RadioDaruvar) GetInterval() int {
+	return r.Interval
 }
 
 func (r *RadioDaruvar) GetHeadlines() ([]models.Headline, error) {
