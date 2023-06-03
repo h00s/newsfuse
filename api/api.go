@@ -23,11 +23,11 @@ func NewAPI(config *config.Config, logger *log.Logger) *API {
 	services := services.NewServices(config, logger)
 	servicesMiddleware := middleware.NewServicesMiddleware(services)
 	limiterMiddleware := middleware.NewLimiterMiddleware(&config.Limiter)
-	//modelsMiddleware := middleware.NewModelsMiddleware(services)
+	modelsMiddleware := middleware.NewModelsMiddleware(services)
 
 	server.Use(servicesMiddleware.ServicesMiddleware)
 	server.Use(limiterMiddleware.LimiterMiddleware())
-	//server.Use(modelsMiddleware.ModelsMiddleware)
+	server.Use(modelsMiddleware.ModelsMiddleware)
 
 	return &API{
 		config:   config,
