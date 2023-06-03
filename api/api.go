@@ -9,6 +9,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/h00s/newsfuse/api/config"
 	"github.com/h00s/newsfuse/api/mmc/middleware"
+	"github.com/h00s/newsfuse/api/robot"
 	"github.com/h00s/newsfuse/api/services"
 )
 
@@ -16,6 +17,7 @@ type API struct {
 	config   *config.Config
 	server   *fiber.App
 	services *services.Services
+	robot    *robot.Robot
 }
 
 func NewAPI(config *config.Config, logger *log.Logger) *API {
@@ -33,6 +35,7 @@ func NewAPI(config *config.Config, logger *log.Logger) *API {
 		config:   config,
 		server:   server,
 		services: services,
+		robot:    robot.NewRobot(modelsMiddleware),
 	}
 }
 
@@ -44,7 +47,7 @@ func (api *API) Start() {
 			api.services.Logger.Fatal("Error starting server: " + err.Error())
 		}
 	}()
-	//api.services.Robot.Start()
+	api.robot.Start()
 }
 
 func (api *API) WaitForShutdown() {
