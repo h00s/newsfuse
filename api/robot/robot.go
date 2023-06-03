@@ -1,14 +1,17 @@
 package robot
 
-import "github.com/h00s/newsfuse/api/robot/sources"
+import (
+	"github.com/h00s/newsfuse/api/mmc/models"
+	"github.com/h00s/newsfuse/api/mmc/models/sources"
+)
 
 type Robot struct {
-	Scrapers []Scraper
+	Scrapers []models.Scraper
 }
 
 func NewRobot() *Robot {
 	return &Robot{
-		Scrapers: []Scraper{
+		Scrapers: []models.Scraper{
 			sources.NewRadioDaruvar(),
 		},
 	}
