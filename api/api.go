@@ -44,7 +44,7 @@ func (api *API) Start() {
 			api.services.Logger.Fatal("Error starting server: " + err.Error())
 		}
 	}()
-	api.services.Robot.Start()
+	//api.services.Robot.Start()
 }
 
 func (api *API) WaitForShutdown() {
