@@ -3,7 +3,7 @@ module github.com/h00s/newsfuse
 go 1.20
 
 require (
-	github.com/BurntSushi/toml v1.3.0
+	github.com/BurntSushi/toml v1.3.2
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/gofiber/fiber/v2 v2.46.0
 	github.com/jackc/pgx/v5 v5.3.1
