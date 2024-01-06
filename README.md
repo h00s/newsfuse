@@ -23,7 +23,7 @@ To get started with the News Aggregator Application, follow these steps:
 The News Aggregator Application is built using the following technologies:
 
 - Go
-- Svelte
+- SvelteKit
 - Tailwind CSS
 - PostgreSQL
 - Docker
