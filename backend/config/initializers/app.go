@@ -1,8 +1,8 @@
 package initializers
 
 import (
+	"github.com/go-raptor/raptor"
 	"github.com/h00s/newsfuse/app/controllers"
-	"github.com/h00s/raptor"
 )
 
 func App() *raptor.AppInitializer {
