@@ -14,9 +14,14 @@ type HeadlinesService struct {
 }
 
 func NewHeadlinesService() *HeadlinesService {
-	return &HeadlinesService{
-		Scrapers: []internal.Scraper{
-			scrapers.NewKliknihr(),
-		},
+	hs := &HeadlinesService{}
+	hs.Scrapers = []internal.Scraper{
+		scrapers.NewKliknihr(hs.AddHeadline),
 	}
+	hs.Headlines = models.Headlines{}
+	return hs
+}
+
+func (hs *HeadlinesService) AddHeadline(h models.Headline) {
+	hs.Headlines = append(hs.Headlines, h)
 }

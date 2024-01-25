@@ -16,7 +16,7 @@ type DefaultScraper struct {
 	URL                string
 	MinRefreshInterval int
 	MaxRefreshInterval int
-	HeadlineCallback   func(h models.Headlines)
+	HeadlineCallback   func(h models.Headline)
 	Collector          *colly.Collector
 }
 
@@ -29,13 +29,6 @@ func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int) *D
 	}
 }
 
-/*func (s *DefaultScraper) OnHTML(selector string, cb func(e *colly.HTMLElement)) {
-	s.Collector.OnHTML(selector, cb)
-}*/
-
-func (s *DefaultScraper) OnHeadline(cb func(h models.Headline)) {
-}
-
 func (s *DefaultScraper) Start() {
 	go func() {
 		for {
@@ -45,4 +38,8 @@ func (s *DefaultScraper) Start() {
 			time.Sleep(time.Duration(waitTime) * time.Minute)
 		}
 	}()
+}
+
+func (s *DefaultScraper) RegisterOnHeadline(h func(h models.Headline)) {
+	s.HeadlineCallback = h
 }
