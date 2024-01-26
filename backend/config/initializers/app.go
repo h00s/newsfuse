@@ -8,6 +8,7 @@ import (
 
 func App() *raptor.AppInitializer {
 	hs := services.NewHeadlinesService()
+	go hs.Receive()
 
 	return &raptor.AppInitializer{
 		Services: raptor.Services{

@@ -11,17 +11,26 @@ type HeadlinesService struct {
 	raptor.Service
 	Scrapers  []internal.Scraper
 	Headlines models.Headlines
+	Headline  chan models.Headline
 }
 
 func NewHeadlinesService() *HeadlinesService {
-	hs := &HeadlinesService{}
-	hs.Scrapers = []internal.Scraper{
-		scrapers.NewKliknihr(hs.AddHeadline),
+	headlineChan := make(chan models.Headline)
+
+	return &HeadlinesService{
+		Scrapers: []internal.Scraper{
+			scrapers.NewKliknihr(headlineChan),
+		},
+		Headlines: models.Headlines{},
+		Headline:  headlineChan,
 	}
-	hs.Headlines = models.Headlines{}
-	return hs
 }
 
-func (hs *HeadlinesService) AddHeadline(h models.Headline) {
-	hs.Headlines = append(hs.Headlines, h)
+func (hs *HeadlinesService) Receive() {
+	for {
+		select {
+		case h := <-hs.Headline:
+			hs.Headlines = append(hs.Headlines, h)
+		}
+	}
 }
