@@ -9,9 +9,10 @@ import (
 
 type HeadlinesService struct {
 	raptor.Service
-	Scrapers  []internal.Scraper
-	Headlines models.Headlines
-	Headline  chan models.Headline
+	Scrapers        []internal.Scraper
+	Headlines       models.Headlines
+	Headline        chan models.Headline
+	storedHeadlines map[string]bool
 }
 
 func NewHeadlinesService() *HeadlinesService {
@@ -21,8 +22,9 @@ func NewHeadlinesService() *HeadlinesService {
 		Scrapers: []internal.Scraper{
 			scrapers.NewKliknihr(headlineChan),
 		},
-		Headlines: models.Headlines{},
-		Headline:  headlineChan,
+		Headlines:       models.Headlines{},
+		Headline:        headlineChan,
+		storedHeadlines: make(map[string]bool),
 	}
 }
 
@@ -30,7 +32,10 @@ func (hs *HeadlinesService) Receive() {
 	for {
 		select {
 		case h := <-hs.Headline:
-			hs.Headlines = append(hs.Headlines, h)
+			if _, ok := hs.storedHeadlines[h.URL]; !ok {
+				hs.storedHeadlines[h.URL] = true
+				hs.Headlines = append(hs.Headlines, h)
+			}
 		}
 	}
 }
