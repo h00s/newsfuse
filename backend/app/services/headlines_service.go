@@ -35,6 +35,7 @@ func (hs *HeadlinesService) Receive() {
 			if _, ok := hs.storedHeadlines[h.URL]; !ok {
 				hs.storedHeadlines[h.URL] = true
 				hs.Headlines = append(hs.Headlines, h)
+				hs.Utils.Log.Info("Received new headline", "Title", h.Title[:25])
 			}
 		}
 	}
