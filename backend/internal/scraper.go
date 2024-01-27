@@ -35,6 +35,7 @@ func NewScraper(headline chan (models.Headline), name, url string, minRefreshInt
 
 func (s *DefaultScraper) Start() {
 	s.Collector.DisableCookies()
+	s.Collector.AllowURLRevisit = true
 	go func() {
 		for {
 			fmt.Println("Scraping", s.URL)
