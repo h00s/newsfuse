@@ -1,12 +1,16 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Headline struct {
-	Title string
-	//Source      Source
-	URL         string
-	PublishedAt time.Time
+	gorm.Model
+	Title       string
+	URL         string    `gorm:"index"`
+	PublishedAt time.Time `gorm:"index"`
 	Source      string
 }
 

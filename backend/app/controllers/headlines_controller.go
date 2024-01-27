@@ -12,5 +12,5 @@ type HeadlinesController struct {
 }
 
 func (hc *HeadlinesController) Index(c *raptor.Context) error {
-	return c.JSON(hc.Hs.Headlines)
+	return c.JSON(hc.Hs.All())
 }
