@@ -7,6 +7,7 @@ type Headline struct {
 	//Source      Source
 	URL         string
 	PublishedAt time.Time
+	Source      string
 }
 
 type Headlines []Headline

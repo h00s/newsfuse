@@ -32,10 +32,11 @@ func (hs *HeadlinesService) Receive() {
 	for {
 		select {
 		case h := <-hs.Headline:
+			hs.Utils.Log.Info("Received headline", "Title", h.Title[:25])
 			if _, ok := hs.storedHeadlines[h.URL]; !ok {
 				hs.storedHeadlines[h.URL] = true
 				hs.Headlines = append(hs.Headlines, h)
-				hs.Utils.Log.Info("Received new headline", "Title", h.Title[:25])
+				hs.Utils.Log.Info("Added new headline", "Title", h.Title[:25])
 			}
 		}
 	}
