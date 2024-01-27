@@ -1,6 +1,5 @@
 <script>
   export let data;
-  console.log(data.headlines);
 </script>
 
 <div>
