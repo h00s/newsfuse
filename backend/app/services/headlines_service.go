@@ -30,6 +30,7 @@ func NewHeadlinesService() *HeadlinesService {
 		Scrapers: []internal.Scraper{
 			scrapers.NewKliknihr(headlineChan),
 			scrapers.NewMojportalhr(headlineChan),
+			scrapers.NewRadioDaruvar(headlineChan),
 		},
 		Headline: headlineChan,
 		db:       db,
@@ -43,7 +44,7 @@ func (hs *HeadlinesService) Receive() {
 			result := hs.db.First(&h, "url = ?", h.URL)
 			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 				hs.db.Create(&h)
-				hs.Utils.Log.Info("Added new headline", "Title", h.Title[:25])
+				hs.Utils.Log.Info("Added new headline", "Title", h.Title)
 			}
 		}
 	}
