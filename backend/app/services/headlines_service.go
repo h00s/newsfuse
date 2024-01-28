@@ -29,6 +29,7 @@ func NewHeadlinesService() *HeadlinesService {
 	return &HeadlinesService{
 		Scrapers: []internal.Scraper{
 			scrapers.NewKliknihr(headlineChan),
+			scrapers.NewMojportalhr(headlineChan),
 		},
 		Headline: headlineChan,
 		db:       db,
@@ -50,7 +51,6 @@ func (hs *HeadlinesService) Receive() {
 
 func (hs *HeadlinesService) All() models.Headlines {
 	var headlines models.Headlines
-	hs.db.Order("id desc").Find(&headlines)
-	hs.Utils.Log.Info("Found headlines", "Count", len(headlines))
+	hs.db.Limit(50).Order("id desc").Find(&headlines)
 	return headlines
 }
