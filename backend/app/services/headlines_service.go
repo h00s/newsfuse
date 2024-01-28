@@ -50,7 +50,7 @@ func (hs *HeadlinesService) Receive() {
 
 func (hs *HeadlinesService) All() models.Headlines {
 	var headlines models.Headlines
-	hs.db.Order("published_at desc").Find(&headlines)
+	hs.db.Order("id desc").Find(&headlines)
 	hs.Utils.Log.Info("Found headlines", "Count", len(headlines))
 	return headlines
 }
