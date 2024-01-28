@@ -19,7 +19,7 @@ type HeadlinesService struct {
 }
 
 func NewHeadlinesService() *HeadlinesService {
-	db, err := gorm.Open(sqlite.Open("../newsfuse.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("../db/newsfuse.db"), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
 	}
