@@ -3,7 +3,7 @@ module github.com/h00s/newsfuse
 go 1.21.5
 
 require (
-	github.com/go-raptor/raptor v0.3.2
+	github.com/go-raptor/raptor v0.3.3
 	github.com/gocolly/colly/v2 v2.1.0
 	gorm.io/driver/sqlite v1.5.4
 	gorm.io/gorm v1.25.6
