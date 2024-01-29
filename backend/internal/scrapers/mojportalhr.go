@@ -13,8 +13,8 @@ type Mojportalhr struct {
 	internal.DefaultScraper
 }
 
-func NewMojportalhr(headline chan (models.Headline)) internal.Scraper {
-	s := internal.NewScraper(headline, "MojPortal.hr", "https://www.mojportal.hr/", 15, 45)
+func NewMojportalhr(h chan (models.Headline)) internal.Scraper {
+	s := internal.NewScraper("MojPortal.hr", "https://www.mojportal.hr/", 15, 45, h)
 
 	s.Collector.OnHTML("div[class^='article_teaser__horizontal_box2']", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
@@ -25,6 +25,5 @@ func NewMojportalhr(headline chan (models.Headline)) internal.Scraper {
 		})
 	})
 
-	s.Start()
 	return s
 }

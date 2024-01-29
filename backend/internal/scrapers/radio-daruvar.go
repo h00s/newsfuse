@@ -13,8 +13,8 @@ type RadioDaruvar struct {
 	internal.DefaultScraper
 }
 
-func NewRadioDaruvar(headline chan (models.Headline)) internal.Scraper {
-	s := internal.NewScraper(headline, "Radio Daruvar", "https://www.radio-daruvar.hr/", 30, 60)
+func NewRadioDaruvar(h chan (models.Headline)) internal.Scraper {
+	s := internal.NewScraper("Radio Daruvar", "https://www.radio-daruvar.hr/", 30, 60, h)
 
 	s.Collector.OnHTML("li[class='news-item'],h2[class='post-title']", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
@@ -25,6 +25,5 @@ func NewRadioDaruvar(headline chan (models.Headline)) internal.Scraper {
 		})
 	})
 
-	s.Start()
 	return s
 }

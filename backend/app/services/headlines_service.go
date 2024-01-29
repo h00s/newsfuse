@@ -35,7 +35,15 @@ func NewHeadlinesService() *HeadlinesService {
 		HeadlineChannel: headlineChannel,
 		db:              db,
 	}
-	go hs.Receive()
+
+	hs.OnInit(func() {
+		go hs.Receive()
+		for _, s := range hs.Scrapers {
+			s.SetUtils(hs.Utils)
+			s.Start()
+		}
+	})
+
 	return hs
 }
 
