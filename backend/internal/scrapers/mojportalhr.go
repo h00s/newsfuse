@@ -34,7 +34,7 @@ func NewMojportalhr(headline chan (models.Headline)) internal.Scraper {
 	s.Collector.OnScraped(func(r *colly.Response) {
 		for i := len(s.Headlines) - 1; i >= 0; i-- {
 			h := s.Headlines[i]
-			s.Headline <- h
+			s.HeadlineChannel <- h
 		}
 	})
 

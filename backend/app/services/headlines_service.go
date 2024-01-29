@@ -13,9 +13,9 @@ import (
 
 type HeadlinesService struct {
 	raptor.Service
-	Scrapers []internal.Scraper
-	Headline chan models.Headline
-	db       *gorm.DB
+	Scrapers        []internal.Scraper
+	HeadlineChannel chan models.Headline
+	db              *gorm.DB
 }
 
 func NewHeadlinesService() *HeadlinesService {
@@ -24,23 +24,23 @@ func NewHeadlinesService() *HeadlinesService {
 		panic("Failed to connect database")
 	}
 	db.AutoMigrate(&models.Headline{})
-	headlineChan := make(chan models.Headline)
+	headlineChannel := make(chan models.Headline)
 
 	return &HeadlinesService{
 		Scrapers: []internal.Scraper{
-			scrapers.NewKliknihr(headlineChan),
-			scrapers.NewMojportalhr(headlineChan),
-			scrapers.NewRadioDaruvar(headlineChan),
+			scrapers.NewKliknihr(headlineChannel),
+			scrapers.NewMojportalhr(headlineChannel),
+			scrapers.NewRadioDaruvar(headlineChannel),
 		},
-		Headline: headlineChan,
-		db:       db,
+		HeadlineChannel: headlineChannel,
+		db:              db,
 	}
 }
 
 func (hs *HeadlinesService) Receive() {
 	for {
 		select {
-		case h := <-hs.Headline:
+		case h := <-hs.HeadlineChannel:
 			result := hs.db.First(&h, "url = ?", h.URL)
 			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 				hs.db.Create(&h)

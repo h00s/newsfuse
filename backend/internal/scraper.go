@@ -18,14 +18,14 @@ type DefaultScraper struct {
 	Name               string
 	MinRefreshInterval int
 	MaxRefreshInterval int
-	Headline           chan (models.Headline)
+	HeadlineChannel    chan (models.Headline)
 	Collector          *colly.Collector
 	Headlines          models.Headlines
 }
 
 func NewScraper(headline chan (models.Headline), name, url string, minRefreshInterval, maxRefreshInterval int) *DefaultScraper {
 	return &DefaultScraper{
-		Headline:           headline,
+		HeadlineChannel:    headline,
 		Name:               name,
 		URL:                url,
 		MinRefreshInterval: minRefreshInterval,
