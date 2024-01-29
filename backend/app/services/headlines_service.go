@@ -26,7 +26,7 @@ func NewHeadlinesService() *HeadlinesService {
 	db.AutoMigrate(&models.Headline{})
 	headlineChannel := make(chan models.Headline)
 
-	return &HeadlinesService{
+	hs := &HeadlinesService{
 		Scrapers: []internal.Scraper{
 			scrapers.NewKliknihr(headlineChannel),
 			scrapers.NewMojportalhr(headlineChannel),
@@ -35,6 +35,8 @@ func NewHeadlinesService() *HeadlinesService {
 		HeadlineChannel: headlineChannel,
 		db:              db,
 	}
+	go hs.Receive()
+	return hs
 }
 
 func (hs *HeadlinesService) Receive() {

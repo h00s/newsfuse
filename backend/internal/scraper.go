@@ -20,7 +20,7 @@ type DefaultScraper struct {
 	MaxRefreshInterval int
 	HeadlineChannel    chan (models.Headline)
 	Collector          *colly.Collector
-	Headlines          models.Headlines
+	headlines          models.Headlines
 }
 
 func NewScraper(headline chan (models.Headline), name, url string, minRefreshInterval, maxRefreshInterval int) *DefaultScraper {
@@ -34,9 +34,26 @@ func NewScraper(headline chan (models.Headline), name, url string, minRefreshInt
 	}
 }
 
+func (s *DefaultScraper) AddHeadline(h models.Headline) {
+	s.headlines = append(s.headlines, h)
+}
+
 func (s *DefaultScraper) Start() {
 	s.Collector.DisableCookies()
 	s.Collector.AllowURLRevisit = true
+
+	s.Collector.OnRequest(func(r *colly.Request) {
+		r.Headers.Set("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+		s.headlines = models.Headlines{}
+	})
+
+	s.Collector.OnScraped(func(r *colly.Response) {
+		for i := len(s.headlines) - 1; i >= 0; i-- {
+			h := s.headlines[i]
+			s.HeadlineChannel <- h
+		}
+	})
+
 	go func() {
 		for {
 			fmt.Println("Scraping", s.URL)
