@@ -16,7 +16,7 @@ type Mojportalhr struct {
 func NewMojportalhr(h chan (models.Headline)) internal.Scraper {
 	s := internal.NewScraper("MojPortal.hr", "https://www.mojportal.hr/", 15, 30, h)
 
-	s.Collector.OnHTML("div[class^='article_teaser__horizontal_box2']", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("div[class^='article_teaser__horizontal_box2']", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
 			Source:      s.Name,
 			Title:       strings.TrimSpace(e.ChildText("span[class*='article_teaser__title_text']")),

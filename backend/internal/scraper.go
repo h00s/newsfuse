@@ -15,24 +15,32 @@ type Scraper interface {
 }
 
 type DefaultScraper struct {
-	URL                string
-	Name               string
+	Name string
+	URL  string
+
 	MinRefreshInterval int
 	MaxRefreshInterval int
-	HeadlineChannel    chan (models.Headline)
-	Collector          *colly.Collector
-	headlines          models.Headlines
-	utils              *raptor.Utils
+
+	headlineChannel chan (models.Headline)
+	headlines       models.Headlines
+
+	utils     *raptor.Utils
+	collector *colly.Collector
 }
 
-func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, headline chan (models.Headline)) *DefaultScraper {
+func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, headlineChannel chan (models.Headline)) *DefaultScraper {
 	return &DefaultScraper{
-		HeadlineChannel:    headline,
-		Name:               name,
-		URL:                url,
+		Name: name,
+		URL:  url,
+
 		MinRefreshInterval: minRefreshInterval,
 		MaxRefreshInterval: maxRefreshInterval,
-		Collector:          colly.NewCollector(),
+
+		headlineChannel: headlineChannel,
+		headlines:       nil,
+
+		utils:     nil,
+		collector: colly.NewCollector(),
 	}
 }
 
@@ -44,19 +52,23 @@ func (s *DefaultScraper) AddHeadline(h models.Headline) {
 	s.headlines = append(s.headlines, h)
 }
 
-func (s *DefaultScraper) Start() {
-	s.Collector.DisableCookies()
-	s.Collector.AllowURLRevisit = true
+func (s *DefaultScraper) ScrapeHeadline(selector string, callback func(e *colly.HTMLElement)) {
+	s.collector.OnHTML(selector, callback)
+}
 
-	s.Collector.OnRequest(func(r *colly.Request) {
+func (s *DefaultScraper) Start() {
+	s.collector.DisableCookies()
+	s.collector.AllowURLRevisit = true
+
+	s.collector.OnRequest(func(r *colly.Request) {
 		r.Headers.Set("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
 		s.headlines = models.Headlines{}
 	})
 
-	s.Collector.OnScraped(func(r *colly.Response) {
+	s.collector.OnScraped(func(r *colly.Response) {
 		for i := len(s.headlines) - 1; i >= 0; i-- {
 			h := s.headlines[i]
-			s.HeadlineChannel <- h
+			s.headlineChannel <- h
 		}
 		s.utils.Log.Info("Finished scraping", "scraper", s.Name)
 	})
@@ -64,8 +76,8 @@ func (s *DefaultScraper) Start() {
 	go func() {
 		for {
 			s.utils.Log.Info("Started scraping", "scraper", s.Name)
-			s.Collector.Visit(s.URL)
-			s.Collector.Wait()
+			s.collector.Visit(s.URL)
+			s.collector.Wait()
 			waitTime := rand.Intn(s.MaxRefreshInterval-s.MinRefreshInterval) + s.MinRefreshInterval
 			s.utils.Log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
 			time.Sleep(time.Duration(waitTime) * time.Minute)
