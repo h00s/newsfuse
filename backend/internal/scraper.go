@@ -67,6 +67,7 @@ func (s *DefaultScraper) Start() {
 			s.Collector.Visit(s.URL)
 			s.Collector.Wait()
 			waitTime := rand.Intn(s.MaxRefreshInterval-s.MinRefreshInterval) + s.MinRefreshInterval
+			s.utils.Log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
 			time.Sleep(time.Duration(waitTime) * time.Minute)
 		}
 	}()
