@@ -13,7 +13,7 @@ type Kliknihr struct {
 }
 
 func NewKliknihr(h chan (models.Headline)) internal.Scraper {
-	s := internal.NewScraper("klikni.hr", "https://www.klikni.hr", 15, 45, h)
+	s := internal.NewScraper("klikni.hr", "https://www.klikni.hr", 15, 30, h)
 
 	s.Collector.OnHTML("h3.jeg_post_title", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
