@@ -11,7 +11,7 @@ import (
 
 type Scraper interface {
 	Start()
-	SetUtils(u *raptor.Utils)
+	Init(u *raptor.Utils)
 }
 
 type DefaultScraper struct {
@@ -36,7 +36,7 @@ func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, he
 	}
 }
 
-func (s *DefaultScraper) SetUtils(u *raptor.Utils) {
+func (s *DefaultScraper) Init(u *raptor.Utils) {
 	s.utils = u
 }
 

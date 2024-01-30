@@ -39,7 +39,7 @@ func NewHeadlinesService() *HeadlinesService {
 	hs.OnInit(func() {
 		go hs.Receive()
 		for _, s := range hs.Scrapers {
-			s.SetUtils(hs.Utils)
+			s.Init(hs.Utils)
 			s.Start()
 		}
 	})
