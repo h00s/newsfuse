@@ -7,7 +7,6 @@ import (
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/h00s/newsfuse/internal/scrapers"
-	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -15,15 +14,9 @@ type HeadlinesService struct {
 	raptor.Service
 	Scrapers        []internal.Scraper
 	HeadlineChannel chan models.Headline
-	db              *gorm.DB
 }
 
 func NewHeadlinesService() *HeadlinesService {
-	db, err := gorm.Open(sqlite.Open("../db/newsfuse.db"), &gorm.Config{})
-	if err != nil {
-		panic("Failed to connect database")
-	}
-	db.AutoMigrate(&models.Headline{})
 	headlineChannel := make(chan models.Headline)
 
 	hs := &HeadlinesService{
@@ -33,10 +26,11 @@ func NewHeadlinesService() *HeadlinesService {
 			scrapers.NewRadioDaruvar(headlineChannel),
 		},
 		HeadlineChannel: headlineChannel,
-		db:              db,
 	}
 
 	hs.OnInit(func() {
+		hs.DB.AutoMigrate(&models.Headline{})
+
 		go hs.Receive()
 		for _, s := range hs.Scrapers {
 			s.Init(hs.Utils)
@@ -51,10 +45,10 @@ func (hs *HeadlinesService) Receive() {
 	for {
 		select {
 		case h := <-hs.HeadlineChannel:
-			result := hs.db.First(&h, "url = ?", h.URL)
+			result := hs.DB.First(&h, "url = ?", h.URL)
 			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-				hs.db.Create(&h)
-				hs.Utils.Log.Info("Added new headline", "Title", h.Title)
+				hs.DB.Create(&h)
+				hs.Log.Info("Added new headline", "Title", h.Title)
 			}
 		}
 	}
@@ -62,6 +56,6 @@ func (hs *HeadlinesService) Receive() {
 
 func (hs *HeadlinesService) All() models.Headlines {
 	var headlines models.Headlines
-	hs.db.Limit(50).Order("id desc").Find(&headlines)
+	hs.DB.Limit(50).Order("id desc").Find(&headlines)
 	return headlines
 }
