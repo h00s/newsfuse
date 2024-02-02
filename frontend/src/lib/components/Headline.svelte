@@ -9,5 +9,5 @@
     <a class="mb-4" href="{ headline.URL }">{ headline.Title }</a>
   </h3>
 
-  <span class="text-gray-400 mb-4">{ formatDate(headline.PublishedAt) } | { headline.Source }</span>
+  <span class="text-gray-400 mb-4">{ formatDate(headline.PublishedAt) } | { headline.Source.Name }</span>
 </div>
