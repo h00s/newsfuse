@@ -11,6 +11,6 @@ type HeadlinesController struct {
 	Hs *services.HeadlinesService
 }
 
-func (hc *HeadlinesController) Index(c *raptor.Context) error {
+func (hc *HeadlinesController) All(c *raptor.Context) error {
 	return c.JSON(hc.Hs.All())
 }

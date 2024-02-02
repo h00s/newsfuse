@@ -11,14 +11,15 @@ import (
 
 type Mojportalhr struct {
 	internal.DefaultScraper
+	Source models.Source
 }
 
-func NewMojportalhr(h chan (models.Headline)) internal.Scraper {
+func NewMojportalhr(h chan (models.Headline), sourceID uint) internal.Scraper {
 	s := internal.NewScraper("MojPortal.hr", "https://www.mojportal.hr/", 15, 30, h)
 
 	s.ScrapeHeadline("div[class^='article_teaser__horizontal_box2']", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
-			Source:      s.Name,
+			SourceID:    sourceID,
 			Title:       strings.TrimSpace(e.ChildText("span[class*='article_teaser__title_text']")),
 			URL:         "https://www.mojportal.hr/" + strings.TrimSpace(e.ChildAttr("a[class*='article_teaser__title_link']", "href")),
 			PublishedAt: time.Now(),

@@ -1,6 +1,11 @@
 package models
 
+import "github.com/go-raptor/raptor"
+
 type Source struct {
-	ID   uint
-	Name string
+	raptor.Model
+	Name      string
+	Headlines []Headline
 }
+
+type Sources []Source

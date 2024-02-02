@@ -21,16 +21,14 @@ func NewHeadlinesService() *HeadlinesService {
 
 	hs := &HeadlinesService{
 		Scrapers: []internal.Scraper{
-			scrapers.NewKliknihr(headlineChannel),
-			scrapers.NewMojportalhr(headlineChannel),
-			scrapers.NewRadioDaruvar(headlineChannel),
+			scrapers.NewKliknihr(headlineChannel, 1),
+			scrapers.NewMojportalhr(headlineChannel, 2),
+			scrapers.NewRadioDaruvar(headlineChannel, 3),
 		},
 		HeadlineChannel: headlineChannel,
 	}
 
 	hs.OnInit(func() {
-		hs.DB.AutoMigrate(&models.Headline{})
-
 		go hs.Receive()
 		for _, s := range hs.Scrapers {
 			s.Init(hs.Utils)

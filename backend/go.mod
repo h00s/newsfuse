@@ -1,9 +1,11 @@
 module github.com/h00s/newsfuse
 
-go 1.21.5
+go 1.21.6
+
+// replace github.com/go-raptor/raptor => ../../go-raptor/raptor
 
 require (
-	github.com/go-raptor/raptor v0.4.4
+	github.com/go-raptor/raptor v0.4.6
 	github.com/gocolly/colly/v2 v2.1.0
 	gorm.io/gorm v1.25.6
 )

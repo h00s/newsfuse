@@ -3,15 +3,16 @@ package models
 import (
 	"time"
 
-	"gorm.io/gorm"
+	"github.com/go-raptor/raptor"
 )
 
 type Headline struct {
-	gorm.Model
+	raptor.Model
 	Title       string
 	URL         string    `gorm:"index"`
 	PublishedAt time.Time `gorm:"index"`
-	Source      string
+	SourceID    uint
+	Story       Story `json:"-"`
 }
 
 type Headlines []Headline
