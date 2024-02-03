@@ -54,6 +54,6 @@ func (hs *HeadlinesService) Receive() {
 
 func (hs *HeadlinesService) All() models.Headlines {
 	var headlines models.Headlines
-	hs.DB.Limit(50).Order("id desc").Find(&headlines)
+	hs.DB.Limit(50).Order("id desc").Preload("Source").Find(&headlines)
 	return headlines
 }
