@@ -56,6 +56,23 @@ func (s *DefaultScraper) ScrapeHeadline(selector string, callback func(e *colly.
 	s.collector.OnHTML(selector, callback)
 }
 
+func (s *DefaultScraper) ScrapeStory(url, element string) (string, error) {
+	var result string
+
+	c := colly.NewCollector()
+
+	c.OnHTML(element, func(e *colly.HTMLElement) {
+		result = e.Text
+	})
+
+	err := c.Visit(url)
+	if err != nil {
+		return "", err
+	}
+
+	return result, nil
+}
+
 func (s *DefaultScraper) Start() {
 	s.collector.DisableCookies()
 	s.collector.AllowURLRevisit = true
