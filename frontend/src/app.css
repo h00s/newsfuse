@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (min-width: 1280px) {
+  body {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+}
