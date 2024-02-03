@@ -14,8 +14,10 @@ type Mojportalhr struct {
 	Source models.Source
 }
 
-func NewMojportalhr(h chan (models.Headline), sourceID uint) internal.Scraper {
-	s := internal.NewScraper("MojPortal.hr", "https://www.mojportal.hr/", 15, 30, h)
+func NewMojportalhr(h chan (models.Headline), sourceID uint) *Mojportalhr {
+	s := &Mojportalhr{
+		DefaultScraper: *internal.NewScraper("MojPortal.hr", "https://www.mojportal.hr/", 15, 30, h),
+	}
 
 	s.ScrapeHeadline("div[class^='article_teaser__horizontal_box2']", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
@@ -27,4 +29,8 @@ func NewMojportalhr(h chan (models.Headline), sourceID uint) internal.Scraper {
 	})
 
 	return s
+}
+
+func (s *Mojportalhr) ScrapeStory(url string) (string, error) {
+	return s.DefaultScraper.ScrapeStory(url, "div[class='article__content']")
 }

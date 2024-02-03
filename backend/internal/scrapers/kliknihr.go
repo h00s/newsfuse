@@ -12,8 +12,10 @@ type Kliknihr struct {
 	internal.DefaultScraper
 }
 
-func NewKliknihr(h chan (models.Headline), sourceID uint) internal.Scraper {
-	s := internal.NewScraper("klikni.hr", "https://www.klikni.hr", 15, 30, h)
+func NewKliknihr(h chan (models.Headline), sourceID uint) *Kliknihr {
+	s := &Kliknihr{
+		DefaultScraper: *internal.NewScraper("klikni.hr", "https://www.klikni.hr", 15, 30, h),
+	}
 
 	s.ScrapeHeadline("h3.jeg_post_title", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
@@ -25,4 +27,8 @@ func NewKliknihr(h chan (models.Headline), sourceID uint) internal.Scraper {
 	})
 
 	return s
+}
+
+func (s *Kliknihr) ScrapeStory(url string) (string, error) {
+	return s.DefaultScraper.ScrapeStory(url, "div[class^='post']")
 }

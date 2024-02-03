@@ -13,8 +13,10 @@ type RadioDaruvar struct {
 	internal.DefaultScraper
 }
 
-func NewRadioDaruvar(h chan (models.Headline), sourceID uint) internal.Scraper {
-	s := internal.NewScraper("Radio Daruvar", "https://www.radio-daruvar.hr/", 30, 60, h)
+func NewRadioDaruvar(h chan (models.Headline), sourceID uint) *RadioDaruvar {
+	s := &RadioDaruvar{
+		DefaultScraper: *internal.NewScraper("Radio Daruvar", "https://www.radio-daruvar.hr/", 30, 60, h),
+	}
 
 	s.ScrapeHeadline("li[class='news-item'],h2[class='post-title']", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
@@ -26,4 +28,8 @@ func NewRadioDaruvar(h chan (models.Headline), sourceID uint) internal.Scraper {
 	})
 
 	return s
+}
+
+func (s *RadioDaruvar) ScrapeStory(url string) (string, error) {
+	return s.DefaultScraper.ScrapeStory(url, "div[class^='entry-content']")
 }

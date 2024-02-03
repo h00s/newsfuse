@@ -1,13 +1,23 @@
 <script>
-  import { humanizeDuration } from '$lib/helpers/date';
+  import { PUBLIC_API_URL } from '$env/static/public'
+  import { humanizeDuration } from '$lib/helpers/date'
 
   let showStory = false;
 
   function toggleStory() {
     showStory = !showStory;
+    if (story === undefined) {
+      story = 'Dohvaćam članak...';
+      fetch(PUBLIC_API_URL + '/headlines/' + headline.ID + '/story')
+        .then(response => response.json())
+        .then(data => {
+          story = data.Summary;
+        });
+    }
   }
 
   export let headline;
+  let story;
 </script>
 
 <div class="rounded overflow-hidden shadow-lg m-2 p-3 dark:bg-gray-800">
@@ -30,7 +40,7 @@
 
   {#if showStory}
     <div class="story pt-4 text-gray-700 dark:text-gray-300">
-      <p> uskoro... </p>
+      <p>{ story }</p>
     </div>
   {/if}
 </div>

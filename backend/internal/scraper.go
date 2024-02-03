@@ -12,6 +12,7 @@ import (
 type Scraper interface {
 	Start()
 	Init(u *raptor.Utils)
+	ScrapeStory(url string) (string, error)
 }
 
 type DefaultScraper struct {
