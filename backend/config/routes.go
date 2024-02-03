@@ -4,8 +4,13 @@ import "github.com/go-raptor/raptor"
 
 func Routes() raptor.Routes {
 	return raptor.CollectRoutes(
-		raptor.Route("GET", "/api/v1/headlines", "HeadlinesController", "All"),
-		raptor.Route("GET", "/api/v1/sources", "SourcesController", "All"),
+		raptor.Scope("api/v1",
+			raptor.Route("GET", "/headlines", "HeadlinesController", "All"),
+			raptor.Route("GET", "/headlines/:id/story", "HeadlinesController", "Story"),
+
+			raptor.Route("GET", "/sources", "SourcesController", "All"),
+		),
+
 		raptor.Route("GET", "*", "SPAController", "Index"),
 	)
 }

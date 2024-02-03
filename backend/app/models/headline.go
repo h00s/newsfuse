@@ -11,7 +11,7 @@ type Headline struct {
 	Title       string
 	URL         string    `gorm:"index"`
 	PublishedAt time.Time `gorm:"index"`
-	SourceID    uint      `json:"-"`
+	SourceID    uint
 	Source      Source
 	Story       Story `json:"-"`
 }

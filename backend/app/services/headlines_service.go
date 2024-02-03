@@ -12,7 +12,7 @@ import (
 
 type HeadlinesService struct {
 	raptor.Service
-	Scrapers        []internal.Scraper
+	Scrapers        map[int]internal.Scraper
 	HeadlineChannel chan models.Headline
 }
 
@@ -20,10 +20,10 @@ func NewHeadlinesService() *HeadlinesService {
 	headlineChannel := make(chan models.Headline)
 
 	hs := &HeadlinesService{
-		Scrapers: []internal.Scraper{
-			scrapers.NewKliknihr(headlineChannel, 1),
-			scrapers.NewMojportalhr(headlineChannel, 2),
-			scrapers.NewRadioDaruvar(headlineChannel, 3),
+		Scrapers: map[int]internal.Scraper{
+			1: scrapers.NewKliknihr(headlineChannel, 1),
+			2: scrapers.NewMojportalhr(headlineChannel, 2),
+			3: scrapers.NewRadioDaruvar(headlineChannel, 3),
 		},
 		HeadlineChannel: headlineChannel,
 	}
@@ -56,4 +56,10 @@ func (hs *HeadlinesService) All() models.Headlines {
 	var headlines models.Headlines
 	hs.DB.Limit(50).Order("id desc").Preload("Source").Find(&headlines)
 	return headlines
+}
+
+func (hs *HeadlinesService) Story(id int) (models.Headline, error) {
+	hs.Log.Info("Story", "ID", id)
+	var headline models.Headline
+	return headline, nil
 }
