@@ -60,17 +60,21 @@ func (hs *HeadlinesService) All() models.Headlines {
 
 func (hs *HeadlinesService) Story(headlineID int) (models.Story, error) {
 	var headline models.Headline
+	var story models.Story
 	result := hs.DB.Preload("Source").First(&headline, headlineID)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return models.Story{}, errors.New("Headline not found")
+		return story, errors.New("Headline not found")
 	}
 
 	content, err := hs.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
 	if err != nil {
-		return models.Story{}, err
+		return story, err
 	}
-	return models.Story{
+
+	story = models.Story{
 		HeadlineID: headline.ID,
 		Summary:    content,
-	}, nil
+	}
+
+	return story, nil
 }
