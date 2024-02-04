@@ -2,6 +2,7 @@ package internal
 
 import (
 	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/go-raptor/raptor"
@@ -71,7 +72,7 @@ func (s *DefaultScraper) ScrapeStory(url, element, childElement string) (string,
 		return "", err
 	}
 
-	return result, nil
+	return strings.TrimSpace(result), nil
 }
 
 func (s *DefaultScraper) Start() {

@@ -5,5 +5,6 @@ import "github.com/go-raptor/raptor"
 type Story struct {
 	raptor.Model
 	Summary    string `gorm:"type:text"`
-	HeadlineID uint
+	Content    string `gorm:"type:text"`
+	HeadlineID uint   `gorm:"unique;not null"`
 }

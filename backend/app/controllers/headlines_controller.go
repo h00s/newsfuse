@@ -21,7 +21,7 @@ func (hc *HeadlinesController) Story(c *raptor.Context) error {
 		return c.SendStatus(400)
 	}
 
-	story, err := hc.Hs.Story(headlineID)
+	story, err := hc.Hs.GetStory(headlineID)
 	if err != nil {
 		return c.SendStatus(404)
 	}

@@ -58,23 +58,25 @@ func (hs *HeadlinesService) All() models.Headlines {
 	return headlines
 }
 
-func (hs *HeadlinesService) Story(headlineID int) (models.Story, error) {
+func (hs *HeadlinesService) GetStory(headlineID int) (*models.Story, error) {
 	var headline models.Headline
 	var story models.Story
-	result := hs.DB.Preload("Source").First(&headline, headlineID)
-	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return story, errors.New("headline not found")
+	result := hs.DB.Where("headline_id = ?", headlineID).First(&story)
+	if result.RowsAffected == 0 {
+		hs.DB.First(&headline, headlineID)
+		content, err := hs.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
+		if err != nil {
+			return &story, err
+		}
+		story = models.Story{
+			HeadlineID: uint(headlineID),
+			Content:    content,
+		}
+		result := hs.DB.Create(&story)
+		if result.Error != nil {
+			hs.Log.Error("Error creating story", "Headline", headlineID)
+		}
 	}
 
-	content, err := hs.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
-	if err != nil {
-		return story, err
-	}
-
-	story = models.Story{
-		HeadlineID: headline.ID,
-		Summary:    content,
-	}
-
-	return story, nil
+	return &story, nil
 }
