@@ -39,7 +39,7 @@
   <span class="text-gray-400 mb-4">{ humanizeDuration(headline.PublishedAt) } | { headline.Source.Name }</span>
 
   {#if showStory}
-    <div class="story pt-4 text-gray-700 dark:text-gray-300">
+    <div class="pt-4 text-gray-700 dark:text-gray-300">
       <p>{ @html story }</p>
     </div>
   {/if}
