@@ -7,11 +7,10 @@
   function toggleStory() {
     showStory = !showStory;
     if (story === undefined) {
-      story = 'Dohvaćam članak...';
       fetch(PUBLIC_API_URL + '/headlines/' + headline.ID + '/story')
         .then(response => response.json())
         .then(data => {
-          story = data.Summary;
+          story = data;
         });
     }
   }
@@ -40,7 +39,13 @@
 
   {#if showStory}
     <div class="pt-4 text-gray-700 dark:text-gray-300">
-      <p>{ @html story }</p>
+      <p>
+        {#if story === undefined}
+          Dohvaćam članak...
+        {:else}
+          { @html story.Content }
+        {/if}
+      </p>
     </div>
   {/if}
 </div>
