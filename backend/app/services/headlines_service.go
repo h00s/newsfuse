@@ -44,7 +44,10 @@ func (hs *HeadlinesService) Receive() {
 		h := <-hs.HeadlineChannel
 		result := hs.DB.First(&h, "url = ?", h.URL)
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			hs.DB.Create(&h)
+			result := hs.DB.Create(&h)
+			if result.Error != nil {
+				hs.Log.Error("Error creating headline", "DB", result.Error.Error())
+			}
 		}
 	}
 }
