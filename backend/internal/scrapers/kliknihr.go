@@ -30,5 +30,5 @@ func NewKliknihr(h chan (models.Headline), sourceID uint) *Kliknihr {
 }
 
 func (s *Kliknihr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class^='post']")
+	return s.DefaultScraper.ScrapeStory(url, "section[class='container page-content']", "p:not([class])")
 }

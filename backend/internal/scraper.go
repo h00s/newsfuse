@@ -57,13 +57,13 @@ func (s *DefaultScraper) ScrapeHeadline(selector string, callback func(e *colly.
 	s.collector.OnHTML(selector, callback)
 }
 
-func (s *DefaultScraper) ScrapeStory(url, element string) (string, error) {
+func (s *DefaultScraper) ScrapeStory(url, element, childElement string) (string, error) {
 	var result string
 
 	c := colly.NewCollector()
 
 	c.OnHTML(element, func(e *colly.HTMLElement) {
-		result = e.Text
+		result = e.ChildText(childElement)
 	})
 
 	err := c.Visit(url)

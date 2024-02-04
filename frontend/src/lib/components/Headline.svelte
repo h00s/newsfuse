@@ -40,7 +40,7 @@
 
   {#if showStory}
     <div class="story pt-4 text-gray-700 dark:text-gray-300">
-      <p>{ story }</p>
+      <p>{ @html story }</p>
     </div>
   {/if}
 </div>

@@ -32,5 +32,5 @@ func NewMojportalhr(h chan (models.Headline), sourceID uint) *Mojportalhr {
 }
 
 func (s *Mojportalhr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='article__content']")
+	return s.DefaultScraper.ScrapeStory(url, "div[class='article__container']", "p:not([class])")
 }
