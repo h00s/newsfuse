@@ -7,9 +7,9 @@ import (
 
 func Migrations() raptor.Migrations {
 	return raptor.Migrations{
-		1: migrate.AddHeadline,
-		2: migrate.AddSource,
-		3: migrate.AddStory,
-		4: migrate.SeedSource,
+		1: migrate.AddSource,
+		2: migrate.SeedSource,
+		3: migrate.AddHeadline,
+		4: migrate.AddStory,
 	}
 }
