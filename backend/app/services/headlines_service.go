@@ -41,13 +41,10 @@ func NewHeadlinesService() *HeadlinesService {
 
 func (hs *HeadlinesService) Receive() {
 	for {
-		select {
-		case h := <-hs.HeadlineChannel:
-			result := hs.DB.First(&h, "url = ?", h.URL)
-			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-				hs.DB.Create(&h)
-				hs.Log.Info("Added new headline", "Title", h.Title)
-			}
+		h := <-hs.HeadlineChannel
+		result := hs.DB.First(&h, "url = ?", h.URL)
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			hs.DB.Create(&h)
 		}
 	}
 }
@@ -63,7 +60,7 @@ func (hs *HeadlinesService) Story(headlineID int) (models.Story, error) {
 	var story models.Story
 	result := hs.DB.Preload("Source").First(&headline, headlineID)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-		return story, errors.New("Headline not found")
+		return story, errors.New("headline not found")
 	}
 
 	content, err := hs.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
