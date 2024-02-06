@@ -35,6 +35,8 @@ github.com/go-raptor/raptor v0.4.9 h1:zRW4ug9CTlSE7EzXsleKYDSx5W+D0QiavETFbfE9N3
 github.com/go-raptor/raptor v0.4.9/go.mod h1:SyNzTclL6oNS9R96FjRhGq9iKmVdd68AL9LTzbIZRTo=
 github.com/go-raptor/raptor v0.4.10 h1:vxRRrJqsKCzvT4cD8i1gp6hhCT4TurXl808x8x/E564=
 github.com/go-raptor/raptor v0.4.10/go.mod h1:SyNzTclL6oNS9R96FjRhGq9iKmVdd68AL9LTzbIZRTo=
+github.com/go-raptor/raptor v0.4.11 h1:woVCPvXJ7cK8+Y5Qx67qk8zeUhacXASeumUAIKpcA7c=
+github.com/go-raptor/raptor v0.4.11/go.mod h1:SyNzTclL6oNS9R96FjRhGq9iKmVdd68AL9LTzbIZRTo=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0/go.mod h1:Hof5T3ZswNVsOHYmba1u03W65HDWgpV5HifSuueE0EA=

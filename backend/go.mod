@@ -5,7 +5,7 @@ go 1.21.6
 // replace github.com/go-raptor/raptor => ../../go-raptor/raptor
 
 require (
-	github.com/go-raptor/raptor v0.4.10
+	github.com/go-raptor/raptor v0.4.11
 	github.com/gocolly/colly/v2 v2.1.0
 	gorm.io/gorm v1.25.6
 )
