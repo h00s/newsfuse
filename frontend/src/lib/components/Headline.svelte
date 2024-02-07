@@ -41,7 +41,7 @@
     <div class="pt-4 text-gray-700 dark:text-gray-300">
       <p>
         {#if story === undefined}
-          Dohvaćam članak...
+          <span class="loading loading-spinner loading-sm"></span>
         {:else}
           { @html story.Content }
         {/if}
