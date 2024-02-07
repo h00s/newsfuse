@@ -4,19 +4,13 @@ The News Aggregator Application is a web-based platform that aggregates news art
 
 ## Features
 
-- Scrapes news articles from multiple sources
-- Summarizes articles with AI for quick and easy reading
-- Stores articles in a database for easy retrieval and display
-- Displays articles in a compact format for easy reading
-- Allows users to filter articles by source, category, or date
-- Provides a search function for finding specific articles
-- Automatically updates with the latest news articles on a regular basis
-
-## Getting Started
-
-To get started with the News Aggregator Application, follow these steps:
-
-1. (TBD)
+- ✅ Scrapes news articles from multiple sources
+- ❌ Summarizes articles with AI for quick and easy reading
+- ✅ Stores articles in a database for easy retrieval and display
+- ✅ Displays articles in a compact format for easy reading
+- ❌ Allows users to filter articles by source, category, or date
+- ❌ Provides a search function for finding specific articles
+- ❌ Automatically updates with the latest news articles on a regular basis
 
 ## Technologies Used
 
@@ -27,15 +21,6 @@ The News Aggregator Application is built using the following technologies:
 - Tailwind CSS
 - PostgreSQL
 - Docker
-
-## Future Development
-
-Here are some ideas for future development of the News Aggregator Application:
-
-- Implement user authentication and authorization for personalized news feeds
-- Add social media sharing functionality for articles
-- Implement machine learning algorithms for personalized article recommendations
-- Develop a mobile application for the news aggregator
 
 ## Contributing
 
