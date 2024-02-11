@@ -1,10 +1,5 @@
-import { PUBLIC_API_URL } from '$env/static/public'
+import { redirect } from '@sveltejs/kit';
 
-export async function load({ fetch, params }) {
-	let res = await fetch(`${PUBLIC_API_URL}/topics/1/headlines`);
-	const headlines = await res.json();
-
-	return {
-    headlines: headlines,
-  };
+export function load() {
+  redirect(302, '/topics/1');
 }
