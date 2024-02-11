@@ -9,6 +9,8 @@ func Routes() raptor.Routes {
 			raptor.Route("GET", "/headlines/:id/story", "HeadlinesController", "Story"),
 
 			raptor.Route("GET", "/sources", "SourcesController", "All"),
+
+			raptor.Route("GET", "/topics", "TopicsController", "All"),
 		),
 
 		raptor.Route("GET", "*", "SPAController", "Index"),
