@@ -12,7 +12,7 @@ type HeadlinesController struct {
 }
 
 func (hc *HeadlinesController) All(c *raptor.Context) error {
-	return c.JSON(hc.Hs.All())
+	return c.JSON(hc.Hs.All(c.QueryInt("topic_id", 1)))
 }
 
 func (hc *HeadlinesController) Story(c *raptor.Context) error {

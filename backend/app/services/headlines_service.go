@@ -52,9 +52,9 @@ func (hs *HeadlinesService) Receive() {
 	}
 }
 
-func (hs *HeadlinesService) All() models.Headlines {
+func (hs *HeadlinesService) All(topicID int) models.Headlines {
 	var headlines models.Headlines
-	hs.DB.Limit(50).Order("id desc").Preload("Source").Find(&headlines)
+	hs.DB.Limit(50).Order("id desc").Preload("Source").Joins("JOIN sources ON headlines.source_id = sources.id").Where("sources.topic_id = ?", topicID).Find(&headlines)
 	return headlines
 }
 
