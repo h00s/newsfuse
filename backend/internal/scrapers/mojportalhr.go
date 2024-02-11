@@ -23,7 +23,7 @@ func NewMojportalhr(h chan (models.Headline), sourceID uint) *Mojportalhr {
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       strings.TrimSpace(e.ChildText("span[class*='article_teaser__title_text']")),
-			URL:         "https://www.mojportal.hr/" + strings.TrimSpace(e.ChildAttr("a[class*='article_teaser__title_link']", "href")),
+			URL:         "https://www.mojportal.hr" + strings.TrimSpace(e.ChildAttr("a[class*='article_teaser__title_link']", "href")),
 			PublishedAt: time.Now(),
 		})
 	})
