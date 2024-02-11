@@ -24,6 +24,7 @@ func NewHeadlinesService() *HeadlinesService {
 			1: scrapers.NewKliknihr(headlineChannel, 1),
 			2: scrapers.NewMojportalhr(headlineChannel, 2),
 			3: scrapers.NewRadioDaruvar(headlineChannel, 3),
+			4: scrapers.NewIndexhr(headlineChannel, 4),
 		},
 		HeadlineChannel: headlineChannel,
 	}
