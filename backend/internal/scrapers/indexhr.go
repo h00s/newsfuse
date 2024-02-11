@@ -9,8 +9,6 @@ import (
 	"github.com/h00s/newsfuse/internal"
 )
 
-/* https://www.index.hr/najnovije?kategorija=3 */
-
 type Indexhr struct {
 	internal.DefaultScraper
 }
@@ -38,5 +36,5 @@ func NewIndexhr(h chan (models.Headline), sourceID uint) *Indexhr {
 }
 
 func (s *Indexhr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "section[class='container page-content']", "p:not([class])")
+	return s.DefaultScraper.ScrapeStory(url, "div[class='text vijesti-link-underline']", "p:not([class])")
 }
