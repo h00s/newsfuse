@@ -1,7 +1,7 @@
 import { PUBLIC_API_URL } from '$env/static/public'
 
 export async function load({ fetch, params }) {
-	let res = await fetch(PUBLIC_API_URL + '/headlines');
+	let res = await fetch(`${PUBLIC_API_URL}/topics/1/headlines`);
 	const headlines = await res.json();
 
 	return {
