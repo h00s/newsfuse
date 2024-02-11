@@ -1,6 +1,7 @@
 package scrapers
 
 import (
+	"strings"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -20,10 +21,15 @@ func NewIndexhr(h chan (models.Headline), sourceID uint) *Indexhr {
 	}
 
 	s.ScrapeHeadline("div[class='title-box']", func(e *colly.HTMLElement) {
+		url := e.ChildAttr("a[class='vijesti-text-hover scale-img-hover flex']", "href")
+		if index := strings.Index(url, "?"); index != -1 {
+			url = url[:index]
+		}
+
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       e.ChildText("h3[class='title']"),
-			URL:         "https://www.index.hr" + e.ChildAttr("a[class='vijesti-text-hover scale-img-hover flex']", "href"),
+			URL:         "https://www.index.hr" + url,
 			PublishedAt: time.Now(),
 		})
 	})
