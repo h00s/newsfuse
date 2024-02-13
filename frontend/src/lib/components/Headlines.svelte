@@ -5,7 +5,7 @@
 </script>
 
 <div>
-  {#each headlines as headline}
+  {#each headlines as headline (headline.ID)}
     <Headline headline={ headline } />
   {/each}
 </div>
