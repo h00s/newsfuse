@@ -5,5 +5,5 @@
   export let data;
 </script>
 
-<Tabs topics={ data.topics } selectedTopic={ data.selectedTopic } />
-<Headlines headlines={ data.headlines } />
+<Tabs topics={data.topics} selectedTopic={data.selectedTopic} />
+<Headlines headlines={data.headlines} />

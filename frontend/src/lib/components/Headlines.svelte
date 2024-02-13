@@ -6,6 +6,6 @@
 
 <div>
   {#each headlines as headline (headline.ID)}
-    <Headline headline={ headline } />
+    <Headline headline={headline} />
   {/each}
 </div>

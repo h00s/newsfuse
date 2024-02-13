@@ -5,7 +5,7 @@
   let story;
 
   if (story === undefined) {
-    fetch(PUBLIC_API_URL + "/headlines/" + headlineId + "/story")
+    fetch(`${PUBLIC_API_URL}/headlines/${headlineId}/story`)
       .then((response) => response.json())
       .then((data) => {
         story = data;

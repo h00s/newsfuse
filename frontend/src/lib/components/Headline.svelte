@@ -14,7 +14,7 @@
 <div class="rounded overflow-hidden shadow-lg m-2 p-3 dark:bg-gray-800">
   <div class="flex justify-between items-center">
     <h3 class="text-gray-900 dark:text-white text-lg font-bold">
-      <a class="mb-4" href="{ headline.URL }">{ headline.Title }</a>
+      <a class="mb-4" href="{headline.URL}">{headline.Title}</a>
     </h3>
 
     <button on:click="{toggleStory}" class="text-gray-300 focus:outline-none">
@@ -29,10 +29,10 @@
   </div>
 
   <span class="text-gray-400 mb-4">
-    { humanizeDuration(headline.PublishedAt) } | { headline.Source.Name }
+    {humanizeDuration(headline.PublishedAt)} | {headline.Source.Name}
   </span>
 
   {#if showStory}
-    <Story headlineId={ headline.ID } />
+    <Story headlineId={headline.ID} />
   {/if}
 </div>
