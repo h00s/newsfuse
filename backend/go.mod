@@ -5,7 +5,7 @@ go 1.21.7
 // replace github.com/go-raptor/raptor => ../../go-raptor/raptor
 
 require (
-	github.com/go-raptor/raptor v0.5.0
+	github.com/go-raptor/raptor v0.5.1
 	github.com/gocolly/colly/v2 v2.1.0
 	gorm.io/gorm v1.25.7
 )
@@ -43,7 +43,7 @@ require (
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.51.0 // indirect
+	github.com/valyala/fasthttp v1.52.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/crypto v0.19.0 // indirect
 	golang.org/x/net v0.21.0 // indirect
