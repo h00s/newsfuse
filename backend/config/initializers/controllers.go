@@ -15,7 +15,8 @@ func ServicesAndControllers() (raptor.Services, raptor.Controllers) {
 			hs,
 			ss,
 			ts,
-		}, raptor.Controllers{
+		},
+		raptor.Controllers{
 			&controllers.HeadlinesController{
 				Hs: hs,
 			},
