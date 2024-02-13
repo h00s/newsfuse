@@ -6,12 +6,10 @@ import (
 )
 
 func App() *raptor.AppInitializer {
-	services, controllers := ServicesAndControllers()
-
 	return &raptor.AppInitializer{
 		Database:    db.Migrations(),
-		Services:    services,
+		Services:    Services(),
 		Middlewares: Middlewares(),
-		Controllers: controllers,
+		Controllers: Controllers(),
 	}
 }

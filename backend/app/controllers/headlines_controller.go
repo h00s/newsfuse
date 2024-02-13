@@ -7,8 +7,10 @@ import (
 
 type HeadlinesController struct {
 	raptor.Controller
+}
 
-	Hs *services.HeadlinesService
+func (hc *HeadlinesController) Headlines() *services.HeadlinesService {
+	return hc.Services["HeadlinesService"].(*services.HeadlinesService)
 }
 
 func (hc *HeadlinesController) All(c *raptor.Context) error {
@@ -16,7 +18,7 @@ func (hc *HeadlinesController) All(c *raptor.Context) error {
 	if err != nil {
 		return c.SendStatus(400)
 	}
-	return c.JSON(hc.Hs.All(topicID))
+	return c.JSON(hc.Headlines().All(topicID))
 }
 
 func (hc *HeadlinesController) Story(c *raptor.Context) error {
@@ -25,7 +27,7 @@ func (hc *HeadlinesController) Story(c *raptor.Context) error {
 		return c.SendStatus(400)
 	}
 
-	story, err := hc.Hs.GetStory(headlineID)
+	story, err := hc.Headlines().GetStory(headlineID)
 	if err != nil {
 		return c.SendStatus(404)
 	}

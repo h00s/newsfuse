@@ -31,10 +31,10 @@ func NewHeadlinesService() *HeadlinesService {
 
 	hs.OnInit(func() {
 		go hs.Receive()
-		for _, s := range hs.Scrapers {
-			s.Init(hs.Utils)
-			s.Start()
-		}
+		//for _, s := range hs.Scrapers {
+		//	s.Init(hs.Utils)
+		//	s.Start()
+		//}
 	})
 
 	return hs

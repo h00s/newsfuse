@@ -7,10 +7,12 @@ import (
 
 type SourcesController struct {
 	raptor.Controller
+}
 
-	Ss *services.SourcesService
+func (sc *SourcesController) Sources() *services.SourcesService {
+	return sc.Services["SourcesService"].(*services.SourcesService)
 }
 
 func (sc *SourcesController) All(c *raptor.Context) error {
-	return c.JSON(sc.Ss.All())
+	return c.JSON(sc.Sources().All())
 }
