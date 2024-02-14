@@ -18,7 +18,6 @@ func (ss *StoriesService) Get(headlineID int) (*models.Story, error) {
 			return nil, err
 		}
 		go ss.Save(&story)
-		return &story, nil
 	}
 
 	return &story, nil
