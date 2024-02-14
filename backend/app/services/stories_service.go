@@ -3,10 +3,23 @@ package services
 import (
 	"github.com/go-raptor/raptor"
 	"github.com/h00s/newsfuse/app/models"
+	"github.com/h00s/newsfuse/internal"
 )
 
 type StoriesService struct {
 	raptor.Service
+
+	chatgpt *internal.ChatGPT
+}
+
+func NewStoriesService() *StoriesService {
+	ss := &StoriesService{}
+
+	ss.OnInit(func() {
+		ss.chatgpt = internal.NewChatGPT(ss.Config.App["openai_token"].(string))
+	})
+
+	return ss
 }
 
 func (ss *StoriesService) Get(headlineID int) (*models.Story, error) {
@@ -17,7 +30,8 @@ func (ss *StoriesService) Get(headlineID int) (*models.Story, error) {
 		if err != nil {
 			return nil, err
 		}
-		go ss.Save(&story)
+		ss.Save(&story)
+		return &story, nil
 	}
 
 	return &story, nil
@@ -44,4 +58,22 @@ func (ss *StoriesService) Save(story *models.Story) error {
 		return result.Error
 	}
 	return nil
+}
+
+func (ss *StoriesService) Summarize(storyID int) (models.Story, error) {
+	var story models.Story
+	result := ss.DB.First(&story, storyID)
+	if result.RowsAffected == 0 {
+		return story, result.Error
+	}
+	if story.Summary != "" {
+		return story, nil
+	}
+	summary, err := ss.chatgpt.Summarize(story.Content)
+	if err != nil {
+		return story, err
+	}
+	story.Summary = summary
+	go ss.DB.Save(&story)
+	return story, nil
 }

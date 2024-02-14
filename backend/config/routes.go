@@ -17,6 +17,10 @@ func Routes() raptor.Routes {
 			raptor.Scope("/sources",
 				raptor.Route("GET", "", "SourcesController", "All"),
 			),
+
+			raptor.Scope("/stories",
+				raptor.Route("GET", "/:id/summarize", "StoriesController", "Summarize"),
+			),
 		),
 		raptor.Route("GET", "*", "SPAController", "Index"),
 	)

@@ -7,6 +7,7 @@ go 1.21.7
 require (
 	github.com/go-raptor/raptor v0.5.2
 	github.com/gocolly/colly/v2 v2.1.0
+	github.com/sashabaranov/go-openai v1.19.3
 	gorm.io/gorm v1.25.7
 )
 
