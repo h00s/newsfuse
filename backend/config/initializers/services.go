@@ -9,6 +9,7 @@ func Services() raptor.Services {
 	return raptor.Services{
 		services.NewHeadlinesService(),
 		&services.SourcesService{},
+		&services.StoriesService{},
 		&services.TopicsService{},
 	}
 }

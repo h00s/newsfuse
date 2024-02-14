@@ -11,7 +11,7 @@ func Routes() raptor.Routes {
 			),
 
 			raptor.Scope("/headlines",
-				raptor.Route("GET", "/:id/story", "HeadlinesController", "Story"),
+				raptor.Route("GET", "/:id/story", "StoriesController", "Get"),
 			),
 
 			raptor.Scope("/sources",

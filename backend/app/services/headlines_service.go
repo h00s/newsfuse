@@ -55,29 +55,12 @@ func (hs *HeadlinesService) Receive() {
 
 func (hs *HeadlinesService) All(topicID int) models.Headlines {
 	var headlines models.Headlines
-	hs.DB.Limit(50).Order("id desc").Preload("Source").Joins("JOIN sources ON headlines.source_id = sources.id").Where("sources.topic_id = ?", topicID).Find(&headlines)
+	hs.DB.
+		Limit(50).
+		Order("id desc").
+		Preload("Source").
+		Joins("JOIN sources ON headlines.source_id = sources.id").
+		Where("sources.topic_id = ?", topicID).
+		Find(&headlines)
 	return headlines
-}
-
-func (hs *HeadlinesService) GetStory(headlineID int) (*models.Story, error) {
-	var headline models.Headline
-	var story models.Story
-	result := hs.DB.Where("headline_id = ?", headlineID).First(&story)
-	if result.RowsAffected == 0 {
-		hs.DB.First(&headline, headlineID)
-		content, err := hs.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
-		if err != nil {
-			return &story, err
-		}
-		story = models.Story{
-			HeadlineID: uint(headlineID),
-			Content:    content,
-		}
-		result := hs.DB.Create(&story)
-		if result.Error != nil {
-			hs.Log.Error("Error creating story", "Headline", headlineID)
-		}
-	}
-
-	return &story, nil
 }

@@ -9,6 +9,7 @@ func Controllers() raptor.Controllers {
 	return raptor.Controllers{
 		&controllers.HeadlinesController{},
 		&controllers.SourcesController{},
+		&controllers.StoriesController{},
 		&controllers.TopicsController{},
 		&controllers.SPAController{},
 	}
