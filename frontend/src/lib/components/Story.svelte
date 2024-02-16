@@ -4,6 +4,7 @@
   export let headlineId;
   let story;
   let buttonSummarizeText = "Sažmi članak";
+  let storySummarized = false;
 
   if (story === undefined) {
     fetch(`${PUBLIC_API_URL}/headlines/${headlineId}/story`)
@@ -27,12 +28,14 @@
 <div class="pt-4 text-gray-700 dark:text-gray-300">
   <p>
     {#if story === undefined}
-    <span class="loading loading-spinner loading-sm"></span>
+      <span class="loading loading-spinner loading-sm"></span>
     {:else}
-    {#if story.Content.length > 800}
-        <div class="flex justify-center pb-2">
-          <button class="btn btn-sm btn-primary" on:click={summarizeStory}>{@html buttonSummarizeText}</button>
-        </div>
+      {#if story.Content.length > 800}
+        {#if !storySummarized}
+          <div class="flex justify-center pb-2">
+            <button class="btn btn-sm btn-primary" on:click={summarizeStory}>{@html buttonSummarizeText}</button>
+          </div>
+        {/if}
       {/if}
       {@html story.Content}
     {/if}
