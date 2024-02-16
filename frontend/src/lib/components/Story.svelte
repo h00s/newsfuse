@@ -21,6 +21,7 @@
       .then((data) => {
         story = data;
         story.Content = story.Summary;
+        storySummarized = true;
       });
   }
 </script>
