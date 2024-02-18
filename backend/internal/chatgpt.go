@@ -3,7 +3,6 @@ package internal
 import (
 	"context"
 
-	"github.com/sashabaranov/go-openai"
 	gogpt "github.com/sashabaranov/go-openai"
 )
 
@@ -20,11 +19,11 @@ func NewChatGPT(authToken string) *ChatGPT {
 func (c *ChatGPT) Summarize(story string) (string, error) {
 	resp, err := c.client.CreateChatCompletion(
 		context.Background(),
-		openai.ChatCompletionRequest{
+		gogpt.ChatCompletionRequest{
 			Model: gogpt.GPT3Dot5Turbo0125,
-			Messages: []openai.ChatCompletionMessage{
+			Messages: []gogpt.ChatCompletionMessage{
 				{
-					Role:    openai.ChatMessageRoleUser,
+					Role:    gogpt.ChatMessageRoleUser,
 					Content: "Napravi mi sažetak do 600 znakova sljedeće vijesti: " + story,
 				},
 			},
