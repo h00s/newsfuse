@@ -52,7 +52,9 @@ func (s *DefaultScraper) Init(u *raptor.Utils) {
 }
 
 func (s *DefaultScraper) AddHeadline(h models.Headline) {
-	s.headlines = append(s.headlines, h)
+	if strings.TrimSpace(h.Title) != "" {
+		s.headlines = append(s.headlines, h)
+	}
 }
 
 func (s *DefaultScraper) ScrapeHeadline(selector string, callback func(e *colly.HTMLElement)) {
