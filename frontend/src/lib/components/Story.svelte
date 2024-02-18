@@ -25,21 +25,19 @@
   }
 </script>
 
-<div class="pt-4 text-gray-700 dark:text-gray-300">
-  <p>
-    {#if story === undefined}
-      <span class="loading loading-spinner loading-sm"></span>
-    {:else}
-      {#if !storySummarized}
-        {#if story.Content.length > 800}
-          <div class="flex justify-center pb-2">
-            <button class="btn btn-sm btn-primary" on:click={summarizeStory}>{@html buttonSummarizeText}</button>
-          </div>
-        {/if}
-        {@html story.Content}
-      {:else}
-        {@html story.Summary}
+<div class="story pt-4 text-gray-700 dark:text-gray-300">
+  {#if story === undefined}
+    <span class="loading loading-spinner loading-sm"></span>
+  {:else}
+    {#if !storySummarized}
+      {#if story.Content.length > 800}
+        <div class="flex justify-center">
+          <button class="btn btn-sm btn-primary" on:click={summarizeStory}>{@html buttonSummarizeText}</button>
+        </div>
       {/if}
+      {@html story.Content}
+    {:else}
+      {@html story.Summary}
     {/if}
-  </p>
+  {/if}
 </div>

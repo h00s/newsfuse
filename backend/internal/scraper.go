@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"fmt"
 	"math/rand"
 	"strings"
 	"time"
@@ -59,12 +60,15 @@ func (s *DefaultScraper) ScrapeHeadline(selector string, callback func(e *colly.
 }
 
 func (s *DefaultScraper) ScrapeStory(url, element, childElement string) (string, error) {
-	var result string
+	var story string
 
 	c := colly.NewCollector()
+	c.UserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 
 	c.OnHTML(element, func(e *colly.HTMLElement) {
-		result = e.ChildText(childElement)
+		e.ForEach(childElement, func(_ int, el *colly.HTMLElement) {
+			story += fmt.Sprintf("<p>%s</p>", strings.TrimSpace(el.Text))
+		})
 	})
 
 	err := c.Visit(url)
@@ -72,7 +76,7 @@ func (s *DefaultScraper) ScrapeStory(url, element, childElement string) (string,
 		return "", err
 	}
 
-	return strings.TrimSpace(result), nil
+	return story, nil
 }
 
 func (s *DefaultScraper) Start() {

@@ -13,3 +13,7 @@ img {
     margin: 0 auto;
   }
 }
+
+.story p {
+  padding-top: 0.8rem;
+}
