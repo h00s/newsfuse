@@ -7,7 +7,7 @@ WORKDIR /app
 COPY backend ./
 
 RUN go mod download && \
-    GOOS=linux CGO_ENABLED=1 GOARCH=amd64 go build -o /out/newsfuse
+    GOOS=linux GOARCH=amd64 go build -o /out/newsfuse
 
 FROM oven/bun:latest AS frontend
 
