@@ -16,7 +16,7 @@ func NewStoriesService() *StoriesService {
 	ss := &StoriesService{}
 
 	ss.OnInit(func() {
-		ss.chatgpt = internal.NewChatGPT(ss.Config.App["openai_token"].(string))
+		ss.chatgpt = internal.NewChatGPT(ss.Config.AppConfig["openai_token"].(string))
 	})
 
 	return ss
