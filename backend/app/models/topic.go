@@ -1,11 +1,15 @@
 package models
 
-import "github.com/go-raptor/raptor"
+import (
+	"time"
+)
 
 type Topic struct {
-	raptor.Model
-	Name    string
-	Sources []Source `json:"-"`
+	ID        uint      `gorm:"primaryKey" json:"id"`
+	CreatedAt time.Time `json:"-"`
+	UpdatedAt time.Time `json:"-"`
+	Name      string    `json:"name"`
+	Sources   []Source  `gorm:"constraint:OnDelete:CASCADE;" json:"-"`
 }
 
 type Topics []Topic

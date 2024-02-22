@@ -58,7 +58,6 @@ func (hs *HeadlinesService) All(topicID int) models.Headlines {
 	hs.DB.
 		Limit(50).
 		Order("id desc").
-		Preload("Source").
 		Joins("JOIN sources ON headlines.source_id = sources.id").
 		Where("sources.topic_id = ?", topicID).
 		Find(&headlines)

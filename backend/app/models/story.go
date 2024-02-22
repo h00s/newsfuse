@@ -1,10 +1,12 @@
 package models
 
-import "github.com/go-raptor/raptor"
+import "time"
 
 type Story struct {
-	raptor.Model
-	Summary    string `gorm:"type:text"`
-	Content    string `gorm:"type:text"`
-	HeadlineID uint   `gorm:"unique;not null"`
+	ID         uint      `gorm:"primaryKey" json:"id"`
+	HeadlineID uint      `gorm:"unique;not null" json:"headline_id"`
+	Summary    string    `gorm:"type:text" json:"summary"`
+	Content    string    `gorm:"type:text" json:"content"`
+	CreatedAt  time.Time `json:"-"`
+	UpdatedAt  time.Time `json:"-"`
 }

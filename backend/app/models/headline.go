@@ -2,18 +2,18 @@ package models
 
 import (
 	"time"
-
-	"github.com/go-raptor/raptor"
 )
 
 type Headline struct {
-	raptor.Model
-	Title       string
-	URL         string    `gorm:"index"`
-	PublishedAt time.Time `gorm:"index"`
-	SourceID    uint
-	Source      Source
-	Story       Story `json:"-"`
+	ID          uint      `gorm:"primaryKey" json:"id"`
+	Title       string    `json:"title"`
+	URL         string    `gorm:"index" json:"url"`
+	SourceID    uint      `json:"source_id"`
+	Source      Source    `json:"-"`
+	Story       Story     `gorm:"constraint:OnDelete:CASCADE;" json:"-"`
+	PublishedAt time.Time `gorm:"index" json:"published_at"`
+	CreatedAt   time.Time `json:"-"`
+	UpdatedAt   time.Time `json:"-"`
 }
 
 type Headlines []Headline
