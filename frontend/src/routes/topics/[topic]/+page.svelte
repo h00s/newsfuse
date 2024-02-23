@@ -6,4 +6,4 @@
 </script>
 
 <Tabs topics={data.topics} selectedTopic={data.selectedTopic} />
-<Headlines headlines={data.headlines} />
+<Headlines headlines={data.headlines} sources={data.sources} />

@@ -16,7 +16,7 @@
 
   function summarizeStory() {
     buttonSummarizeText = '<span class="loading loading-spinner loading-sm"></span>';
-    fetch(`${PUBLIC_API_URL}/stories/${story.ID}/summarize`)
+    fetch(`${PUBLIC_API_URL}/stories/${story.id}/summarize`)
       .then((response) => response.json())
       .then((data) => {
         story = data;
@@ -30,14 +30,14 @@
     <span class="loading loading-spinner loading-sm"></span>
   {:else}
     {#if !storySummarized}
-      {#if story.Content.length > 800}
+      {#if story.content.length > 800}
         <div class="flex justify-center">
           <button class="btn btn-sm btn-primary" on:click={summarizeStory}>{@html buttonSummarizeText}</button>
         </div>
       {/if}
-      {@html story.Content}
+      {@html story.content}
     {:else}
-      {@html story.Summary}
+      {@html story.summary}
     {/if}
   {/if}
 </div>
