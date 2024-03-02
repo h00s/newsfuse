@@ -9,24 +9,24 @@ import (
 	"github.com/h00s/newsfuse/internal"
 )
 
-type Indexhr struct {
+type IndexhrWorld struct {
 	internal.DefaultScraper
 }
 
-func NewIndexhr(h chan (models.Headline), sourceID uint) *Indexhr {
-	s := &Indexhr{
-		DefaultScraper: *internal.NewScraper("Index.hr", "https://www.index.hr/najnovije?kategorija=3", 5, 15, h),
+func NewIndexhrWorld(h chan (models.Headline), sourceID uint) *IndexhrWorld {
+	s := &IndexhrWorld{
+		DefaultScraper: *internal.NewScraper("Index.hr", "https://www.index.hr/vijesti/rubrika/hrvatska/23.aspx", 5, 15, h),
 	}
 
-	s.ScrapeHeadline("div[class='title-box']", func(e *colly.HTMLElement) {
-		url := e.ChildAttr("a[class='vijesti-text-hover scale-img-hover flex']", "href")
+	s.ScrapeHeadline("a[class='vijesti-text-hover scale-img-hover']", func(e *colly.HTMLElement) {
+		url := e.Attr("href")
 		if index := strings.Index(url, "?"); index != -1 {
 			url = url[:index]
 		}
 
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
-			Title:       e.ChildText("h3[class='title']"),
+			Title:       e.ChildText(".title"),
 			URL:         "https://www.index.hr" + url,
 			PublishedAt: time.Now(),
 		})
@@ -35,6 +35,6 @@ func NewIndexhr(h chan (models.Headline), sourceID uint) *Indexhr {
 	return s
 }
 
-func (s *Indexhr) ScrapeStory(url string) (string, error) {
+func (s *IndexhrWorld) ScrapeStory(url string) (string, error) {
 	return s.DefaultScraper.ScrapeStory(url, "div[class='text vijesti-link-underline']", "p:not([class])")
 }

@@ -24,7 +24,11 @@ func NewHeadlinesService() *HeadlinesService {
 			1: scrapers.NewKliknihr(headlineChannel, 1),
 			2: scrapers.NewMojportalhr(headlineChannel, 2),
 			3: scrapers.NewRadioDaruvar(headlineChannel, 3),
-			4: scrapers.NewIndexhr(headlineChannel, 4),
+			4: scrapers.NewIndexhrCroatia(headlineChannel, 4),
+			5: scrapers.NewN1InfoCroatia(headlineChannel, 5),
+			6: scrapers.NewIndexhrWorld(headlineChannel, 6),
+			7: scrapers.NewN1InfoWorld(headlineChannel, 7),
+			8: scrapers.NewHackerNews(headlineChannel, 8),
 		},
 		HeadlineChannel: headlineChannel,
 	}

@@ -11,6 +11,10 @@ func SeedSource(db *raptor.DB) error {
 		models.Source{Name: "MojPortal.hr", TopicID: 1},
 		models.Source{Name: "Radio Daruvar", TopicID: 1},
 		models.Source{Name: "Index.hr", TopicID: 2},
+		models.Source{Name: "N1Info.hr", TopicID: 2},
+		models.Source{Name: "Index.hr", TopicID: 3},
+		models.Source{Name: "N1Info.hr", TopicID: 3},
+		models.Source{Name: "Hacker News", TopicID: 4},
 	}
 	return db.CreateInBatches(&sources, 4).Error
 }
