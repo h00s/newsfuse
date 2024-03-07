@@ -1,4 +1,5 @@
 import { PUBLIC_API_URL } from '$env/static/public'
+import { getLastAccessedAt } from '$lib/stores/topics'
 
 export async function load({ fetch, params }) {
   let [topics, headlines, sources] = await Promise.all([
@@ -16,6 +17,7 @@ export async function load({ fetch, params }) {
     topics: topics,
     selectedTopic: params.topic,
     headlines: headlines,
-    sources: sourcesMap
+    sources: sourcesMap,
+    lastAccessedAt: getLastAccessedAt(params.topic)
   };
 }

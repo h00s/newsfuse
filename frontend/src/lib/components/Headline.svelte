@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from 'svelte';
   import { humanizeDuration } from '$lib/helpers/date'
   import Story from '$lib/components/Story.svelte'
 
@@ -8,14 +9,23 @@
     showStory = !showStory;
   }
 
+  onMount(() => {
+    newHeadline = lastAccessedAt < new Date(headline.published_at).getTime() ? true : false;
+  });
+
   export let headline;
   export let source;
+  export let lastAccessedAt;
+  export let newHeadline = false;
 </script>
 
 <div class="rounded overflow-hidden shadow-lg m-2 p-3 dark:bg-gray-800">
   <div class="flex justify-between items-center">
     <h3 class="text-gray-900 dark:text-white text-lg font-bold">
       <a class="mb-4" href="{headline.url}">{headline.title}</a>
+      {#if newHeadline}
+        <span class="text-xs bg-green-500 text-white rounded-full px-2 py-1">NOVO</span>
+      {/if}
     </h3>
 
     <button on:click="{toggleStory}" class="text-gray-300 focus:outline-none">
