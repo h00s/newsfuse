@@ -1,6 +1,7 @@
 package scrapers
 
 import (
+	"errors"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -32,5 +33,5 @@ func NewHackerNews(h chan (models.Headline), sourceID uint) *HackerNews {
 }
 
 func (s *HackerNews) ScrapeStory(url string) (string, error) {
-	return "Scraping story from Hacker News is not available", nil
+	return "", errors.New("not supported")
 }
