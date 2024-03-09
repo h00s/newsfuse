@@ -17,3 +17,11 @@ img {
 .story p {
   padding-top: 0.8rem;
 }
+
+.tab {
+  opacity: 0.7;
+}
+
+.tab-active {
+  opacity: 1;
+}

@@ -11,5 +11,15 @@ export default {
     },
   },
   plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      'light',
+      {
+        'dark': {
+          'base-content': '#38bdf8',
+        },
+      }
+    ],
+  },
 }
 
