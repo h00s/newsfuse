@@ -19,7 +19,7 @@
   export let newHeadline = false;
 </script>
 
-<div class="rounded overflow-hidden shadow-lg m-2 p-3 dark:bg-gray-800">
+<div class="rounded overflow-hidden shadow-lg m-2 p-3 dark:bg-news-gray">
   <div class="flex justify-between items-center">
     <h3 class="text-gray-900 dark:text-white text-lg font-bold">
       <a class="mb-4" href="{headline.url}">{headline.title}</a>
