@@ -2,6 +2,7 @@ package scrapers
 
 import (
 	"errors"
+	"strings"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -21,6 +22,9 @@ func NewHackerNews(h chan (models.Headline), sourceID uint) *HackerNews {
 	s.ScrapeHeadline("span[class='titleline']", func(e *colly.HTMLElement) {
 		anchor := e.DOM.Find("a").First()
 		url, _ := anchor.Attr("href")
+		if !strings.HasPrefix(url, "http") {
+			url = s.URL + url
+		}
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       anchor.Text(),
