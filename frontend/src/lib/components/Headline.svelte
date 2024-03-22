@@ -19,7 +19,7 @@
   export let newHeadline = false;
 </script>
 
-<div class="rounded overflow-hidden m-2 p-2">
+<div class="rounded overflow-hidden ml-2 p-2">
   <div class="flex justify-between items-center">
     <img class="inline-block rounded-lg pr-3" src="/{source.name}.webp" alt="logo">
     <div class="flex-1">
