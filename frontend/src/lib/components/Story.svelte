@@ -25,7 +25,7 @@
   }
 </script>
 
-<div class="story text-gray-700 dark:text-gray-300">
+<div class="story pt-2 pb-4 text-gray-700 dark:text-gray-300">
   {#if story === undefined}
     <span class="loading loading-spinner loading-sm"></span>
   {:else}
