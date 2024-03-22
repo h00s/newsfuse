@@ -19,9 +19,9 @@
   export let newHeadline = false;
 </script>
 
-<div class="rounded overflow-hidden shadow-lg m-2 p-3 dark:bg-news-gray">
+<div class="rounded overflow-hidden m-2 p-2">
   <div class="flex justify-between items-center">
-    <h3 class="text-gray-900 dark:text-white text-lg font-bold">
+    <h3 class="text-gray-900 dark:text-white font-bold">
       <a class="mb-4" href="{headline.url}">{headline.title}</a>
       {#if newHeadline}
         <span class="text-xs bg-green-500 text-white rounded-full px-2 py-1">NOVO</span>
