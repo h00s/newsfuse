@@ -3,7 +3,6 @@
 
   export let headlineId;
   let story;
-  let buttonSummarizeText = "Sažmi članak";
   let storySummarized = false;
 
   if (story === undefined) {
@@ -32,7 +31,9 @@
     {#if !storySummarized}
       {#if story.content.length > 800}
         <div class="flex justify-center">
-          <button class="btn btn-sm btn-primary" on:click={summarizeStory}>{@html buttonSummarizeText}</button>
+          <button class="btn btn-sm btn-primary" on:click={summarizeStory}>
+            Sažmi članak
+          </button>
         </div>
       {/if}
       {@html story.content}
