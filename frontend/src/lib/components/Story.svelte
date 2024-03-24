@@ -4,7 +4,7 @@
   export let headlineId;
   let story;
   let buttonSummarizeEnabled = false;
-  let buttonContentEnabled = true;
+  let buttonContentEnabled = false;
   let buttonSummarizeText = "Sažmi članak";
   let displayedStory = "";
 
