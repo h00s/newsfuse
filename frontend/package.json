@@ -21,7 +21,7 @@
   },
   "type": "module",
   "dependencies": {
-    "svelte-lazy-image": "^0.5.1",
+    "svelte-inview": "^4.0.2",
     "svelte-persisted-store": "^0.9.1"
   }
 }
