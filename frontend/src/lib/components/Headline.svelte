@@ -22,7 +22,7 @@
 
 <div class="rounded overflow-hidden ml-2 p-2">
   <div class="flex justify-between items-center">
-    <img data-src="/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32px" use:lazyImage>
+    <img data-src="/sources/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32" use:lazyImage>
     <div class="flex-1">
       <h3 class="text-gray-900 dark:text-white font-bold inline">
         <a class="mb-4" href="{headline.url}">
