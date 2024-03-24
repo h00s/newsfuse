@@ -73,7 +73,7 @@ func (ss *StoriesService) Summarize(storyID int) (models.Story, error) {
 	if err != nil {
 		return story, err
 	}
-	story.Summary = summary
+	story.Summary = "<p>" + summary + "</p>"
 	go ss.DB.Save(&story)
 	return story, nil
 }
