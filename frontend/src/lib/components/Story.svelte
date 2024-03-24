@@ -31,7 +31,7 @@
     {#if !storySummarized}
       {#if story.content.length > 800}
         <div class="flex justify-center">
-          <button class="btn btn-sm btn-primary" on:click={summarizeStory}>
+          <button class="btn btn-sm btn-primary text-white" on:click={summarizeStory}>
             Sažmi članak
           </button>
         </div>
