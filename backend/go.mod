@@ -8,7 +8,7 @@ toolchain go1.22.1
 
 require (
 	github.com/go-raptor/connector/postgres v0.2.6
-	github.com/go-raptor/raptor v0.8.1
+	github.com/go-raptor/raptor v0.8.3
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/sashabaranov/go-openai v1.20.4
 	gorm.io/gorm v1.25.9
