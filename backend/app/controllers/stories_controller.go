@@ -7,10 +7,7 @@ import (
 
 type StoriesController struct {
 	raptor.Controller
-}
-
-func (sc *StoriesController) Stories() *services.StoriesService {
-	return sc.Services["StoriesService"].(*services.StoriesService)
+	Stories *services.StoriesService
 }
 
 func (sc *StoriesController) Get(c *raptor.Context) error {
@@ -19,7 +16,7 @@ func (sc *StoriesController) Get(c *raptor.Context) error {
 		return c.SendStatus(400)
 	}
 
-	story, err := sc.Stories().Get(headlineID)
+	story, err := sc.Stories.Get(headlineID)
 	if err != nil {
 		return c.SendStatus(404)
 	}
@@ -33,7 +30,7 @@ func (sc *StoriesController) Summarize(c *raptor.Context) error {
 		return c.SendStatus(400)
 	}
 
-	story, err := sc.Stories().Summarize(storyID)
+	story, err := sc.Stories.Summarize(storyID)
 	if err != nil {
 		return c.SendStatus(404)
 	}
