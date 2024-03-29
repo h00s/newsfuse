@@ -7,7 +7,7 @@ import (
 type Headline struct {
 	ID          uint      `gorm:"primaryKey" json:"id"`
 	Title       string    `json:"title"`
-	URL         string    `gorm:"index" json:"url"`
+	URL         string    `gorm:"unique" json:"url"`
 	SourceID    uint      `json:"source_id"`
 	Source      Source    `json:"-"`
 	Story       Story     `gorm:"constraint:OnDelete:CASCADE;" json:"-"`

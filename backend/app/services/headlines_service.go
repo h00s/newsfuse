@@ -1,14 +1,13 @@
 package services
 
 import (
-	"errors"
 	"slices"
 
 	"github.com/go-raptor/raptor"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/h00s/newsfuse/internal/scrapers"
-	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type HeadlinesService struct {
@@ -49,14 +48,8 @@ func (hs *HeadlinesService) Receive() {
 	for {
 		headlines := <-hs.HeadlinesChannel
 		slices.Reverse(headlines)
-		for _, h := range headlines {
-			result := hs.DB.First(&h, "url = ?", h.URL)
-			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-				result := hs.DB.Create(&h)
-				if result.Error != nil {
-					hs.Log.Error("Error creating headline", "DB", result.Error.Error())
-				}
-			}
+		if result := hs.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&headlines); result.Error != nil {
+			hs.Log.Error("Error creating headlines", "DB", result.Error.Error())
 		}
 	}
 }
