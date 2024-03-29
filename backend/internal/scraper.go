@@ -24,14 +24,14 @@ type DefaultScraper struct {
 	MinRefreshInterval int
 	MaxRefreshInterval int
 
-	headlineChannel chan (models.Headline)
-	headlines       models.Headlines
+	headlinesChannel chan (models.Headlines)
+	headlines        models.Headlines
 
 	utils     *raptor.Utils
 	collector *colly.Collector
 }
 
-func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, headlineChannel chan (models.Headline)) *DefaultScraper {
+func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, headlinesChannel chan (models.Headlines)) *DefaultScraper {
 	return &DefaultScraper{
 		Name: name,
 		URL:  url,
@@ -39,8 +39,8 @@ func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, he
 		MinRefreshInterval: minRefreshInterval,
 		MaxRefreshInterval: maxRefreshInterval,
 
-		headlineChannel: headlineChannel,
-		headlines:       nil,
+		headlinesChannel: headlinesChannel,
+		headlines:        nil,
 
 		utils:     nil,
 		collector: colly.NewCollector(),
@@ -94,10 +94,11 @@ func (s *DefaultScraper) Start() {
 	})
 
 	s.collector.OnScraped(func(r *colly.Response) {
-		for i := len(s.headlines) - 1; i >= 0; i-- {
+		/*for i := len(s.headlines) - 1; i >= 0; i-- {
 			h := s.headlines[i]
 			s.headlineChannel <- h
-		}
+		}*/
+		s.headlinesChannel <- s.headlines
 		s.utils.Log.Info("Finished scraping", "scraper", s.Name)
 	})
 

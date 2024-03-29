@@ -2,6 +2,7 @@ package services
 
 import (
 	"errors"
+	"slices"
 
 	"github.com/go-raptor/raptor"
 	"github.com/h00s/newsfuse/app/models"
@@ -12,25 +13,25 @@ import (
 
 type HeadlinesService struct {
 	raptor.Service
-	Scrapers        map[int]internal.Scraper
-	HeadlineChannel chan models.Headline
+	Scrapers         map[int]internal.Scraper
+	HeadlinesChannel chan models.Headlines
 }
 
 func NewHeadlinesService() *HeadlinesService {
-	headlineChannel := make(chan models.Headline)
+	headlinesChannel := make(chan models.Headlines)
 
 	hs := &HeadlinesService{
 		Scrapers: map[int]internal.Scraper{
-			1: scrapers.NewKliknihr(headlineChannel, 1),
-			2: scrapers.NewMojportalhr(headlineChannel, 2),
-			3: scrapers.NewRadioDaruvar(headlineChannel, 3),
-			4: scrapers.NewIndexhrCroatia(headlineChannel, 4),
-			5: scrapers.NewN1InfoCroatia(headlineChannel, 5),
-			6: scrapers.NewIndexhrWorld(headlineChannel, 6),
-			7: scrapers.NewN1InfoWorld(headlineChannel, 7),
-			8: scrapers.NewHackerNews(headlineChannel, 8),
+			1: scrapers.NewKliknihr(headlinesChannel, 1),
+			2: scrapers.NewMojportalhr(headlinesChannel, 2),
+			3: scrapers.NewRadioDaruvar(headlinesChannel, 3),
+			4: scrapers.NewIndexhrCroatia(headlinesChannel, 4),
+			5: scrapers.NewN1InfoCroatia(headlinesChannel, 5),
+			6: scrapers.NewIndexhrWorld(headlinesChannel, 6),
+			7: scrapers.NewN1InfoWorld(headlinesChannel, 7),
+			8: scrapers.NewHackerNews(headlinesChannel, 8),
 		},
-		HeadlineChannel: headlineChannel,
+		HeadlinesChannel: headlinesChannel,
 	}
 
 	hs.OnInit(func() {
@@ -46,12 +47,15 @@ func NewHeadlinesService() *HeadlinesService {
 
 func (hs *HeadlinesService) Receive() {
 	for {
-		h := <-hs.HeadlineChannel
-		result := hs.DB.First(&h, "url = ?", h.URL)
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			result := hs.DB.Create(&h)
-			if result.Error != nil {
-				hs.Log.Error("Error creating headline", "DB", result.Error.Error())
+		headlines := <-hs.HeadlinesChannel
+		slices.Reverse(headlines)
+		for _, h := range headlines {
+			result := hs.DB.First(&h, "url = ?", h.URL)
+			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+				result := hs.DB.Create(&h)
+				if result.Error != nil {
+					hs.Log.Error("Error creating headline", "DB", result.Error.Error())
+				}
 			}
 		}
 	}

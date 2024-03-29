@@ -12,7 +12,7 @@ type Kliknihr struct {
 	internal.DefaultScraper
 }
 
-func NewKliknihr(h chan (models.Headline), sourceID uint) *Kliknihr {
+func NewKliknihr(h chan (models.Headlines), sourceID uint) *Kliknihr {
 	s := &Kliknihr{
 		DefaultScraper: *internal.NewScraper("klikni.hr", "https://www.klikni.hr", 15, 30, h),
 	}

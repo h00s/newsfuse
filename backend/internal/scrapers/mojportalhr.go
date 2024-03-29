@@ -14,7 +14,7 @@ type Mojportalhr struct {
 	Source models.Source
 }
 
-func NewMojportalhr(h chan (models.Headline), sourceID uint) *Mojportalhr {
+func NewMojportalhr(h chan (models.Headlines), sourceID uint) *Mojportalhr {
 	s := &Mojportalhr{
 		DefaultScraper: *internal.NewScraper("MojPortal.hr", "https://www.mojportal.hr/", 15, 30, h),
 	}

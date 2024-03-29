@@ -13,7 +13,7 @@ type IndexhrCroatia struct {
 	internal.DefaultScraper
 }
 
-func NewIndexhrCroatia(h chan (models.Headline), sourceID uint) *IndexhrCroatia {
+func NewIndexhrCroatia(h chan (models.Headlines), sourceID uint) *IndexhrCroatia {
 	s := &IndexhrCroatia{
 		DefaultScraper: *internal.NewScraper("Index.hr", "https://www.index.hr/vijesti/rubrika/hrvatska/22.aspx", 5, 15, h),
 	}
