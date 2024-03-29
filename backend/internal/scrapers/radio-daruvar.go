@@ -15,7 +15,7 @@ type RadioDaruvar struct {
 
 func NewRadioDaruvar(h chan (models.Headlines), sourceID uint) *RadioDaruvar {
 	s := &RadioDaruvar{
-		DefaultScraper: *internal.NewScraper("Radio Daruvar", "https://www.radio-daruvar.hr/", 30, 60, h),
+		DefaultScraper: *internal.NewScraper("Radio Daruvar", "https://www.radio-daruvar.hr/", 15, 30, h),
 	}
 
 	s.ScrapeHeadline("li[class='news-item'],h2[class='post-title']", func(e *colly.HTMLElement) {
