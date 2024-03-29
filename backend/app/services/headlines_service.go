@@ -16,6 +16,7 @@ type HeadlinesService struct {
 	raptor.Service
 	Scrapers         map[int]internal.Scraper
 	HeadlinesChannel chan models.Headlines
+	Sources          *SourcesService
 	Memstore         *Memstore
 }
 
@@ -55,8 +56,7 @@ func (hs *HeadlinesService) Receive() {
 		if result.Error == nil {
 			hs.Log.Info("New headlines", "Count", result.RowsAffected)
 			if result.RowsAffected > 0 {
-				var source models.Source
-				hs.DB.First(&source, headlines[0].SourceID)
+				source := hs.Sources.Get(headlines[0].SourceID)
 				if err := hs.allFromDB(int(source.TopicID), &headlines); err == nil {
 					hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
 				}

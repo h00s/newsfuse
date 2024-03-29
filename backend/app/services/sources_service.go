@@ -23,3 +23,9 @@ func (ss *SourcesService) All() models.Sources {
 	ss.Memstore.Set("sources", sources)
 	return sources
 }
+
+func (ss *SourcesService) Get(id uint) models.Source {
+	var source models.Source
+	ss.DB.First(&source, id)
+	return source
+}
