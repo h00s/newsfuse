@@ -12,5 +12,5 @@ func SeedTopic(db *raptor.DB) error {
 		models.Topic{Name: "Svijet"},
 		models.Topic{Name: "Tech"},
 	}
-	return db.CreateInBatches(&topics, 2).Error
+	return db.CreateInBatches(&topics, 4).Error
 }
