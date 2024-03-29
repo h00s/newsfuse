@@ -1,6 +1,8 @@
 package services
 
 import (
+	"encoding/json"
+	"fmt"
 	"slices"
 
 	"github.com/go-raptor/raptor"
@@ -14,6 +16,7 @@ type HeadlinesService struct {
 	raptor.Service
 	Scrapers         map[int]internal.Scraper
 	HeadlinesChannel chan models.Headlines
+	Memstore         *Memstore
 }
 
 func NewHeadlinesService() *HeadlinesService {
@@ -51,16 +54,26 @@ func (hs *HeadlinesService) Receive() {
 		if result := hs.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&headlines); result.Error != nil {
 			hs.Log.Error("Error creating headlines", "DB", result.Error.Error())
 		}
+		topicID := headlines[0].Source.TopicID
+		hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
 	}
 }
 
 func (hs *HeadlinesService) All(topicID int) models.Headlines {
 	var headlines models.Headlines
+	data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
+	if err == nil && data != "" {
+		json.Unmarshal([]byte(data), &headlines)
+		return headlines
+	}
+
 	hs.DB.
 		Limit(50).
 		Order("id desc").
 		Joins("JOIN sources ON headlines.source_id = sources.id").
 		Where("sources.topic_id = ?", topicID).
 		Find(&headlines)
+	go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
+
 	return headlines
 }
