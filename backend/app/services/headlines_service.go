@@ -57,7 +57,9 @@ func (hs *HeadlinesService) Receive() {
 			if result.RowsAffected > 0 {
 				var source models.Source
 				hs.DB.First(&source, headlines[0].SourceID)
-				hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
+				if err := hs.allFromDB(int(source.TopicID), &headlines); err == nil {
+					hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
+				}
 			}
 		} else {
 			hs.Log.Error("Error creating headlines", "DB", result.Error.Error())
@@ -73,13 +75,20 @@ func (hs *HeadlinesService) All(topicID int) models.Headlines {
 		return headlines
 	}
 
-	hs.DB.
+	if err := hs.allFromDB(topicID, &headlines); err != nil {
+		hs.Log.Error("Error getting headlines", "Error", err.Error())
+		return headlines
+	}
+	go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
+
+	return headlines
+}
+
+func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) error {
+	return hs.DB.
 		Limit(50).
 		Order("id desc").
 		Joins("JOIN sources ON headlines.source_id = sources.id").
 		Where("sources.topic_id = ?", topicID).
-		Find(&headlines)
-	go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
-
-	return headlines
+		Find(&headlines).Error
 }
