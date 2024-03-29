@@ -51,11 +51,17 @@ func (hs *HeadlinesService) Receive() {
 	for {
 		headlines := <-hs.HeadlinesChannel
 		slices.Reverse(headlines)
-		if result := hs.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&headlines); result.Error != nil {
+		result := hs.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&headlines)
+		if result.Error == nil {
+			hs.Log.Info("New headlines", "Count", result.RowsAffected)
+			if result.RowsAffected > 0 {
+				var source models.Source
+				hs.DB.First(&source, headlines[0].SourceID)
+				hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
+			}
+		} else {
 			hs.Log.Error("Error creating headlines", "DB", result.Error.Error())
 		}
-		topicID := headlines[0].Source.TopicID
-		hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
 	}
 }
 
