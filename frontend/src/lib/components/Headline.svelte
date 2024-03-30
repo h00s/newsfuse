@@ -20,9 +20,9 @@
   export let newHeadline = false;
 </script>
 
-<div class="rounded overflow-hidden ml-2 p-2">
+<div class="rounded overflow-hidden ml-2 p-2" use:inview>
   <div class="flex justify-between items-center">
-    <img src="/sources/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32" use:inview>
+    <img src="/sources/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32">
     <div class="flex-1">
       <h3 class="text-gray-900 dark:text-white font-bold inline">
         <a class="mb-4" href="{headline.url}">
