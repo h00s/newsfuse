@@ -5,7 +5,7 @@
   function handleHeadlineDisplayed(event) {
     let headlineId = event.detail;
     if (headlineId == headlines[headlines.length - 1].id) {
-      fetch(`${PUBLIC_API_URL}/topics/${topic}/headlines?last_id=${headlineId}`)
+      fetch(`${PUBLIC_API_URL}/topics/${selectedTopic}/headlines?last_id=${headlineId}`)
       .then((response) => response.json())
       .then((data) => {
         headlines = [...headlines, ...data];
@@ -13,7 +13,7 @@
     }
   }
 
-  export let topic;
+  export let selectedTopic;
   export let headlines;
   export let sources;
   export let lastAccessedAt;
