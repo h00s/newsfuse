@@ -93,7 +93,7 @@ func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) 
 		Find(&headlines).Error
 }
 
-func (hs *HeadlinesService) AllFromID(topicID, lastID int) models.Headlines {
+func (hs *HeadlinesService) AllByLastID(topicID, lastID int) models.Headlines {
 	var headlines models.Headlines
 	if err := hs.DB.
 		Limit(30).
