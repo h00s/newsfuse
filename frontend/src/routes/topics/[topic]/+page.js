@@ -1,11 +1,13 @@
-import { PUBLIC_API_URL } from '$env/static/public'
 import { getLastAccessedAt } from '$lib/stores/topics'
+import { fetchHeadlinesByTopic } from '$lib/repositories/headlines';
+import { fetchSources } from '$lib/repositories/sources';
+import { fetchTopics } from '$lib/repositories/topics';
 
 export async function load({ fetch, params }) {
   let [topics, headlines, sources] = await Promise.all([
-    fetch(`${PUBLIC_API_URL}/topics`).then(res => res.json()),
-    fetch(`${PUBLIC_API_URL}/topics/${params.topic}/headlines`).then(res => res.json()),
-    fetch(`${PUBLIC_API_URL}/sources`).then(res => res.json())
+    fetchTopics(fetch),
+    fetchHeadlinesByTopic(params.topic, fetch),
+    fetchSources(fetch)
   ]);
 
   const sourcesMap = sources.reduce((map, obj) => {

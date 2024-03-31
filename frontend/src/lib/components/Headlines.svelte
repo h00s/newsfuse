@@ -1,15 +1,12 @@
 <script>
-  import { PUBLIC_API_URL } from '$env/static/public'
+  import { fetchHeadlinesByTopicAndLastId } from '$lib/repositories/headlines';
   import Headline from '$lib/components/Headline.svelte';
 
-  function handleHeadlineDisplayed(event) {
+  async function handleHeadlineDisplayed(event) {
     let headlineId = event.detail;
     if (headlineId == headlines[headlines.length - 1].id) {
-      fetch(`${PUBLIC_API_URL}/topics/${selectedTopic}/headlines?last_id=${headlineId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        headlines = [...headlines, ...data];
-      });
+      let additionalHeadlines = await fetchHeadlinesByTopicAndLastId(selectedTopic, headlineId);
+      headlines = [...headlines, ...additionalHeadlines];
     }
   }
 

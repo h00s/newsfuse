@@ -1,5 +1,5 @@
 <script>
-  import { PUBLIC_API_URL } from '$env/static/public'
+  import { fetchStoryByHeadline } from '$lib/repositories/stories';
 
   export let headlineId;
   let story;
@@ -9,22 +9,20 @@
   let displayedStory = "";
 
   if (story === undefined) {
-    fetch(`${PUBLIC_API_URL}/headlines/${headlineId}/story`)
-      .then((response) => response.json())
-      .then((data) => {
-        story = data;
-        if (story.content.length > 800) {
-          story.long = true;
-          story.intro = story.content.substring(0, 800).trim() + '...';
-          story.summary === "" ? story.summarized = false : story.summarized = true;
-          buttonContentEnabled = true;
-          buttonSummarizeEnabled = true;
-          displayedStory = story.intro;
-        } else {
-          story.long = false;
-          displayedStory = story.content;
-        }
-      });
+    fetchStoryByHeadline(headlineId).then((data) => {
+      story = data;
+      if (story.content.length > 800) {
+        story.long = true;
+        story.intro = story.content.substring(0, 800).trim() + '...';
+        story.summary === "" ? story.summarized = false : story.summarized = true;
+        buttonContentEnabled = true;
+        buttonSummarizeEnabled = true;
+        displayedStory = story.intro;
+      } else {
+        story.long = false;
+        displayedStory = story.content;
+      }
+    });
   }
 
   function summary() {
