@@ -86,7 +86,7 @@ func (hs *HeadlinesService) All(topicID int) models.Headlines {
 
 func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) error {
 	return hs.DB.
-		Limit(50).
+		Limit(30).
 		Order("id desc").
 		Joins("JOIN sources ON headlines.source_id = sources.id").
 		Where("sources.topic_id = ?", topicID).
