@@ -1,13 +1,19 @@
 <script>
+  import { PUBLIC_API_URL } from '$env/static/public'
   import Headline from '$lib/components/Headline.svelte';
 
   function handleHeadlineDisplayed(event) {
     let headlineId = event.detail;
     if (headlineId == headlines[headlines.length - 1].id) {
-      // console.log('Last headline displayed' + headlineId);
+      fetch(`${PUBLIC_API_URL}/topics/${topic}/headlines?last_id=${headlineId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        headlines = [...headlines, ...data];
+      });
     }
   }
 
+  export let topic;
   export let headlines;
   export let sources;
   export let lastAccessedAt;

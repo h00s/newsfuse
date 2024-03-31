@@ -16,6 +16,6 @@
 
 <Navbar />
 <Tabs topics={data.topics} selectedTopic={data.selectedTopic} />
-<Headlines headlines={data.headlines} sources={data.sources} lastAccessedAt={data.lastAccessedAt} />
+<Headlines topic={data.selectedTopic} headlines={data.headlines} sources={data.sources} lastAccessedAt={data.lastAccessedAt} />
 <Footer />
 

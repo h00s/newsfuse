@@ -15,5 +15,8 @@ func (hc *HeadlinesController) All(c *raptor.Context) error {
 	if err != nil {
 		return c.SendStatus(400)
 	}
+	if lastID := c.QueryInt("last_id", 0); lastID != 0 {
+		return c.JSON(hc.Headlines.AllFromID(topicID, lastID))
+	}
 	return c.JSON(hc.Headlines.All(topicID))
 }

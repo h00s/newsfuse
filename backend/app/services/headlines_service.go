@@ -92,3 +92,17 @@ func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) 
 		Where("sources.topic_id = ?", topicID).
 		Find(&headlines).Error
 }
+
+func (hs *HeadlinesService) AllFromID(topicID, lastID int) models.Headlines {
+	var headlines models.Headlines
+	if err := hs.DB.
+		Limit(30).
+		Order("id desc").
+		Joins("JOIN sources ON headlines.source_id = sources.id").
+		Where("sources.topic_id = ? AND headlines.id < ?", topicID, lastID).
+		Find(&headlines).Error; err != nil {
+		hs.Log.Error("Error getting headlines", "Error", err.Error())
+	}
+
+	return headlines
+}
