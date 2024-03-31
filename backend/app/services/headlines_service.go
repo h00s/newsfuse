@@ -9,7 +9,6 @@ import (
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/h00s/newsfuse/internal/scrapers"
-	"gorm.io/gorm/clause"
 )
 
 type HeadlinesService struct {
@@ -52,17 +51,23 @@ func (hs *HeadlinesService) Receive() {
 	for {
 		headlines := <-hs.HeadlinesChannel
 		slices.Reverse(headlines)
-		result := hs.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&headlines)
-		if result.Error == nil {
-			hs.Log.Info("New headlines", "Count", result.RowsAffected)
-			if result.RowsAffected > 0 {
-				source := hs.Sources.Get(headlines[0].SourceID)
-				if err := hs.allFromDB(int(source.TopicID), &headlines); err == nil {
-					hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
-				}
+		newHeadlines := false
+		for _, headline := range headlines {
+			if hs.DB.Where("url = ?", headline.URL).First(&models.Headline{}).Error == nil {
+				continue
 			}
-		} else {
-			hs.Log.Error("Error creating headlines", "DB", result.Error.Error())
+			result := hs.DB.Create(&headline)
+			if result.Error != nil {
+				hs.Log.Error("Error creating headline", "DB", result.Error.Error())
+			} else {
+				newHeadlines = true
+			}
+		}
+		if newHeadlines {
+			source := hs.Sources.Get(headlines[0].SourceID)
+			if err := hs.allFromDB(int(source.TopicID), &headlines); err == nil {
+				hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
+			}
 		}
 	}
 }
