@@ -1,12 +1,18 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
   import { humanizeDuration } from '$lib/helpers/date'
   import { inview } from 'svelte-inview';
   import Story from '$lib/components/Story.svelte'
+  
+  const dispatch = createEventDispatcher();
+  
+  function sendDataToParent() {
+    dispatch('headlineDisplayed', headline.id);
+  }
 
   let showStory = false;
   let sourceLogoInView = false;
-  const sourceLogoInViewOptions = {
+  const headlineInViewOptions = {
     rootMargin: '50px',
     unobserveOnEnter: true,
   };
@@ -15,8 +21,9 @@
     showStory = !showStory;
   }
 
-  function handleSourceLogoView({ detail }) {
-    sourceLogoInView = detail.inView
+  function handleHeadlineView({ detail }) {
+    sendDataToParent();
+    sourceLogoInView = true;
   }
 
   onMount(() => {
@@ -29,12 +36,12 @@
   export let newHeadline = false;
 </script>
 
-<div class="rounded overflow-hidden ml-2 p-2" use:inview={sourceLogoInViewOptions} on:inview_change="{handleSourceLogoView}">
+<div class="rounded overflow-hidden ml-2 p-2" use:inview={headlineInViewOptions} on:inview_enter="{handleHeadlineView}">
   <div class="flex justify-between items-center">
     {#if sourceLogoInView}
       <img src="/sources/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32">
     {:else}
-      <div class="inline-block pr-3 source-logo-placeholder"></div>
+      <div class="inline-block source-logo-placeholder"></div>
     {/if}
     <div class="flex-1">
       <h3 class="text-gray-900 dark:text-white font-bold inline">
@@ -73,6 +80,6 @@
 <style>
   .source-logo-placeholder {
     width: 32px;
-    height: 32px;
+    height: 36px;
   }
 </style>
