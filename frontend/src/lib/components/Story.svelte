@@ -1,5 +1,5 @@
 <script>
-  import { fetchStoryByHeadline } from '$lib/repositories/stories';
+  import { fetchStoryByHeadline, fetchStorySummary } from '$lib/repositories/stories';
 
   export let headlineId;
   let story;
@@ -28,14 +28,12 @@
   function summary() {
     buttonSummarizeText = '<span class="loading loading-spinner loading-sm"></span>';
     if (!story.summarized) {
-      fetch(`${PUBLIC_API_URL}/stories/${story.id}/summarize`)
-        .then((response) => response.json())
-        .then((data) => {
-          story.summary = data.summary;
-          story.summarized = true;
-          displayedStory = story.summary;
-          buttonSummarizeEnabled = false;
-        });
+      fetchStorySummary(story.id).then((data) => {
+        story.summary = data.summary;
+        story.summarized = true;
+        displayedStory = story.summary;
+        buttonSummarizeEnabled = false;
+      });
     } else {
       displayedStory = story.summary;
       buttonSummarizeEnabled = false;
