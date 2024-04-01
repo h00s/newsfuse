@@ -111,3 +111,16 @@ func (hs *HeadlinesService) AllByLastID(topicID, lastID int) models.Headlines {
 
 	return headlines
 }
+
+func (hs *HeadlinesService) Search(query string) models.Headlines {
+	var headlines models.Headlines
+	if err := hs.DB.
+		Limit(100).
+		Order("id desc").
+		Where("title LIKE ?", "%"+query+"%").
+		Find(&headlines).Error; err != nil {
+		hs.Log.Error("Error searching headlines", "Error", err.Error())
+	}
+
+	return headlines
+}

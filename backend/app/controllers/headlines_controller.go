@@ -20,3 +20,11 @@ func (hc *HeadlinesController) All(c *raptor.Context) error {
 	}
 	return c.JSON(hc.Headlines.All(topicID))
 }
+
+func (hc *HeadlinesController) Search(c *raptor.Context) error {
+	query := c.Query("query")
+	if query == "" || len(query) < 3 {
+		return c.SendStatus(400)
+	}
+	return c.JSON(hc.Headlines.Search(query))
+}
