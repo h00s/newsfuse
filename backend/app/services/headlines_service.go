@@ -117,7 +117,7 @@ func (hs *HeadlinesService) Search(query string) models.Headlines {
 	if err := hs.DB.
 		Limit(100).
 		Order("id desc").
-		Where("title LIKE ?", "%"+query+"%").
+		Where("title ILIKE ?", "%"+query+"%").
 		Find(&headlines).Error; err != nil {
 		hs.Log.Error("Error searching headlines", "Error", err.Error())
 	}
