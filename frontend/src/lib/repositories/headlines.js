@@ -9,3 +9,8 @@ export async function fetchHeadlinesByTopicAndLastId(topic, lastId, svelteFetch 
   svelteFetch = svelteFetch || fetch;
   return svelteFetch(`${PUBLIC_API_URL}/topics/${topic}/headlines?last_id=${lastId}`).then(res => res.json());
 }
+
+export async function searchHeadlines(query, svelteFetch = undefined) {
+  svelteFetch = svelteFetch || fetch;
+  return svelteFetch(`${PUBLIC_API_URL}/headlines/search?query=${query}`).then(res => res.json());
+}
