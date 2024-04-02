@@ -12,7 +12,6 @@ require (
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/redis/go-redis/v9 v9.5.1
 	github.com/sashabaranov/go-openai v1.20.4
-	gorm.io/gorm v1.25.9
 )
 
 require (
@@ -57,4 +56,5 @@ require (
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gorm.io/driver/postgres v1.5.7 // indirect
+	gorm.io/gorm v1.25.9 // indirect
 )
