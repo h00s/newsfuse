@@ -4,14 +4,16 @@
   import { inview } from 'svelte-inview';
   import Story from '$lib/components/Story.svelte'
   
+  onMount(() => {
+    newHeadline = lastAccessedAt < new Date(headline.published_at).getTime() ? true : false;
+  });
+
   const dispatch = createEventDispatcher();
-  
+
   function sendDataToParent() {
     dispatch('headlineDisplayed', headline.id);
   }
 
-  let showStory = false;
-  let sourceLogoInView = false;
   const headlineInViewOptions = {
     rootMargin: '50px',
     unobserveOnEnter: true,
@@ -26,10 +28,8 @@
     sourceLogoInView = true;
   }
 
-  onMount(() => {
-    newHeadline = lastAccessedAt < new Date(headline.published_at).getTime() ? true : false;
-  });
-
+  let showStory = false;
+  let sourceLogoInView = false;
   export let headline;
   export let source;
   export let lastAccessedAt;

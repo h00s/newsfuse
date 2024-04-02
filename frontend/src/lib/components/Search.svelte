@@ -1,11 +1,12 @@
 <script>
   import { onMount } from 'svelte';
-
-  let inputSearch;
-
+  
   onMount(() => {
     inputSearch.focus();
   });
+
+  let inputSearch;
+  export let sources;
 </script>
 
 <div>
