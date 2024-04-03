@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="navbar-center">
-    <span class="text-xl text-news-light font-bold">NewsFuse</span>
+    <span class="text-xl text-news-light font-bold"><a href="/">NewsFuse</a></span>
   </div>
   <div class="navbar-end">
     <button class="btn btn-ghost btn-circle text-news-light">
