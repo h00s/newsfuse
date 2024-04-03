@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="navbar-center">
-    <span class="text-xl text-news-light font-bold"><a href="/">NewsFuse</a></span>
+    <span class="text-xl text-news-light font-bold"><a href="/">FusedNews</a></span>
   </div>
   <div class="navbar-end">
     <a href="/headlines/search">
