@@ -1,22 +1,23 @@
 <script>
   import { onMount } from 'svelte';
   import { searchHeadlines } from '$lib/repositories/headlines';
-  import Headline from '$lib/components/Headline.svelte';
-  
+  import SearchDetails from '$lib/components/SearchDetails.svelte';
+
   onMount(() => {
     inputSearch.focus();
   });
 
   async function handleInputSearch(event) {
     if (event.key === 'Enter') {
-      foundHeadlines = await searchHeadlines(inputSearch.value);
+      searchTerm = inputSearch.value;
+      searchedHeadlines = await searchHeadlines(searchTerm);
       inputSearch.blur();
     }
   }
 
   let inputSearch;
-  let foundHeadlines;
-  let lastAccessedAt = new Date();
+  let searchTerm;
+  let searchedHeadlines;
   export let sources;
 </script>
 
@@ -26,23 +27,5 @@
     <input bind:this={inputSearch} on:keydown={handleInputSearch} type="text" class="grow" placeholder="Upišite tekst za pretragu..." />
   </label>
 
-  {#if foundHeadlines !== undefined && foundHeadlines.length > 0}
-    <div class="border mt-6">
-      {#each foundHeadlines as headline (headline.id)}
-        <Headline {headline} source={sources[headline.source_id]} {lastAccessedAt} />
-        <hr>
-      {/each}
-    </div>
-  {/if}
+  <SearchDetails {sources} {searchedHeadlines} {searchTerm} />
 </div>
-
-<style>
-  .border {
-    padding: 0;
-    border: 1px solid #172F47;
-  }
-  
-  hr {
-    border-color: #172F47;
-  }
-</style>
