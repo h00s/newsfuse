@@ -10,12 +10,13 @@
   async function handleInputSearch(event) {
     if (event.key === 'Enter') {
       foundHeadlines = await searchHeadlines(inputSearch.value);
-      console.log(foundHeadlines);
+      inputSearch.blur();
     }
   }
 
   let inputSearch;
   let foundHeadlines;
+  let lastAccessedAt = new Date();
   export let sources;
 </script>
 
@@ -28,7 +29,7 @@
   {#if foundHeadlines !== undefined && foundHeadlines.length > 0}
     <div class="border mt-6">
       {#each foundHeadlines as headline (headline.id)}
-        <Headline {headline} source={sources[headline.source_id]} />
+        <Headline {headline} source={sources[headline.source_id]} {lastAccessedAt} />
         <hr>
       {/each}
     </div>
