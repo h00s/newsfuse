@@ -32,6 +32,7 @@ func NewHeadlinesService() *HeadlinesService {
 			6: scrapers.NewIndexhrWorld(headlinesChannel, 6),
 			7: scrapers.NewN1InfoWorld(headlinesChannel, 7),
 			8: scrapers.NewHackerNews(headlinesChannel, 8),
+			9: scrapers.NewBughr(headlinesChannel, 9),
 		},
 		HeadlinesChannel: headlinesChannel,
 	}
