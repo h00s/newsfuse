@@ -3,7 +3,18 @@ img {
   padding-bottom: 0.5em;
 }
 
+html {
+  background-image: url('/img/bg/dark-s.webp');
+  background-position: -200px 0px;
+  background-repeat: no-repeat;
+}
+
 @media (min-width: 1280px) {
+  html {
+    background-position: 0px 0px;
+    background-size: contain;
+    background-image: url('/img/bg/dark.webp');
+  }
   body {
     max-width: 960px;
     margin: 0 auto;
@@ -20,7 +31,7 @@ img {
 }
 
 .tab:hover {
-  background-color: #1e283b;
+  background-color: #21375E;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
