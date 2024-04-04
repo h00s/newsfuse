@@ -37,7 +37,7 @@
 <div class="rounded overflow-hidden ml-2 p-2" use:inview={headlineInViewOptions} on:inview_enter="{handleHeadlineView}">
   <div class="flex justify-between items-center">
     {#if sourceLogoInView}
-      <img src="/sources/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32">
+      <img src="/img/sources/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32">
     {:else}
       <div class="inline-block source-logo-placeholder"></div>
     {/if}
