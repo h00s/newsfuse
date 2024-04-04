@@ -10,7 +10,7 @@
 
 {#if searchedHeadlines !== undefined}
   <div class="mt-6 mb-2 text-center text-news-light">
-    <p>Pronađeno je <span class="font-bold">{resultsNumber}</span> članaka za <span class="font-bold">"{searchTerm}"</span>:</p>
+    <p>Pronađeno je <span class="font-bold">{resultsNumber}</span> članaka za <span class="font-bold">"{searchTerm}"</span></p>
   </div>
   <div class="border">
     {#each searchedHeadlines as headline (headline.id)}
