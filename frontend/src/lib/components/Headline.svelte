@@ -8,16 +8,9 @@
     newHeadline = lastAccessedAt < new Date(headline.published_at).getTime() ? true : false;
   });
 
-  const dispatch = createEventDispatcher();
-
   function sendDataToParent() {
     dispatch('headlineDisplayed', headline.id);
   }
-
-  const headlineInViewOptions = {
-    rootMargin: '50px',
-    unobserveOnEnter: true,
-  };
 
   function toggleStory() {
     showStory = !showStory;
@@ -28,6 +21,11 @@
     sourceLogoInView = true;
   }
 
+  const headlineInViewOptions = {
+    rootMargin: '50px',
+    unobserveOnEnter: true,
+  };
+  const dispatch = createEventDispatcher();
   let showStory = false;
   let sourceLogoInView = false;
   export let headline;

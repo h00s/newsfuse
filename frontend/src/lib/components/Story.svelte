@@ -1,29 +1,25 @@
 <script>
+  import { onMount } from 'svelte';
   import { fetchStoryByHeadline, fetchStorySummary } from '$lib/repositories/stories';
 
-  export let headlineId;
-  let story;
-  let buttonSummarizeEnabled = false;
-  let buttonContentEnabled = false;
-  let buttonSummarizeText = "Sažmi članak";
-  let displayedStory = "";
-
-  if (story === undefined) {
-    fetchStoryByHeadline(headlineId).then((data) => {
-      story = data;
-      if (story.content.length > 800) {
-        story.long = true;
-        story.intro = story.content.substring(0, 800).trim() + '...';
-        story.summary === "" ? story.summarized = false : story.summarized = true;
-        buttonContentEnabled = true;
-        buttonSummarizeEnabled = true;
-        displayedStory = story.intro;
-      } else {
-        story.long = false;
-        displayedStory = story.content;
-      }
-    });
-  }
+  onMount(() => {
+    if (story === undefined) {
+      fetchStoryByHeadline(headlineId).then((data) => {
+        story = data;
+        if (story.content.length > 800) {
+          story.long = true;
+          story.intro = story.content.substring(0, 800).trim() + '...';
+          story.summary === "" ? story.summarized = false : story.summarized = true;
+          buttonContentEnabled = true;
+          buttonSummarizeEnabled = true;
+          displayedStory = story.intro;
+        } else {
+          story.long = false;
+          displayedStory = story.content;
+        }
+      });
+    }
+  });
 
   function summary() {
     buttonSummarizeText = '<span class="loading loading-spinner loading-sm"></span>';
@@ -44,11 +40,20 @@
     displayedStory = story.content;
     buttonContentEnabled = false;
   }
+
+  let story;
+  let buttonSummarizeEnabled = false;
+  let buttonContentEnabled = false;
+  let buttonSummarizeText = "Sažmi članak";
+  let displayedStory = "";
+  export let headlineId;
 </script>
 
 <div class="story pb-2 text-gray-700 dark:text-gray-300">
   {#if story === undefined}
-    <span class="loading loading-spinner loading-sm"></span>
+    <div class="pt-4">
+      <span class="loading loading-spinner loading-sm"></span>
+    </div>
   {:else}
     {@html displayedStory}
     {#if story.long}

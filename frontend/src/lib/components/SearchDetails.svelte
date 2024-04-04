@@ -5,6 +5,7 @@
   export let searchTerm;
   export let searchedHeadlines;
   export let sources;
+
   $: resultsNumber = searchedHeadlines ? searchedHeadlines.length : 0;
 </script>
 
