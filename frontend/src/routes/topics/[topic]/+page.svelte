@@ -7,10 +7,6 @@
   import Headlines from '$lib/components/Headlines.svelte';
   import Footer from '$lib/components/Footer.svelte';
 
-  afterUpdate(async () => {
-    setLastAccessedAt(data.selectedTopic);
-  });
-
   export let data;
 </script>
 
