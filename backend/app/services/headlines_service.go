@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"slices"
+	"time"
 
 	"github.com/go-raptor/raptor"
 	"github.com/h00s/newsfuse/app/models"
@@ -124,4 +125,17 @@ func (hs *HeadlinesService) Search(query string) models.Headlines {
 	}
 
 	return headlines
+}
+
+func (hs *HeadlinesService) Count(topicID int, since time.Time) int {
+	var count int64
+	if err := hs.DB.
+		Model(&models.Headline{}).
+		Joins("JOIN sources ON headlines.source_id = sources.id").
+		Where("sources.topic_id = ? AND published_at > ?", topicID, since).
+		Count(&count).Error; err != nil {
+		hs.Log.Error("Error counting headlines", "Error", err.Error())
+	}
+
+	return int(count)
 }

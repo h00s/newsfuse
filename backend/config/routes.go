@@ -8,6 +8,7 @@ func Routes() raptor.Routes {
 			raptor.Scope("/topics",
 				raptor.Route("GET", "", "TopicsController", "All"),
 				raptor.Route("GET", "/:id/headlines", "HeadlinesController", "All"),
+				raptor.Route("GET", "/:id/headlines/count", "HeadlinesController", "Count"),
 			),
 
 			raptor.Scope("/headlines",

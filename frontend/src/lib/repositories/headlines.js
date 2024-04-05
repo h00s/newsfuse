@@ -14,3 +14,8 @@ export async function searchHeadlines(query, svelteFetch = undefined) {
   svelteFetch = svelteFetch || fetch;
   return svelteFetch(`${PUBLIC_API_URL}/headlines/search?query=${query}`).then(res => res.json());
 }
+
+export async function countNewSince(topic, since, svelteFetch = undefined) {
+  svelteFetch = svelteFetch || fetch;
+  return svelteFetch(`${PUBLIC_API_URL}/topics/${topic}/headlines/count?status=new&since=${since}`).then(res => res.json());
+}
