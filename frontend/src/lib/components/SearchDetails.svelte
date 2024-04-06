@@ -1,7 +1,7 @@
 <script>
   import Headline from "$lib/components/Headline.svelte";
 
-  let lastAccessedAt = new Date();
+  let lastAccessedAt = Date.now();
   export let searchTerm;
   export let searchedHeadlines;
   export let sources;

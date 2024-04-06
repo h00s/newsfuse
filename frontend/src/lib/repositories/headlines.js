@@ -16,6 +16,9 @@ export async function searchHeadlines(query, svelteFetch = undefined) {
 }
 
 export async function countNewSince(topic, since, svelteFetch = undefined) {
+  if (!since) {
+    since = Date.now();
+  }
   svelteFetch = svelteFetch || fetch;
   return svelteFetch(`${PUBLIC_API_URL}/topics/${topic}/headlines/count?status=new&since=${since}`).then(res => res.json());
 }
