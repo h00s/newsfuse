@@ -8,6 +8,7 @@ import (
 
 type StoriesService struct {
 	raptor.Service
+	Headlines *HeadlinesService
 
 	chatgpt *internal.ChatGPT
 }
@@ -38,10 +39,9 @@ func (ss *StoriesService) Get(headlineID int) (*models.Story, error) {
 }
 
 func (ss *StoriesService) Scrape(headlineID int) (models.Story, error) {
-	headlines := ss.Services["HeadlinesService"].(*HeadlinesService)
 	var headline models.Headline
 	ss.DB.First(&headline, headlineID)
-	content, err := headlines.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
+	content, err := ss.Headlines.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
 	if err != nil {
 		return models.Story{}, err
 	}
