@@ -2,13 +2,13 @@ module github.com/h00s/newsfuse
 
 go 1.22
 
-toolchain go1.22.1
+toolchain go1.22.2
 
 // replace github.com/go-raptor/raptor => ../../go-raptor/raptor
 
 require (
 	github.com/go-raptor/connector/postgres v0.2.7
-	github.com/go-raptor/raptor v0.8.10
+	github.com/go-raptor/raptor v0.8.11
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/redis/go-redis/v9 v9.5.1
 	github.com/sashabaranov/go-openai v1.20.5
