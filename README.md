@@ -9,7 +9,7 @@ The News Aggregator Application is a web-based platform that aggregates news art
 - ✅ Stores articles in a database for easy retrieval and display
 - ✅ Displays articles in a compact format for easy reading
 - ❌ Allows users to filter articles by source, category, or date
-- ➡️ Provides a search function for finding specific articles
+- ✅ Provides a search function for finding specific articles
 - ❌ Automatically updates with the latest news articles on a regular basis
 
 ## Technologies Used
