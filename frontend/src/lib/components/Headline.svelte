@@ -42,15 +42,16 @@
       <div class="inline-block source-logo-placeholder"></div>
     {/if}
     <div class="flex-1">
-      <h3 class="text-gray-900 dark:text-white font-bold inline">
+      <h3 class="text-gray-900 inline"
+        class:dark:text-white={newHeadline}
+        class:font-bold={newHeadline}
+        class:dark:text-slate-300={!newHeadline}
+        class:font-medium={!newHeadline}
+      >
         <a class="mb-4" href="{headline.url}">
           {headline.title}
         </a>
       </h3>
-
-      {#if newHeadline}
-        <span class="text-xs bg-green-500 text-white rounded-full px-2 py-1">NOVO</span>
-      {/if}
 
       <span class="text-gray-400 pl-1">
         {humanizeDuration(headline.published_at)}
