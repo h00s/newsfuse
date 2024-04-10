@@ -30,5 +30,5 @@ func NewN1InfoWorld(h chan (models.Headlines), sourceID uint) *N1InfoWorld {
 }
 
 func (s *N1InfoWorld) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='entry-content']", "p:not([class])")
+	return s.DefaultScraper.ScrapeStory(url, "div[class='entry-content']", "p:not([class])", false)
 }

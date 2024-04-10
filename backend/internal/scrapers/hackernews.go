@@ -1,8 +1,6 @@
 package scrapers
 
 import (
-	"errors"
-	"strings"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -19,12 +17,14 @@ func NewHackerNews(h chan (models.Headlines), sourceID uint) *HackerNews {
 		DefaultScraper: *internal.NewScraper("Hacker News", "https://news.ycombinator.com/", 10, 15, h),
 	}
 
-	s.ScrapeHeadline("span[class='titleline']", func(e *colly.HTMLElement) {
-		anchor := e.DOM.Find("a").First()
-		url, _ := anchor.Attr("href")
-		if !strings.HasPrefix(url, "http") {
-			url = s.URL + url
-		}
+	s.ScrapeHeadline("tr[class='athing']", func(e *colly.HTMLElement) {
+		// anchor := e.DOM.Find("a").Last()
+		// url, _ := anchor.Attr("href")
+		url := s.URL + "item?id=" + e.Attr("id")
+		anchor := e.DOM.Find("span[class='titleline'] > a").First()
+		//if !strings.HasPrefix(url, "http") {
+		//	url = s.URL + url
+		//}
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       anchor.Text(),
@@ -37,5 +37,5 @@ func NewHackerNews(h chan (models.Headlines), sourceID uint) *HackerNews {
 }
 
 func (s *HackerNews) ScrapeStory(url string) (string, error) {
-	return "", errors.New("not supported")
+	return s.DefaultScraper.ScrapeStory(url, "td[class='title']", "span[class='titleline']", true)
 }

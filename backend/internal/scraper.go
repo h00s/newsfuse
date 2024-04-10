@@ -64,7 +64,7 @@ func (s *DefaultScraper) ScrapeHeadline(selector string, callback func(e *colly.
 	s.collector.OnHTML(selector, callback)
 }
 
-func (s *DefaultScraper) ScrapeStory(url, element, childElement string) (string, error) {
+func (s *DefaultScraper) ScrapeStory(url, element, childElement string, html bool) (string, error) {
 	var story string
 
 	c := colly.NewCollector()
@@ -72,7 +72,12 @@ func (s *DefaultScraper) ScrapeStory(url, element, childElement string) (string,
 
 	c.OnHTML(element, func(e *colly.HTMLElement) {
 		e.ForEach(childElement, func(_ int, el *colly.HTMLElement) {
-			story += fmt.Sprintf("<p>%s</p>", strings.TrimSpace(el.Text))
+			if html {
+				contents, _ := el.DOM.Html()
+				story += fmt.Sprintf("<p>%s</p>", strings.TrimSpace(contents))
+			} else {
+				story += fmt.Sprintf("<p>%s</p>", strings.TrimSpace(el.Text))
+			}
 		})
 	})
 

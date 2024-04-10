@@ -45,5 +45,5 @@ func NewBughr(h chan (models.Headlines), sourceID uint) *Bughr {
 }
 
 func (s *Bughr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class^='post-full__content']", "p:not([class])")
+	return s.DefaultScraper.ScrapeStory(url, "div[class^='post-full__content']", "p:not([class])", false)
 }

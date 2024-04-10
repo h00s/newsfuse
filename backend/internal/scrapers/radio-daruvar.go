@@ -31,5 +31,5 @@ func NewRadioDaruvar(h chan (models.Headlines), sourceID uint) *RadioDaruvar {
 }
 
 func (s *RadioDaruvar) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='entry-content entry clearfix']", "p:not([class])")
+	return s.DefaultScraper.ScrapeStory(url, "div[class='entry-content entry clearfix']", "p:not([class])", false)
 }
