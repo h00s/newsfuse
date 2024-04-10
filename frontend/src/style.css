@@ -26,6 +26,14 @@ html {
   font-size: 0.9rem;
 }
 
+.story p a {
+  color: #38bdf8;
+}
+
+.story p a:hover {
+  text-decoration: underline;
+}
+
 .tab {
   opacity: 0.7;
 }
