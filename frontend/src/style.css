@@ -12,7 +12,7 @@ html {
 @media (min-width: 1280px) {
   html {
     background-position: 0px 0px;
-    background-size: contain;
+    background-repeat: no-repeat;
     background-image: url('/img/bg/dark.webp');
   }
   body {
