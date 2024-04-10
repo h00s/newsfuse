@@ -71,13 +71,20 @@ func (s *DefaultScraper) ScrapeStory(url, element, childElement string, html boo
 	c.UserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
 
 	c.OnHTML(element, func(e *colly.HTMLElement) {
+		var contents string
 		e.ForEach(childElement, func(_ int, el *colly.HTMLElement) {
 			if html {
-				contents, _ := el.DOM.Html()
-				story += fmt.Sprintf("<p>%s</p>", strings.TrimSpace(contents))
+				contentsHTML, err := el.DOM.Html()
+				if err != nil {
+					s.utils.Log.Error("Error getting HTML", "error", err.Error())
+					contents = ""
+				} else {
+					contents = strings.TrimSpace(contentsHTML)
+				}
 			} else {
-				story += fmt.Sprintf("<p>%s</p>", strings.TrimSpace(el.Text))
+				contents = strings.TrimSpace(el.Text)
 			}
+			story += fmt.Sprintf("<p>%s</p>", contents)
 		})
 	})
 
@@ -99,10 +106,6 @@ func (s *DefaultScraper) Start() {
 	})
 
 	s.collector.OnScraped(func(r *colly.Response) {
-		/*for i := len(s.headlines) - 1; i >= 0; i-- {
-			h := s.headlines[i]
-			s.headlineChannel <- h
-		}*/
 		s.headlinesChannel <- s.headlines
 		s.utils.Log.Info("Finished scraping", "scraper", s.Name)
 	})

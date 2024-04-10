@@ -18,13 +18,8 @@ func NewHackerNews(h chan (models.Headlines), sourceID uint) *HackerNews {
 	}
 
 	s.ScrapeHeadline("tr[class='athing']", func(e *colly.HTMLElement) {
-		// anchor := e.DOM.Find("a").Last()
-		// url, _ := anchor.Attr("href")
 		url := s.URL + "item?id=" + e.Attr("id")
 		anchor := e.DOM.Find("span[class='titleline'] > a").First()
-		//if !strings.HasPrefix(url, "http") {
-		//	url = s.URL + url
-		//}
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       anchor.Text(),
