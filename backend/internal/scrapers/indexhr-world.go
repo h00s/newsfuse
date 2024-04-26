@@ -36,5 +36,5 @@ func NewIndexhrWorld(h chan (models.Headlines), sourceID uint) *IndexhrWorld {
 }
 
 func (s *IndexhrWorld) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='text vijesti-link-underline']", "p:not([class])", false)
+	return s.DefaultScraper.ScrapeStory(url, "div[class^='text vijesti-link-underline']", "p:not([class])", false)
 }
