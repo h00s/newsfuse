@@ -14,10 +14,8 @@
     <span class="text-xl text-news-light font-bold"><a href="/">Fused<span class="-m-1">News</span></a></span>
   </div>
   <div class="navbar-end">
-    <a href="/headlines/search">
-      <button class="btn btn-ghost btn-circle text-news-light">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-      </button>
+    <a role="button" class="btn btn-ghost btn-circle text-news-light" href="/headlines/search">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
     </a>
   </div>
 </div>
