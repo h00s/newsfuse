@@ -7,15 +7,15 @@ toolchain go1.22.2
 // replace github.com/go-raptor/raptor => ../../go-raptor/raptor
 
 require (
-	github.com/go-raptor/connector/postgres v0.2.8
-	github.com/go-raptor/raptor v0.9.2
+	github.com/go-raptor/connector/postgres v0.2.9
+	github.com/go-raptor/raptor v0.9.3
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/redis/go-redis/v9 v9.5.1
-	github.com/sashabaranov/go-openai v1.23.1
+	github.com/sashabaranov/go-openai v1.24.1
 )
 
 require (
-	github.com/BurntSushi/toml v1.3.2 // indirect
+	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/PuerkitoBio/goquery v1.9.2 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/andybalholm/cascadia v1.3.2 // indirect
@@ -31,7 +31,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20231201235250-de7065d80cb9 // indirect
-	github.com/jackc/pgx/v5 v5.5.5 // indirect
+	github.com/jackc/pgx/v5 v5.6.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
@@ -46,7 +46,7 @@ require (
 	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.52.0 // indirect
+	github.com/valyala/fasthttp v1.54.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
