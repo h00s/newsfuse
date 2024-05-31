@@ -19,8 +19,9 @@ func NewClaude(apiKey string) (*Claude, error) {
 }
 
 func (c *Claude) Summarize(story string) (string, error) {
+	content := "Napravi mi sažetak do 600 znakova sljedeće vijesti: " + story[:2500]
 	request := anthropic.NewMessageRequest(
-		[]anthropic.MessagePartRequest{{Role: "user", Content: []anthropic.ContentBlock{anthropic.NewTextContentBlock("Napravi mi sažetak do 600 znakova sljedeće vijesti: " + story)}}},
+		[]anthropic.MessagePartRequest{{Role: "user", Content: []anthropic.ContentBlock{anthropic.NewTextContentBlock(content)}}},
 		anthropic.WithModel[anthropic.MessageRequest](anthropic.Claude3Haiku),
 		anthropic.WithMaxTokens[anthropic.MessageRequest](1000),
 	)
