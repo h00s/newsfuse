@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/go-raptor/raptor"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
@@ -10,14 +12,17 @@ type StoriesService struct {
 	raptor.Service
 	Headlines *HeadlinesService
 
-	chatgpt *internal.ChatGPT
+	claude *internal.Claude
 }
 
 func NewStoriesService() *StoriesService {
 	ss := &StoriesService{}
 
 	ss.OnInit(func() {
-		ss.chatgpt = internal.NewChatGPT(ss.Config.AppConfig["openai_token"].(string))
+		var err error
+		if ss.claude, err = internal.NewClaude(ss.Config.AppConfig["anthropic_key"].(string)); err != nil {
+			ss.Log.Error("Error creating Claude", "error", err.Error())
+		}
 	})
 
 	return ss
@@ -69,8 +74,9 @@ func (ss *StoriesService) Summarize(storyID int) (models.Story, error) {
 	if story.Summary != "" {
 		return story, nil
 	}
-	summary, err := ss.chatgpt.Summarize(story.Content)
+	summary, err := ss.claude.Summarize(story.Content)
 	if err != nil {
+		fmt.Println(err)
 		return story, err
 	}
 	story.Summary = "<p>" + summary + "</p>"

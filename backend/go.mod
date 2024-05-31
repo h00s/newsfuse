@@ -2,7 +2,7 @@ module github.com/h00s/newsfuse
 
 go 1.22
 
-toolchain go1.22.2
+toolchain go1.22.3
 
 // replace github.com/go-raptor/raptor => ../../go-raptor/raptor
 
@@ -10,8 +10,8 @@ require (
 	github.com/go-raptor/connector/postgres v0.2.9
 	github.com/go-raptor/raptor v0.9.3
 	github.com/gocolly/colly/v2 v2.1.0
+	github.com/madebywelch/anthropic-go/v2 v2.2.3
 	github.com/redis/go-redis/v9 v9.5.1
-	github.com/sashabaranov/go-openai v1.24.1
 )
 
 require (
