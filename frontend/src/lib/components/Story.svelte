@@ -6,9 +6,9 @@
     if (story === undefined) {
       fetchStoryByHeadline(headlineId).then((data) => {
         story = data;
-        if (story.content.length > 800) {
+        if (story.content.length > 650) {
           story.long = true;
-          story.intro = story.content.substring(0, 800).trim() + '...';
+          story.intro = story.content.substring(0, 600).trim() + '...';
           story.summary === "" ? story.summarized = false : story.summarized = true;
           buttonContentEnabled = true;
           buttonSummarizeEnabled = true;
