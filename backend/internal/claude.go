@@ -1,6 +1,8 @@
 package internal
 
 import (
+	"strings"
+
 	"github.com/madebywelch/anthropic-go/v2/pkg/anthropic"
 )
 
@@ -19,10 +21,12 @@ func NewClaude(apiKey string) (*Claude, error) {
 }
 
 func (c *Claude) Summarize(story string) (string, error) {
+	replacer := strings.NewReplacer("<p>", "", "</p>", "")
+	story = replacer.Replace(story)
 	if len(story) > 2500 {
 		story = story[:2500]
 	}
-	content := "Napravi mi sažetak do 600 znakova sljedeće vijesti: " + story
+	content := "Napravi sažetak vijesti. Odgovori samo sa sažetkom vijesti do 600 znakova bez navoda da se radi o sažetku: " + story
 	request := anthropic.NewMessageRequest(
 		[]anthropic.MessagePartRequest{{Role: "user", Content: []anthropic.ContentBlock{anthropic.NewTextContentBlock(content)}}},
 		anthropic.WithModel[anthropic.MessageRequest](anthropic.Claude3Haiku),
@@ -34,5 +38,5 @@ func (c *Claude) Summarize(story string) (string, error) {
 		return "", err
 	}
 
-	return response.Content[0].Text, nil
+	return "<p>" + response.Content[0].Text + "</p>", nil
 }
