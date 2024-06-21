@@ -27,7 +27,7 @@ func NewHeadlinesService() *HeadlinesService {
 		Scrapers: map[int]internal.Scraper{
 			1: scrapers.NewKliknihr(headlinesChannel, 1),
 			2: scrapers.NewMojportalhr(headlinesChannel, 2),
-			3: scrapers.NewRadioDaruvar(headlinesChannel, 3),
+			//3: scrapers.NewRadioDaruvar(headlinesChannel, 3),
 			4: scrapers.NewIndexhrCroatia(headlinesChannel, 4),
 			5: scrapers.NewN1InfoCroatia(headlinesChannel, 5),
 			6: scrapers.NewIndexhrWorld(headlinesChannel, 6),
