@@ -15,7 +15,13 @@ type Bughr struct {
 
 func NewBughr(h chan (models.Headlines), sourceID uint) *Bughr {
 	s := &Bughr{
-		DefaultScraper: *internal.NewScraper("Bug", "https://www.bug.hr", 10, 30, h),
+		DefaultScraper: *internal.NewScraper(h,
+			"Bug",
+			"https://www.bug.hr",
+			10,
+			30,
+			[]int{0, 1, 2, 3, 4, 5, 23},
+		),
 	}
 
 	s.ScrapeHeadline("h2[class='post-listing__title'] > a", func(e *colly.HTMLElement) {

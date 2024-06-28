@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"math/rand"
+	"slices"
 	"strings"
 	"time"
 
@@ -18,29 +19,33 @@ type Scraper interface {
 }
 
 type DefaultScraper struct {
+	headlinesChannel chan (models.Headlines)
+	headlines        models.Headlines
+
 	Name string
 	URL  string
 
 	MinRefreshInterval int
 	MaxRefreshInterval int
 
-	headlinesChannel chan (models.Headlines)
-	headlines        models.Headlines
+	OffHours []int
 
 	utils     *raptor.Utils
 	collector *colly.Collector
 }
 
-func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, headlinesChannel chan (models.Headlines)) *DefaultScraper {
+func NewScraper(headlinesChannel chan (models.Headlines), name, url string, minRefreshInterval, maxRefreshInterval int, offHours []int) *DefaultScraper {
 	return &DefaultScraper{
+		headlinesChannel: headlinesChannel,
+		headlines:        nil,
+
 		Name: name,
 		URL:  url,
 
 		MinRefreshInterval: minRefreshInterval,
 		MaxRefreshInterval: maxRefreshInterval,
 
-		headlinesChannel: headlinesChannel,
-		headlines:        nil,
+		OffHours: offHours,
 
 		utils:     nil,
 		collector: colly.NewCollector(),
@@ -113,8 +118,12 @@ func (s *DefaultScraper) Start() {
 	go func() {
 		for {
 			s.utils.Log.Info("Started scraping", "scraper", s.Name)
-			s.collector.Visit(s.URL)
-			s.collector.Wait()
+			if !slices.Contains(s.OffHours, time.Now().Hour()) {
+				s.collector.Visit(s.URL)
+				s.collector.Wait()
+			} else {
+				s.utils.Log.Info("Skipping scraping", "scraper", s.Name, "hour", time.Now().Hour())
+			}
 			waitTime := rand.Intn(s.MaxRefreshInterval-s.MinRefreshInterval) + s.MinRefreshInterval
 			s.utils.Log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
 			time.Sleep(time.Duration(waitTime) * time.Minute)

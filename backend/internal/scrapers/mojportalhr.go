@@ -16,7 +16,13 @@ type Mojportalhr struct {
 
 func NewMojportalhr(h chan (models.Headlines), sourceID uint) *Mojportalhr {
 	s := &Mojportalhr{
-		DefaultScraper: *internal.NewScraper("MojPortal.hr", "https://www.mojportal.hr/", 15, 30, h),
+		DefaultScraper: *internal.NewScraper(h,
+			"MojPortal.hr",
+			"https://www.mojportal.hr/",
+			15,
+			30,
+			[]int{0, 1, 2, 3, 4, 5, 23},
+		),
 	}
 
 	s.ScrapeHeadline("div[class^='article_teaser__horizontal_box2']", func(e *colly.HTMLElement) {

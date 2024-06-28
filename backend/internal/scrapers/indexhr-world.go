@@ -15,7 +15,13 @@ type IndexhrWorld struct {
 
 func NewIndexhrWorld(h chan (models.Headlines), sourceID uint) *IndexhrWorld {
 	s := &IndexhrWorld{
-		DefaultScraper: *internal.NewScraper("Index.hr", "https://www.index.hr/vijesti/rubrika/hrvatska/23.aspx", 5, 15, h),
+		DefaultScraper: *internal.NewScraper(h,
+			"Index.hr",
+			"https://www.index.hr/vijesti/rubrika/hrvatska/23.aspx",
+			5,
+			15,
+			[]int{1, 2, 3, 4, 5},
+		),
 	}
 
 	s.ScrapeHeadline("a[class='vijesti-text-hover scale-img-hover']", func(e *colly.HTMLElement) {

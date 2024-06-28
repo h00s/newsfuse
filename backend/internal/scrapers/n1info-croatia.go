@@ -14,7 +14,13 @@ type N1InfoCroatia struct {
 
 func NewN1InfoCroatia(h chan (models.Headlines), sourceID uint) *N1InfoCroatia {
 	s := &N1InfoCroatia{
-		DefaultScraper: *internal.NewScraper("N1", "https://n1info.hr/vijesti/", 10, 20, h),
+		DefaultScraper: *internal.NewScraper(h,
+			"N1",
+			"https://n1info.hr/vijesti/",
+			10,
+			20,
+			[]int{0, 1, 2, 3, 4, 5, 23},
+		),
 	}
 
 	s.ScrapeHeadline("a[class='uc-block-post-grid-title-link']", func(e *colly.HTMLElement) {

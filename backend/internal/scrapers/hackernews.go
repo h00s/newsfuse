@@ -14,7 +14,13 @@ type HackerNews struct {
 
 func NewHackerNews(h chan (models.Headlines), sourceID uint) *HackerNews {
 	s := &HackerNews{
-		DefaultScraper: *internal.NewScraper("Hacker News", "https://news.ycombinator.com/", 10, 15, h),
+		DefaultScraper: *internal.NewScraper(h,
+			"Hacker News",
+			"https://news.ycombinator.com/",
+			10,
+			15,
+			[]int{},
+		),
 	}
 
 	s.ScrapeHeadline("tr[class='athing']", func(e *colly.HTMLElement) {
