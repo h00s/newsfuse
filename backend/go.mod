@@ -10,7 +10,7 @@ require (
 	github.com/go-raptor/connector/postgres v1.0.0
 	github.com/go-raptor/raptor v1.0.0
 	github.com/gocolly/colly/v2 v2.1.0
-	github.com/madebywelch/anthropic-go/v2 v2.2.4
+	github.com/madebywelch/anthropic-go/v3 v3.0.0
 	github.com/redis/go-redis/v9 v9.5.3
 )
 

@@ -1,17 +1,19 @@
 package internal
 
 import (
+	"context"
 	"strings"
 
-	"github.com/madebywelch/anthropic-go/v2/pkg/anthropic"
+	"github.com/madebywelch/anthropic-go/v3/pkg/anthropic"
+	"github.com/madebywelch/anthropic-go/v3/pkg/anthropic/client/native"
 )
 
 type Claude struct {
-	client *anthropic.Client
+	client *native.Client
 }
 
 func NewClaude(apiKey string) (*Claude, error) {
-	if client, err := anthropic.NewClient(apiKey); err == nil {
+	if client, err := native.MakeClient(native.Config{APIKey: apiKey}); err == nil {
 		return &Claude{
 			client: client,
 		}, nil
@@ -21,6 +23,7 @@ func NewClaude(apiKey string) (*Claude, error) {
 }
 
 func (c *Claude) Summarize(story string) (string, error) {
+	ctx := context.Background()
 	replacer := strings.NewReplacer("<p>", "", "</p>", "")
 	story = replacer.Replace(story)
 	if len(story) > 2500 {
@@ -33,7 +36,7 @@ func (c *Claude) Summarize(story string) (string, error) {
 		anthropic.WithMaxTokens[anthropic.MessageRequest](1000),
 	)
 
-	response, err := c.client.Message(request)
+	response, err := c.client.Message(ctx, request)
 	if err != nil {
 		return "", err
 	}
