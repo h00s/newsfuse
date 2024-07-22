@@ -23,8 +23,9 @@
 
 <style>
   .border {
+    margin: 0;
     padding: 0;
-    border: 1px solid #172F47;
+    border: 0;
     border-top: 2px solid #38BDF8;
   }
   
