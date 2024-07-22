@@ -27,7 +27,7 @@
   .border {
     margin: 0;
     padding: 0;
-    border: 1px solid #172F47;
+    border: 0;
   }
   
   hr {
