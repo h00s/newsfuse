@@ -1,6 +1,6 @@
 FROM golang:alpine AS backend
 
-RUN apk add --no-cache build-base sqlite-dev
+RUN apk add --no-cache build-base
 
 WORKDIR /app
 
