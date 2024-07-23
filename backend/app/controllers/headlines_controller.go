@@ -1,9 +1,10 @@
 package controllers
 
 import (
+	"strconv"
 	"time"
 
-	"github.com/go-raptor/raptor"
+	"github.com/go-raptor/raptor/v2"
 	"github.com/h00s/newsfuse/app/services"
 )
 
@@ -13,11 +14,11 @@ type HeadlinesController struct {
 }
 
 func (hc *HeadlinesController) All(c *raptor.Context) error {
-	topicID, err := c.ParamsInt("id")
+	topicID, err := strconv.Atoi(c.Params("id"))
 	if err != nil {
-		return c.SendStatus(400)
+		return c.JSONError(raptor.NewErrorBadRequest("Invalid Topic ID"))
 	}
-	if lastID := c.QueryInt("last_id", 0); lastID != 0 {
+	if lastID, err := strconv.Atoi(c.Query("last_id")); err == nil {
 		return c.JSON(hc.Headlines.AllByLastID(topicID, lastID))
 	}
 	return c.JSON(hc.Headlines.All(topicID))
@@ -32,10 +33,13 @@ func (hc *HeadlinesController) Search(c *raptor.Context) error {
 }
 
 func (hc *HeadlinesController) Count(c *raptor.Context) error {
-	topicID, _ := c.ParamsInt("id")
+	topicID, err := strconv.Atoi(c.Params("id"))
+	if err != nil {
+		return c.JSONError(raptor.NewErrorBadRequest("Invalid Topic ID"))
+	}
 	status := c.Query("status")
-	since := c.QueryInt("since", 0)
-	if status != "" && since != 0 {
+	since, err := strconv.Atoi(c.Query("since"))
+	if err == nil && status != "" && since != 0 {
 		sinceTime := time.Unix(int64(since/1000), 0)
 		return c.JSON(
 			raptor.Map{
@@ -44,5 +48,5 @@ func (hc *HeadlinesController) Count(c *raptor.Context) error {
 		)
 	}
 
-	return c.JSON("", 400)
+	return c.JSONError(raptor.NewErrorBadRequest("Invalid query parameters"))
 }

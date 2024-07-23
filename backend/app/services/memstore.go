@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/go-raptor/raptor"
+	"github.com/go-raptor/raptor/v2"
 	"github.com/redis/go-redis/v9"
 )
 

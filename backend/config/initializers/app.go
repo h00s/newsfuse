@@ -1,7 +1,7 @@
 package initializers
 
 import (
-	"github.com/go-raptor/raptor"
+	"github.com/go-raptor/raptor/v2"
 )
 
 func App(c *raptor.Config) *raptor.AppInitializer {
