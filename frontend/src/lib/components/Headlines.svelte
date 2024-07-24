@@ -16,21 +16,9 @@
   export let lastAccessedAt;
 </script>
 
-<div class="border">
+<div>
   {#each headlines as headline (headline.id)}
     <Headline {headline} source={sources[headline.source_id]} {lastAccessedAt} on:headlineDisplayed={handleHeadlineDisplayed} />
-    <hr>
+    <hr class="border-news-separator">
   {/each}
 </div>
-
-<style>
-  .border {
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
-  
-  hr {
-    border-color: #172F47;
-  }
-</style>

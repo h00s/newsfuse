@@ -13,23 +13,10 @@
   <div class="mt-6 mb-2 text-center text-news-light">
     <p>Pronađeno je <span class="font-bold">{resultsNumber}</span> članaka za <span class="font-bold">"{searchedTerm}"</span></p>
   </div>
-  <div class="border">
+  <div class="border-t-2 border-news-light">
     {#each searchedHeadlines as headline (headline.id)}
       <Headline {headline} source={sources[headline.source_id]} {lastAccessedAt} />
-      <hr>
+      <hr class="border-news-separator">
     {/each}
   </div>
 {/if}
-
-<style>
-  .border {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-top: 2px solid #38BDF8;
-  }
-  
-  hr {
-    border-color: #172F47;
-  }
-</style>
