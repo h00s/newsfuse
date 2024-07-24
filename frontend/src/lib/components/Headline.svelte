@@ -39,7 +39,7 @@
     {#if sourceLogoInView}
       <img src="/img/sources/{source.name}.webp" class="inline-block rounded-lg pr-3" alt="{source.name} logo" width="32" height="32">
     {:else}
-      <div class="inline-block source-logo-placeholder"></div>
+      <div class="inline-block w-8 h-9"></div>
     {/if}
     <div class="flex-1">
       <h3 class="text-gray-900 inline"
@@ -75,10 +75,3 @@
     <Story headlineId={headline.id} />
   {/if}
 </div>
-
-<style>
-  .source-logo-placeholder {
-    width: 32px;
-    height: 36px;
-  }
-</style>
