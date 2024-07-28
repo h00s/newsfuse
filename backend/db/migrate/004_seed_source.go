@@ -16,6 +16,7 @@ func SeedSource(db *raptor.DB) error {
 		models.Source{Name: "N1Info.hr", TopicID: 3, IsScrapable: true},
 		models.Source{Name: "Hacker News", TopicID: 4, IsScrapable: true},
 		models.Source{Name: "Bug", TopicID: 4, IsScrapable: true},
+		models.Source{Name: "Telegram", TopicID: 2, IsScrapable: true},
 	}
-	return db.CreateInBatches(&sources, 9).Error
+	return db.CreateInBatches(&sources, 10).Error
 }

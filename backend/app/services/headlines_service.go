@@ -25,15 +25,16 @@ func NewHeadlinesService() *HeadlinesService {
 
 	hs := &HeadlinesService{
 		Scrapers: map[int]internal.Scraper{
-			1: scrapers.NewKliknihr(headlinesChannel, 1),
-			2: scrapers.NewMojportalhr(headlinesChannel, 2),
-			3: scrapers.NewRadioDaruvar(headlinesChannel, 3),
-			4: scrapers.NewIndexhrCroatia(headlinesChannel, 4),
-			5: scrapers.NewN1InfoCroatia(headlinesChannel, 5),
-			6: scrapers.NewIndexhrWorld(headlinesChannel, 6),
-			7: scrapers.NewN1InfoWorld(headlinesChannel, 7),
-			8: scrapers.NewHackerNews(headlinesChannel, 8),
-			9: scrapers.NewBughr(headlinesChannel, 9),
+			1:  scrapers.NewKliknihr(headlinesChannel, 1),
+			2:  scrapers.NewMojportalhr(headlinesChannel, 2),
+			3:  scrapers.NewRadioDaruvar(headlinesChannel, 3),
+			4:  scrapers.NewIndexhrCroatia(headlinesChannel, 4),
+			5:  scrapers.NewN1InfoCroatia(headlinesChannel, 5),
+			6:  scrapers.NewIndexhrWorld(headlinesChannel, 6),
+			7:  scrapers.NewN1InfoWorld(headlinesChannel, 7),
+			8:  scrapers.NewHackerNews(headlinesChannel, 8),
+			9:  scrapers.NewBughr(headlinesChannel, 9),
+			10: scrapers.NewTelegram(headlinesChannel, 10),
 		},
 		HeadlinesChannel: headlinesChannel,
 	}
