@@ -1,12 +1,10 @@
 module github.com/h00s/newsfuse
 
-go 1.22
-
-toolchain go1.22.5
+go 1.23
 
 require (
 	github.com/go-raptor/connector/postgres v1.0.1
-	github.com/go-raptor/raptor/v2 v2.0.0-alpha.7
+	github.com/go-raptor/raptor/v2 v2.0.0-alpha.8
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.1.0
 	github.com/redis/go-redis/v9 v9.6.1
@@ -51,11 +49,11 @@ require (
 	github.com/valyala/fasthttp v1.55.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
-	golang.org/x/crypto v0.25.0 // indirect
-	golang.org/x/net v0.27.0 // indirect
-	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.22.0 // indirect
-	golang.org/x/text v0.16.0 // indirect
+	golang.org/x/crypto v0.26.0 // indirect
+	golang.org/x/net v0.28.0 // indirect
+	golang.org/x/sync v0.8.0 // indirect
+	golang.org/x/sys v0.24.0 // indirect
+	golang.org/x/text v0.17.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
