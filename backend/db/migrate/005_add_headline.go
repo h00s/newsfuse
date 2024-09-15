@@ -1,10 +1,18 @@
 package migrate
 
 import (
-	"github.com/go-raptor/raptor/v2"
+	"context"
+
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 )
 
 func AddHeadline(db *raptor.DB) error {
-	return db.Migrator().CreateTable(&models.Headline{})
+	_, err := db.NewCreateTable().
+		Model((*models.Headline)(nil)).
+		ForeignKey(`("source_id") REFERENCES "sources" ("id") ON DELETE CASCADE`).
+		Exec(context.Background())
+	return err
+
+	// _, err := db.NewCreateIndex().
 }

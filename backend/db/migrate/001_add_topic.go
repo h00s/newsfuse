@@ -1,10 +1,15 @@
 package migrate
 
 import (
-	"github.com/go-raptor/raptor/v2"
+	"context"
+
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 )
 
 func AddTopic(db *raptor.DB) error {
-	return db.Migrator().CreateTable(&models.Topic{})
+	_, err := db.NewCreateTable().
+		Model((*models.Topic)(nil)).
+		Exec(context.Background())
+	return err
 }

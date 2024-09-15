@@ -3,7 +3,7 @@ package controllers
 import (
 	"strconv"
 
-	"github.com/go-raptor/raptor/v2"
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/services"
 )
 
@@ -13,7 +13,7 @@ type StoriesController struct {
 }
 
 func (sc *StoriesController) Get(c *raptor.Context) error {
-	headlineID, err := strconv.Atoi(c.Params("id"))
+	headlineID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid Headline ID"))
 	}
@@ -28,7 +28,7 @@ func (sc *StoriesController) Get(c *raptor.Context) error {
 
 func (sc *StoriesController) Summarize(c *raptor.Context) error {
 	//storyID, err := c.ParamsInt("id")
-	storyID, err := strconv.Atoi(c.Params("id"))
+	storyID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid Story ID"))
 	}

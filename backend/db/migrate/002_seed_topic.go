@@ -1,7 +1,9 @@
 package migrate
 
 import (
-	"github.com/go-raptor/raptor/v2"
+	"context"
+
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 )
 
@@ -12,5 +14,11 @@ func SeedTopic(db *raptor.DB) error {
 		models.Topic{Name: "Svijet"},
 		models.Topic{Name: "Tech"},
 	}
-	return db.CreateInBatches(&topics, 4).Error
+
+	_, err := db.
+		NewInsert().
+		Model(&topics).
+		Exec(context.Background())
+
+	return err
 }

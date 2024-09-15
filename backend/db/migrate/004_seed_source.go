@@ -1,7 +1,9 @@
 package migrate
 
 import (
-	"github.com/go-raptor/raptor/v2"
+	"context"
+
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 )
 
@@ -18,5 +20,11 @@ func SeedSource(db *raptor.DB) error {
 		models.Source{Name: "Bug", TopicID: 4, IsScrapable: true},
 		models.Source{Name: "Telegram", TopicID: 2, IsScrapable: true},
 	}
-	return db.CreateInBatches(&sources, 10).Error
+
+	_, err := db.
+		NewInsert().
+		Model(&sources).
+		Exec(context.Background())
+
+	return err
 }

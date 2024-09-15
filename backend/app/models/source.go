@@ -1,11 +1,11 @@
 package models
 
 type Source struct {
-	ID          uint       `gorm:"primaryKey" json:"id"`
-	Name        string     `json:"name"`
-	IsScrapable bool       `json:"is_scrapable"`
-	TopicID     uint       `gorm:"not null" json:"topic_id"`
-	Headlines   []Headline `gorm:"constraint:OnDelete:CASCADE;" json:"-"`
+	ID          int64       `json:"id" bun:",pk,autoincrement"`
+	Name        string      `json:"name"`
+	IsScrapable bool        `json:"is_scrapable"`
+	TopicID     int64       `json:"topic_id" bun:",notnull"`
+	Headlines   []*Headline `json:"-" bun:"rel:has-many,join:id=source_id"`
 }
 
 type Sources []Source

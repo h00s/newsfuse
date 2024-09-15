@@ -3,10 +3,11 @@ package models
 import "time"
 
 type Story struct {
-	ID         uint      `gorm:"primaryKey" json:"id"`
-	HeadlineID uint      `gorm:"unique;not null" json:"headline_id"`
-	Summary    string    `gorm:"type:text" json:"summary"`
-	Content    string    `gorm:"type:text" json:"content"`
-	CreatedAt  time.Time `json:"-"`
-	UpdatedAt  time.Time `json:"-"`
+	ID         uint      `json:"id" bun:",pk,autoincrement"`
+	HeadlineID uint      `json:"headline_id" bun:",unique,notnull"`
+	Headline   *Headline `json:"-" bun:"rel:belongs-to,join:headline_id=id"` // cascade
+	Summary    string    `json:"summary" bun:",type:text"`
+	Content    string    `json:"content" bun:",type:text"`
+	CreatedAt  time.Time `json:"-" bun:",nullzero,notnull,default:current_timestamp"`
+	UpdatedAt  time.Time `json:"-" bun:",nullzero,notnull,default:current_timestamp"`
 }

@@ -1,6 +1,6 @@
 package config
 
-import "github.com/go-raptor/raptor/v2"
+import "github.com/go-raptor/raptor/v3"
 
 func Routes() raptor.Routes {
 	return raptor.CollectRoutes(
@@ -24,6 +24,5 @@ func Routes() raptor.Routes {
 				raptor.Route("GET", "/:id/summarize", "StoriesController", "Summarize"),
 			),
 		),
-		raptor.Route("GET", "*", "SPAController", "Index"),
 	)
 }

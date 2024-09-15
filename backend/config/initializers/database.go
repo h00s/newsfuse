@@ -1,8 +1,8 @@
 package initializers
 
 import (
-	"github.com/go-raptor/connector/postgres"
-	"github.com/go-raptor/raptor/v2"
+	"github.com/go-raptor/connector/bun/postgres"
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/db"
 )
 

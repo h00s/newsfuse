@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-raptor/raptor/v2"
+	"github.com/go-raptor/raptor/v3"
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 )

@@ -5,15 +5,15 @@ import (
 )
 
 type Headline struct {
-	ID          uint      `gorm:"primaryKey" json:"id"`
+	ID          int64     `json:"id" bun:"id,pk,autoincrement"`
 	Title       string    `json:"title"`
-	URL         string    `gorm:"unique" json:"url"`
+	URL         string    `json:"url" bun:",unique"`
 	SourceID    uint      `json:"source_id"`
-	Source      Source    `json:"-"`
-	Story       Story     `gorm:"constraint:OnDelete:CASCADE;" json:"-"`
-	PublishedAt time.Time `gorm:"index" json:"published_at"`
-	CreatedAt   time.Time `json:"-"`
-	UpdatedAt   time.Time `json:"-"`
+	Source      *Source   `json:"-" bun:"rel:belongs-to,join:source_id=id"` // cascade
+	Story       Story     `json:"-"`
+	PublishedAt time.Time `json:"published_at" bun:",index"`
+	CreatedAt   time.Time `json:"-" bun:",nullzero,notnull,default:current_timestamp"`
+	UpdatedAt   time.Time `json:"-" bun:",nullzero,notnull,default:current_timestamp"`
 }
 
 type Headlines []Headline
