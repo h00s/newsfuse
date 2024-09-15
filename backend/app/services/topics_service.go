@@ -1,6 +1,8 @@
 package services
 
 import (
+	"context"
+
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 )
@@ -16,8 +18,16 @@ func (ts *TopicsService) All() models.Topics {
 	if err == nil && data != "" {
 		json.Unmarshal([]byte(data), &topics)
 		return topics
+	}*/
+	err := ts.DB.
+		NewSelect().
+		Model(&topics).
+		Order("id").
+		Scan(context.Background())
+
+	if err != nil {
+		ts.Log.Error(err.Error())
 	}
-	ts.DB.Order("id").Find(&topics)
-	ts.Memstore.Set("topics", topics)*/
+	//ts.Memstore.Set("topics", topics)
 	return topics
 }

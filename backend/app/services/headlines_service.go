@@ -1,7 +1,7 @@
 package services
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
 	"slices"
 	"time"
@@ -54,16 +54,31 @@ func (hs *HeadlinesService) Receive() {
 	for {
 		headlines := <-hs.HeadlinesChannel
 		slices.Reverse(headlines)
-		// newHeadlines := false
-		/*for _, headline := range headlines {
-			if hs.DB.Where("url = ?", headline.URL).First(&models.Headline{}).Error == nil {
+		newHeadlines := false
+		for _, headline := range headlines {
+			exists, err := hs.DB.
+				NewSelect().
+				Model(&headline).
+				Where("url = ?", headline.URL).
+				Exists(context.Background())
+			if err != nil {
+				hs.Log.Error("Error checking headline existence", "Error", err.Error())
 				continue
 			}
-			result := hs.DB.Create(&headline)
-			if result.Error != nil {
-				hs.Log.Error("Error creating headline", "DB", result.Error.Error())
+			if exists {
+				continue
+			}
+			result, err := hs.
+				DB.NewInsert().
+				Model(&headline).
+				Exec(context.Background())
+			if err != nil {
+				hs.Log.Error("Error creating headline", "DB", err.Error())
 			} else {
-				newHeadlines = true
+				rowsAffected, _ := result.RowsAffected()
+				if rowsAffected > 0 {
+					newHeadlines = true
+				}
 			}
 		}
 		if newHeadlines {
@@ -71,74 +86,83 @@ func (hs *HeadlinesService) Receive() {
 			if err := hs.allFromDB(int(source.TopicID), &headlines); err == nil {
 				hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
 			}
-		}*/
+		}
 	}
 }
 
 func (hs *HeadlinesService) All(topicID int) models.Headlines {
 	var headlines models.Headlines
-	data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
+	/*data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
 	if err == nil && data != "" {
 		json.Unmarshal([]byte(data), &headlines)
 		return headlines
-	}
+	}*/
 
 	if err := hs.allFromDB(topicID, &headlines); err != nil {
 		hs.Log.Error("Error getting headlines", "Error", err.Error())
 		return headlines
 	}
-	go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
+	//go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
 
 	return headlines
 }
 
 func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) error {
-	/*return hs.DB.
-	Limit(30).
-	Order("id desc").
-	Joins("JOIN sources ON headlines.source_id = sources.id").
-	Where("sources.topic_id = ?", topicID).
-	Find(&headlines).Error
-	*/
-	return nil
+	return hs.DB.
+		NewSelect().
+		Model(headlines).
+		Table("headlines").
+		Join("JOIN sources AS sources ON headlines.source_id = sources.id").
+		Where("sources.topic_id = ?", topicID).
+		Order("headlines.id desc").
+		Limit(30).
+		Scan(context.Background())
 }
 
 func (hs *HeadlinesService) AllByLastID(topicID, lastID int) models.Headlines {
 	var headlines models.Headlines
-	/*if err := hs.DB.
-		Limit(30).
-		Order("id desc").
-		Joins("JOIN sources ON headlines.source_id = sources.id").
+	if err := hs.DB.
+		NewSelect().
+		Model(&headlines).
+		Table("headlines").
+		Join("sources").JoinOn("headlines.source_id = sources.id").
 		Where("sources.topic_id = ? AND headlines.id < ?", topicID, lastID).
-		Find(&headlines).Error; err != nil {
+		Order("headlines.id desc").
+		Limit(30).
+		Scan(context.Background()); err != nil {
 		hs.Log.Error("Error getting headlines", "Error", err.Error())
-	}*/
+	}
 
 	return headlines
 }
 
 func (hs *HeadlinesService) Search(query string) models.Headlines {
 	var headlines models.Headlines
-	/*if err := hs.DB.
-		Limit(100).
-		Order("id desc").
+	if err := hs.DB.
+		NewSelect().
+		Model(&headlines).
 		Where("title ILIKE ?", "%"+query+"%").
-		Find(&headlines).Error; err != nil {
+		Order("id DESC").
+		Limit(100).
+		Scan(context.Background()); err != nil {
 		hs.Log.Error("Error searching headlines", "Error", err.Error())
-	}*/
+	}
 
 	return headlines
 }
 
 func (hs *HeadlinesService) Count(topicID int, since time.Time) int {
-	var count int64
-	/*if err := hs.DB.
-		Model(&models.Headline{}).
-		Joins("JOIN sources ON headlines.source_id = sources.id").
+	count, err := hs.DB.
+		NewSelect().
+		Model((*models.Headline)(nil)).
+		Join("sources").JoinOn("headlines.source_id = sources.id").
 		Where("sources.topic_id = ? AND published_at > ?", topicID, since).
-		Count(&count).Error; err != nil {
-		hs.Log.Error("Error counting headlines", "Error", err.Error())
-	}*/
+		Count(context.Background())
 
-	return int(count)
+	if err != nil {
+		hs.Log.Error("Error counting headlines", "Error", err.Error())
+		return 0
+	}
+
+	return count
 }
