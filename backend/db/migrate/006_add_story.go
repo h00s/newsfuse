@@ -8,7 +8,8 @@ import (
 )
 
 func AddStory(db *raptor.DB) error {
-	_, err := db.NewCreateTable().
+	_, err := db.
+		NewCreateTable().
 		Model((*models.Story)(nil)).
 		Exec(context.Background())
 	return err

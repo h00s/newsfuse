@@ -8,7 +8,8 @@ import (
 )
 
 func AddTopic(db *raptor.DB) error {
-	_, err := db.NewCreateTable().
+	_, err := db.
+		NewCreateTable().
 		Model((*models.Topic)(nil)).
 		Exec(context.Background())
 	return err

@@ -8,7 +8,8 @@ import (
 )
 
 func AddSource(db *raptor.DB) error {
-	_, err := db.NewCreateTable().
+	_, err := db.
+		NewCreateTable().
 		Model((*models.Source)(nil)).
 		Exec(context.Background())
 	return err
