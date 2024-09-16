@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
@@ -15,16 +14,16 @@ type SourcesService struct {
 
 func (ss *SourcesService) All() models.Sources {
 	var sources models.Sources
-	data, err := ss.Memstore.Get("sources")
+	/*data, err := ss.Memstore.Get("sources")
 	if err == nil && data != "" {
 		json.Unmarshal([]byte(data), &sources)
 		return sources
-	}
+	}*/
 	ss.DB.
 		NewSelect().
 		Model(&sources).
-		Exec(context.Background())
-	ss.Memstore.Set("sources", sources)
+		Scan(context.Background())
+	// ss.Memstore.Set("sources", sources)
 	return sources
 }
 

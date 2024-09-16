@@ -111,10 +111,9 @@ func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) 
 	return hs.DB.
 		NewSelect().
 		Model(headlines).
-		Table("headlines").
-		Join("JOIN sources AS sources ON headlines.source_id = sources.id").
-		Where("sources.topic_id = ?", topicID).
-		Order("headlines.id desc").
+		Join("JOIN sources s ON headline.source_id = s.id").
+		Where("s.topic_id = ?", topicID).
+		Order("headline.id desc").
 		Limit(30).
 		Scan(context.Background())
 }
@@ -124,13 +123,13 @@ func (hs *HeadlinesService) AllByLastID(topicID, lastID int) models.Headlines {
 	if err := hs.DB.
 		NewSelect().
 		Model(&headlines).
-		Table("headlines").
-		Join("sources").JoinOn("headlines.source_id = sources.id").
-		Where("sources.topic_id = ? AND headlines.id < ?", topicID, lastID).
-		Order("headlines.id desc").
+		Join("JOIN sources s ON headline.source_id = s.id").
+		Where("s.topic_id = ?", topicID).
+		Where("headline.id < ?", lastID).
+		Order("headline.id DESC").
 		Limit(30).
 		Scan(context.Background()); err != nil {
-		hs.Log.Error("Error getting headlines", "Error", err.Error())
+		hs.Log.Error("Error getting headlines", "Error", err)
 	}
 
 	return headlines
@@ -155,8 +154,8 @@ func (hs *HeadlinesService) Count(topicID int, since time.Time) int {
 	count, err := hs.DB.
 		NewSelect().
 		Model((*models.Headline)(nil)).
-		Join("sources").JoinOn("headlines.source_id = sources.id").
-		Where("sources.topic_id = ? AND published_at > ?", topicID, since).
+		Join("JOIN sources s ON headline.source_id = s.id").
+		Where("s.topic_id = ? AND headline.published_at > ?", topicID, since).
 		Count(context.Background())
 
 	if err != nil {
