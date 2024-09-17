@@ -28,7 +28,7 @@ func (ss *SourcesService) All() models.Sources {
 	return sources
 }
 
-func (ss *SourcesService) Get(id uint) models.Source {
+func (ss *SourcesService) Get(id int64) models.Source {
 	var source models.Source
 
 	ss.DB.

@@ -13,7 +13,7 @@ type RadioDaruvar struct {
 	internal.DefaultScraper
 }
 
-func NewRadioDaruvar(h chan (models.Headlines), sourceID uint) *RadioDaruvar {
+func NewRadioDaruvar(h chan (models.Headlines), sourceID int64) *RadioDaruvar {
 	s := &RadioDaruvar{
 		DefaultScraper: *internal.NewScraper(h,
 			"Radio Daruvar",

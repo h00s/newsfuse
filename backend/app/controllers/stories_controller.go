@@ -13,7 +13,7 @@ type StoriesController struct {
 }
 
 func (sc *StoriesController) Get(c *raptor.Context) error {
-	headlineID, err := strconv.Atoi(c.Param("id"))
+	headlineID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid Headline ID"))
 	}
@@ -27,8 +27,7 @@ func (sc *StoriesController) Get(c *raptor.Context) error {
 }
 
 func (sc *StoriesController) Summarize(c *raptor.Context) error {
-	//storyID, err := c.ParamsInt("id")
-	storyID, err := strconv.Atoi(c.Param("id"))
+	storyID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid Story ID"))
 	}

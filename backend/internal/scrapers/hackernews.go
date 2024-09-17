@@ -12,7 +12,7 @@ type HackerNews struct {
 	internal.DefaultScraper
 }
 
-func NewHackerNews(h chan (models.Headlines), sourceID uint) *HackerNews {
+func NewHackerNews(h chan (models.Headlines), sourceID int64) *HackerNews {
 	s := &HackerNews{
 		DefaultScraper: *internal.NewScraper(h,
 			"Hacker News",

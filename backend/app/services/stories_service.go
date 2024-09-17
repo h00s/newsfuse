@@ -1,6 +1,9 @@
 package services
 
 import (
+	"context"
+	"database/sql"
+
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
@@ -26,61 +29,103 @@ func NewStoriesService() *StoriesService {
 	return ss
 }
 
-func (ss *StoriesService) Get(headlineID int) (*models.Story, error) {
+func (ss *StoriesService) Get(headlineID int64) (*models.Story, error) {
 	var story models.Story
-	/*result := ss.DB.Where("headline_id = ?", headlineID).First(&story)
-	if result.RowsAffected == 0 {
-		story, err := ss.Scrape(headlineID)
-		if err != nil {
-			return nil, err
+	err := ss.DB.
+		NewSelect().
+		Model(&story).
+		Where("headline_id = ?", headlineID).
+		Scan(context.Background())
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			story, err = ss.Scrape(headlineID)
+			if err != nil {
+				ss.Log.Error("Error scraping story", "error", err.Error())
+				return nil, err
+			}
+			ss.Save(&story)
+			return &story, nil
 		}
-		ss.Save(&story)
-		return &story, nil
-	}*/
+		ss.Log.Error("Error getting story", "error", err.Error())
+		return nil, err
+	}
 
 	return &story, nil
 }
 
-func (ss *StoriesService) Scrape(headlineID int) (models.Story, error) {
-	/*var headline models.Headline
-	ss.DB.First(&headline, headlineID)
+func (ss *StoriesService) Scrape(headlineID int64) (models.Story, error) {
+	var headline models.Headline
+	err := ss.DB.
+		NewSelect().
+		Model(&headline).
+		Where("id = ?", headlineID).
+		Scan(context.Background())
+
+	if err != nil {
+		return models.Story{}, err
+	}
+
 	content, err := ss.Headlines.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
 	if err != nil {
 		return models.Story{}, err
 	}
 
 	return models.Story{
-		HeadlineID: uint(headlineID),
+		HeadlineID: headlineID,
 		Content:    content,
 	}, nil
-	*/
-	return models.Story{}, nil
 }
 
 func (ss *StoriesService) Save(story *models.Story) error {
-	/*result := ss.DB.Create(story)
-	if result.Error != nil {
-		ss.Log.Error("Error creating story", "DB", result.Error.Error())
-		return result.Error
-	}*/
+	_, err := ss.DB.
+		NewInsert().
+		Model(story).
+		Returning("id").
+		Exec(context.Background())
+
+	if err != nil {
+		ss.Log.Error("Error creating story", "error", err.Error())
+		return err
+	}
+
 	return nil
 }
 
-func (ss *StoriesService) Summarize(storyID int) (models.Story, error) {
+func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
 	var story models.Story
-	/*result := ss.DB.First(&story, storyID)
-	if result.RowsAffected == 0 {
-		return story, result.Error
+	err := ss.DB.
+		NewSelect().
+		Model(&story).
+		Where("id = ?", storyID).
+		Scan(context.Background())
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			ss.Log.Error("Story not found", "storyID", storyID)
+		} else {
+			ss.Log.Error("Error getting story", "error", err.Error())
+		}
+		return story, err
 	}
+
 	if story.Summary != "" {
 		return story, nil
 	}
+
 	summary, err := ss.claude.Summarize(story.Content)
 	if err != nil {
-		fmt.Println(err)
+		ss.Log.Error("Error summarizing story", "error", err.Error())
 		return story, err
 	}
+
 	story.Summary = summary
-	go ss.DB.Save(&story)*/
+	go ss.DB.
+		NewUpdate().
+		Model(&story).
+		Column("summary").
+		Where("id = ?", storyID).
+		Exec(context.Background())
+
 	return story, nil
 }

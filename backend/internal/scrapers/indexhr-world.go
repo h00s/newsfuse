@@ -13,7 +13,7 @@ type IndexhrWorld struct {
 	internal.DefaultScraper
 }
 
-func NewIndexhrWorld(h chan (models.Headlines), sourceID uint) *IndexhrWorld {
+func NewIndexhrWorld(h chan (models.Headlines), sourceID int64) *IndexhrWorld {
 	s := &IndexhrWorld{
 		DefaultScraper: *internal.NewScraper(h,
 			"Index.hr",

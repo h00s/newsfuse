@@ -12,7 +12,7 @@ type N1InfoCroatia struct {
 	internal.DefaultScraper
 }
 
-func NewN1InfoCroatia(h chan (models.Headlines), sourceID uint) *N1InfoCroatia {
+func NewN1InfoCroatia(h chan (models.Headlines), sourceID int64) *N1InfoCroatia {
 	s := &N1InfoCroatia{
 		DefaultScraper: *internal.NewScraper(h,
 			"N1",

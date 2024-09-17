@@ -13,7 +13,7 @@ type Bughr struct {
 	internal.DefaultScraper
 }
 
-func NewBughr(h chan (models.Headlines), sourceID uint) *Bughr {
+func NewBughr(h chan (models.Headlines), sourceID int64) *Bughr {
 	s := &Bughr{
 		DefaultScraper: *internal.NewScraper(h,
 			"Bug",

@@ -12,7 +12,7 @@ type Telegram struct {
 	internal.DefaultScraper
 }
 
-func NewTelegram(h chan (models.Headlines), sourceID uint) *Telegram {
+func NewTelegram(h chan (models.Headlines), sourceID int64) *Telegram {
 	s := &Telegram{
 		DefaultScraper: *internal.NewScraper(h,
 			"Telegram",
