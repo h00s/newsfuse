@@ -66,32 +66,31 @@ func (hs *HeadlinesService) Receive() {
 				hs.Log.Error("Error checking headline existence", "Error", err.Error())
 				continue
 			}
-			if exists {
-				continue
-			}
-			result, err := hs.
-				DB.NewInsert().
-				Model(&headline).
-				Exec(context.Background())
-			if err != nil {
-				hs.Log.Error("Error creating headline", "DB", err.Error())
-			} else {
-				rowsAffected, _ := result.RowsAffected()
-				if rowsAffected > 0 {
-					newHeadlines = true
+
+			if !exists {
+				_, err = hs.DB.
+					NewInsert().
+					Model(&headline).
+					Exec(context.Background())
+				if err != nil {
+					hs.Log.Error("Error creating headline", "DB", err.Error())
+					continue
 				}
+				newHeadlines = true
 			}
 		}
 		if newHeadlines {
 			source := hs.Sources.Get(headlines[0].SourceID)
-			if err := hs.allFromDB(int(source.TopicID), &headlines); err == nil {
+			if err := hs.allFromDB(source.TopicID, &headlines); err == nil {
 				hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
+			} else {
+				hs.Log.Error("Error getting headlines", "Error", err.Error())
 			}
 		}
 	}
 }
 
-func (hs *HeadlinesService) All(topicID int) models.Headlines {
+func (hs *HeadlinesService) All(topicID int64) models.Headlines {
 	var headlines models.Headlines
 	data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
 	if err == nil && data != "" {
@@ -108,7 +107,7 @@ func (hs *HeadlinesService) All(topicID int) models.Headlines {
 	return headlines
 }
 
-func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) error {
+func (hs *HeadlinesService) allFromDB(topicID int64, headlines *models.Headlines) error {
 	return hs.DB.
 		NewSelect().
 		Model(headlines).
@@ -119,7 +118,7 @@ func (hs *HeadlinesService) allFromDB(topicID int, headlines *models.Headlines) 
 		Scan(context.Background())
 }
 
-func (hs *HeadlinesService) AllByLastID(topicID, lastID int) models.Headlines {
+func (hs *HeadlinesService) AllByLastID(topicID, lastID int64) models.Headlines {
 	var headlines models.Headlines
 	if err := hs.DB.
 		NewSelect().
@@ -151,7 +150,7 @@ func (hs *HeadlinesService) Search(query string) models.Headlines {
 	return headlines
 }
 
-func (hs *HeadlinesService) Count(topicID int, since time.Time) int {
+func (hs *HeadlinesService) Count(topicID int64, since time.Time) int {
 	count, err := hs.DB.
 		NewSelect().
 		Model((*models.Headline)(nil)).

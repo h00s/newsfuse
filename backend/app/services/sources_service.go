@@ -40,7 +40,7 @@ func (ss *SourcesService) Get(id int64) models.Source {
 		NewSelect().
 		Model(&source).
 		Where("id = ?", id).
-		Exec(context.Background())
+		Scan(context.Background())
 
 	return source
 }

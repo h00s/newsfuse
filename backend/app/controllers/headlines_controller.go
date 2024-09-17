@@ -14,11 +14,11 @@ type HeadlinesController struct {
 }
 
 func (hc *HeadlinesController) All(c *raptor.Context) error {
-	topicID, err := strconv.Atoi(c.Param("id"))
+	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid Topic ID"))
 	}
-	if lastID, err := strconv.Atoi(c.QueryParam("last_id")); err == nil {
+	if lastID, err := strconv.ParseInt(c.QueryParam("last_id"), 10, 64); err == nil {
 		return c.JSON(hc.Headlines.AllByLastID(topicID, lastID))
 	}
 	return c.JSON(hc.Headlines.All(topicID))
@@ -33,7 +33,7 @@ func (hc *HeadlinesController) Search(c *raptor.Context) error {
 }
 
 func (hc *HeadlinesController) Count(c *raptor.Context) error {
-	topicID, err := strconv.Atoi(c.Param("id"))
+	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid Topic ID"))
 	}
