@@ -11,5 +11,9 @@ type TopicsController struct {
 }
 
 func (sc *TopicsController) All(c *raptor.Context) error {
-	return c.JSON(sc.Topics.All())
+	topics, err := sc.Topics.All()
+	if err != nil {
+		return c.JSONError(err)
+	}
+	return c.JSON(topics)
 }

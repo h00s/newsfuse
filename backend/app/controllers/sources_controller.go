@@ -11,5 +11,9 @@ type SourcesController struct {
 }
 
 func (sc *SourcesController) All(c *raptor.Context) error {
-	return c.JSON(sc.Sources.All())
+	sources, err := sc.Sources.All()
+	if err != nil {
+		return c.JSONError(err)
+	}
+	return c.JSON(sources)
 }

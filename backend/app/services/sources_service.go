@@ -13,19 +13,24 @@ type SourcesService struct {
 	Memstore *Memstore
 }
 
-func (ss *SourcesService) All() models.Sources {
+func (ss *SourcesService) All() (models.Sources, error) {
 	var sources models.Sources
 	data, err := ss.Memstore.Get("sources")
 	if err == nil && data != "" {
 		json.Unmarshal([]byte(data), &sources)
-		return sources
+		return sources, nil
 	}
-	ss.DB.
+
+	err = ss.DB.
 		NewSelect().
 		Model(&sources).
 		Scan(context.Background())
+	if err != nil {
+		ss.Log.Error(err.Error())
+		return sources, raptor.NewErrorInternal(err.Error())
+	}
 	go ss.Memstore.Set("sources", sources)
-	return sources
+	return sources, nil
 }
 
 func (ss *SourcesService) Get(id int64) models.Source {
