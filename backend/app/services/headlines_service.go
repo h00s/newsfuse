@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"slices"
 	"time"
@@ -92,17 +93,17 @@ func (hs *HeadlinesService) Receive() {
 
 func (hs *HeadlinesService) All(topicID int) models.Headlines {
 	var headlines models.Headlines
-	/*data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
+	data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
 	if err == nil && data != "" {
 		json.Unmarshal([]byte(data), &headlines)
 		return headlines
-	}*/
+	}
 
 	if err := hs.allFromDB(topicID, &headlines); err != nil {
 		hs.Log.Error("Error getting headlines", "Error", err.Error())
 		return headlines
 	}
-	//go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
+	go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
 
 	return headlines
 }
