@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"encoding/json"
+	"errors"
 
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
@@ -41,13 +42,13 @@ func (ts *TopicsService) memstoreGetTopics(topics *models.Topics) error {
 		return nil
 	}
 
-	ts.Log.Warn("Error getting topics from memstore")
-	return raptor.NewErrorInternal("Error getting topics from memstore")
+	ts.Log.Warn("Topics not found in memstore")
+	return errors.New("topics not found in memstore")
 }
 
 func (ts *TopicsService) memstoreSetTopics(topics *models.Topics) {
 	err := ts.Memstore.Set("topics", *topics)
 	if err != nil {
-		ts.Log.Warn("Error setting topics in memstore", "Error", err.Error())
+		ts.Log.Warn("Error setting topics in memstore", "error", err.Error())
 	}
 }

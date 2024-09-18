@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/go-raptor/raptor/v3"
@@ -57,14 +58,14 @@ func (ss *SourcesService) memstoreGetSources(sources *models.Sources) error {
 		return nil
 	}
 
-	ss.Log.Warn("Error getting sources from memstore")
-	return raptor.NewErrorInternal("Error getting sources from memstore")
+	ss.Log.Warn("Sources not found in memstore", "error", err.Error())
+	return errors.New("sources not found in memstore")
 }
 
 func (ss *SourcesService) memstoreSetSources(sources *models.Sources) {
 	err := ss.Memstore.Set("sources", *sources)
 	if err != nil {
-		ss.Log.Warn("Error setting sources in memstore", "Error", err.Error())
+		ss.Log.Warn("Error setting sources in memstore", "error", err.Error())
 	}
 }
 
@@ -75,13 +76,13 @@ func (ss *SourcesService) memstoreGetSource(id int64, source *models.Source) err
 		return nil
 	}
 
-	ss.Log.Warn("Error getting source from memstore", "source", id)
-	return raptor.NewErrorInternal("Error getting source from memstore")
+	ss.Log.Warn("Source not found in memstore", "source", id, "error", err.Error())
+	return errors.New("source not found in memstore")
 }
 
 func (ss *SourcesService) memstoreSetSource(source *models.Source) {
 	err := ss.Memstore.Set(fmt.Sprintf("sources:%d", source.ID), *source)
 	if err != nil {
-		ss.Log.Warn("Error setting source in memstore", "Error", err.Error())
+		ss.Log.Warn("Error setting source in memstore", "error", err.Error())
 	}
 }
