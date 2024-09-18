@@ -16,13 +16,11 @@ type TopicsService struct {
 func (ts *TopicsService) All() (models.Topics, error) {
 	var topics models.Topics
 
-	data, err := ts.Memstore.Get("topics")
-	if err == nil && data != "" {
-		json.Unmarshal([]byte(data), &topics)
+	if err := ts.memstoreGetTopics(&topics); err == nil {
 		return topics, nil
 	}
 
-	err = ts.DB.
+	err := ts.DB.
 		NewSelect().
 		Model(&topics).
 		Order("id").
@@ -32,6 +30,24 @@ func (ts *TopicsService) All() (models.Topics, error) {
 		return topics, raptor.NewErrorInternal(err.Error())
 	}
 
-	go ts.Memstore.Set("topics", topics)
+	go ts.memstoreSetTopics(&topics)
 	return topics, nil
+}
+
+func (ts *TopicsService) memstoreGetTopics(topics *models.Topics) error {
+	data, err := ts.Memstore.Get("topics")
+	if err == nil && data != "" {
+		json.Unmarshal([]byte(data), topics)
+		return nil
+	}
+
+	ts.Log.Warn("Error getting topics from memstore")
+	return raptor.NewErrorInternal("Error getting topics from memstore")
+}
+
+func (ts *TopicsService) memstoreSetTopics(topics *models.Topics) {
+	err := ts.Memstore.Set("topics", *topics)
+	if err != nil {
+		ts.Log.Warn("Error setting topics in memstore", "Error", err.Error())
+	}
 }
