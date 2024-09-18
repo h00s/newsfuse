@@ -58,7 +58,7 @@ func (ss *SourcesService) memstoreGetSources(sources *models.Sources) error {
 		return nil
 	}
 
-	ss.Log.Warn("Sources not found in memstore", "error", err.Error())
+	ss.Log.Warn("Sources not found in memstore")
 	return errors.New("sources not found in memstore")
 }
 
@@ -76,7 +76,7 @@ func (ss *SourcesService) memstoreGetSource(id int64, source *models.Source) err
 		return nil
 	}
 
-	ss.Log.Warn("Source not found in memstore", "source", id, "error", err.Error())
+	ss.Log.Warn("Source not found in memstore", "source", id)
 	return errors.New("source not found in memstore")
 }
 

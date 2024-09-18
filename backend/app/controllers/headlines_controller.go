@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/go-raptor/raptor/v3"
+	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/services"
 )
 
@@ -18,10 +19,21 @@ func (hc *HeadlinesController) All(c *raptor.Context) error {
 	if err != nil {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid Topic ID"))
 	}
+
+	var headlines models.Headlines
 	if lastID, err := strconv.ParseInt(c.QueryParam("last_id"), 10, 64); err == nil {
-		return c.JSON(hc.Headlines.AllByLastID(topicID, lastID))
+		headlines, err = hc.Headlines.AllByLastID(topicID, lastID)
+		if err == nil {
+			return c.JSON(headlines)
+		}
+		return c.JSONError(err)
 	}
-	return c.JSON(hc.Headlines.All(topicID))
+
+	headlines, err = hc.Headlines.All(topicID)
+	if err == nil {
+		return c.JSON(headlines)
+	}
+	return c.JSONError(err)
 }
 
 func (hc *HeadlinesController) Search(c *raptor.Context) error {
@@ -29,7 +41,13 @@ func (hc *HeadlinesController) Search(c *raptor.Context) error {
 	if query == "" || len(query) < 3 {
 		return c.JSONError(raptor.NewErrorBadRequest("Invalid query"))
 	}
-	return c.JSON(hc.Headlines.Search(query))
+
+	var headlines models.Headlines
+	headlines, err := hc.Headlines.Search(query)
+	if err == nil {
+		return c.JSON(headlines)
+	}
+	return c.JSONError(err)
 }
 
 func (hc *HeadlinesController) Count(c *raptor.Context) error {
@@ -41,11 +59,15 @@ func (hc *HeadlinesController) Count(c *raptor.Context) error {
 	since, err := strconv.Atoi(c.QueryParam("since"))
 	if err == nil && status != "" && since != 0 {
 		sinceTime := time.Unix(int64(since/1000), 0)
-		return c.JSON(
-			raptor.Map{
-				"count": hc.Headlines.Count(topicID, sinceTime),
-			},
-		)
+		count, err := hc.Headlines.Count(topicID, sinceTime)
+		if err == nil {
+			return c.JSON(
+				raptor.Map{
+					"count": count,
+				},
+			)
+		}
+		return c.JSONError(err)
 	}
 
 	return c.JSONError(raptor.NewErrorBadRequest("Invalid query parameters"))

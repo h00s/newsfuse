@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"slices"
 	"time"
@@ -63,7 +64,7 @@ func (hs *HeadlinesService) Receive() {
 				Where("url = ?", headline.URL).
 				Exists(context.Background())
 			if err != nil {
-				hs.Log.Error("Error checking headline existence", "Error", err.Error())
+				hs.Log.Error("Error checking headline existence", "error", err.Error())
 				continue
 			}
 
@@ -82,43 +83,45 @@ func (hs *HeadlinesService) Receive() {
 		if newHeadlines {
 			source := hs.Sources.Get(headlines[0].SourceID)
 			if err := hs.allFromDB(source.TopicID, &headlines); err == nil {
-				hs.Memstore.Set(fmt.Sprintf("headlines:%d", source.TopicID), headlines)
-			} else {
-				hs.Log.Error("Error getting headlines", "Error", err.Error())
+				go hs.memstoreSetHeadlinesByTopicID(source.TopicID, &headlines)
 			}
 		}
 	}
 }
 
-func (hs *HeadlinesService) All(topicID int64) models.Headlines {
+func (hs *HeadlinesService) All(topicID int64) (models.Headlines, error) {
 	var headlines models.Headlines
-	data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
-	if err == nil && data != "" {
-		json.Unmarshal([]byte(data), &headlines)
-		return headlines
+
+	if err := hs.memstoreGetHeadlinesByTopicID(topicID, &headlines); err == nil {
+		return headlines, nil
 	}
 
 	if err := hs.allFromDB(topicID, &headlines); err != nil {
-		hs.Log.Error("Error getting headlines", "Error", err.Error())
-		return headlines
+		return headlines, raptor.NewErrorInternal(err.Error())
 	}
-	go hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
 
-	return headlines
+	go hs.memstoreSetHeadlinesByTopicID(topicID, &headlines)
+
+	return headlines, nil
 }
 
 func (hs *HeadlinesService) allFromDB(topicID int64, headlines *models.Headlines) error {
-	return hs.DB.
+	if err := hs.DB.
 		NewSelect().
 		Model(headlines).
 		Join("JOIN sources s ON headline.source_id = s.id").
 		Where("s.topic_id = ?", topicID).
 		Order("headline.id desc").
 		Limit(30).
-		Scan(context.Background())
+		Scan(context.Background()); err != nil {
+		hs.Log.Error("Error getting headlines", "error", err.Error())
+		return err
+	}
+
+	return nil
 }
 
-func (hs *HeadlinesService) AllByLastID(topicID, lastID int64) models.Headlines {
+func (hs *HeadlinesService) AllByLastID(topicID, lastID int64) (models.Headlines, error) {
 	var headlines models.Headlines
 	if err := hs.DB.
 		NewSelect().
@@ -129,13 +132,14 @@ func (hs *HeadlinesService) AllByLastID(topicID, lastID int64) models.Headlines 
 		Order("headline.id DESC").
 		Limit(30).
 		Scan(context.Background()); err != nil {
-		hs.Log.Error("Error getting headlines", "Error", err)
+		hs.Log.Error("Error getting headlines", "error", err)
+		return headlines, raptor.NewErrorInternal(err.Error())
 	}
 
-	return headlines
+	return headlines, nil
 }
 
-func (hs *HeadlinesService) Search(query string) models.Headlines {
+func (hs *HeadlinesService) Search(query string) (models.Headlines, error) {
 	var headlines models.Headlines
 	if err := hs.DB.
 		NewSelect().
@@ -144,13 +148,14 @@ func (hs *HeadlinesService) Search(query string) models.Headlines {
 		Order("id DESC").
 		Limit(100).
 		Scan(context.Background()); err != nil {
-		hs.Log.Error("Error searching headlines", "Error", err.Error())
+		hs.Log.Error("Error searching headlines", "error", err.Error())
+		return headlines, raptor.NewErrorInternal(err.Error())
 	}
 
-	return headlines
+	return headlines, nil
 }
 
-func (hs *HeadlinesService) Count(topicID int64, since time.Time) int {
+func (hs *HeadlinesService) Count(topicID int64, since time.Time) (int, error) {
 	count, err := hs.DB.
 		NewSelect().
 		Model((*models.Headline)(nil)).
@@ -159,9 +164,27 @@ func (hs *HeadlinesService) Count(topicID int64, since time.Time) int {
 		Count(context.Background())
 
 	if err != nil {
-		hs.Log.Error("Error counting headlines", "Error", err.Error())
-		return 0
+		hs.Log.Error("Error counting headlines", "error", err.Error())
+		return 0, raptor.NewErrorInternal(err.Error())
 	}
 
-	return count
+	return count, nil
+}
+
+func (hs *HeadlinesService) memstoreGetHeadlinesByTopicID(topicID int64, headlines *models.Headlines) error {
+	data, err := hs.Memstore.Get(fmt.Sprintf("headlines:%d", topicID))
+	if err == nil && data != "" {
+		json.Unmarshal([]byte(data), headlines)
+		return nil
+	}
+
+	hs.Log.Warn("Headlines not found in memstore", "topic", topicID)
+	return errors.New("headlines not found in memstore")
+}
+
+func (hs *HeadlinesService) memstoreSetHeadlinesByTopicID(topicID int64, headlines *models.Headlines) {
+	err := hs.Memstore.Set(fmt.Sprintf("headlines:%d", topicID), headlines)
+	if err != nil {
+		hs.Log.Warn("Error setting headlines in memstore", "topic", topicID, "error", err.Error())
+	}
 }
