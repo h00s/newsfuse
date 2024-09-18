@@ -8,7 +8,7 @@ toolchain go1.23.1
 
 require (
 	github.com/go-raptor/connector/bun/postgres v1.0.0
-	github.com/go-raptor/raptor/v3 v3.0.0-alpha.10
+	github.com/go-raptor/raptor/v3 v3.0.1
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.1
 	github.com/redis/go-redis/v9 v9.6.1
