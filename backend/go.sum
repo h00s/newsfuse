@@ -42,6 +42,8 @@ github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/go-raptor/connector/bun/postgres v1.0.0 h1:+14m8dZI3Cpv2k3G7Wpcwnhrxq/WbBd3Ezm65MPz0rA=
 github.com/go-raptor/connector/bun/postgres v1.0.0/go.mod h1:PG2M5LEcJBoK8f7+/LexeptN/mfUrNJBeKr5h1l5394=
+github.com/go-raptor/connector/bun/postgres v1.0.1 h1:Va4GUBj0aASLab8evW2XME0d4HhfBk7tt3zwjW7gehE=
+github.com/go-raptor/connector/bun/postgres v1.0.1/go.mod h1:BmHDoKfl1UW1dnVWDGdaNX9JJGdfmIbN1XyP9la7rwg=
 github.com/go-raptor/raptor/v3 v3.0.0-alpha.9 h1:yrTAZLzbP7ezOjdzJrzQHcKrdAbQP+LxsgNImYF6peY=
 github.com/go-raptor/raptor/v3 v3.0.0-alpha.9/go.mod h1:rUUZhJZs5oax5yNcjbn8Rcp9PFGBbVZqaNfDPTaHl08=
 github.com/go-raptor/raptor/v3 v3.0.0-alpha.10 h1:9uQBrbX1oxhyyTzf1ZAuvyKCAm+11t6saZGx6g4rzps=

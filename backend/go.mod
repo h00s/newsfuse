@@ -7,7 +7,7 @@ toolchain go1.23.1
 // replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
 
 require (
-	github.com/go-raptor/connector/bun/postgres v1.0.0
+	github.com/go-raptor/connector/bun/postgres v1.0.1
 	github.com/go-raptor/raptor/v3 v3.0.1
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.1
