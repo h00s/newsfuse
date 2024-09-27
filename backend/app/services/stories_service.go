@@ -19,11 +19,10 @@ type StoriesService struct {
 func NewStoriesService() *StoriesService {
 	ss := &StoriesService{}
 
-	ss.OnInit(func() {
+	ss.OnInit(func() error {
 		var err error
-		if ss.claude, err = internal.NewClaude(ss.Config.AppConfig["anthropic_key"].(string)); err != nil {
-			ss.Log.Error("Error creating Claude", "error", err.Error())
-		}
+		ss.claude, err = internal.NewClaude(ss.Config.AppConfig["anthropic_key"].(string))
+		return err
 	})
 
 	return ss

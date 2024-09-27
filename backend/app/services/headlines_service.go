@@ -41,12 +41,13 @@ func NewHeadlinesService() *HeadlinesService {
 		HeadlinesChannel: headlinesChannel,
 	}
 
-	hs.OnInit(func() {
+	hs.OnInit(func() error {
 		go hs.Receive()
 		for _, s := range hs.Scrapers {
 			s.Init(hs.Utils)
 			s.Start()
 		}
+		return nil
 	})
 
 	return hs
