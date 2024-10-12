@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
+	"github.com/uptrace/bun"
 )
 
 type SourcesService struct {
@@ -22,7 +23,7 @@ func (ss *SourcesService) All() (models.Sources, error) {
 		return sources, nil
 	}
 
-	err := ss.DB.
+	err := ss.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&sources).
 		Scan(context.Background())
@@ -41,7 +42,7 @@ func (ss *SourcesService) Get(id int64) models.Source {
 		return source
 	}
 
-	ss.DB.
+	ss.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&source).
 		Where("id = ?", id).

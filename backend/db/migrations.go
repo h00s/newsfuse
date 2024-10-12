@@ -1,12 +1,12 @@
 package db
 
 import (
-	"github.com/go-raptor/raptor/v3"
+	"github.com/go-raptor/connector/bun/postgres"
 	"github.com/h00s/newsfuse/db/migrate"
 )
 
-func Migrations() raptor.Migrations {
-	return raptor.Migrations{
+func Migrations() postgres.Migrations {
+	return postgres.Migrations{
 		1: migrate.AddTopic,
 		2: migrate.SeedTopic,
 		3: migrate.AddSource,

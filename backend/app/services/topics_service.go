@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
+	"github.com/uptrace/bun"
 )
 
 type TopicsService struct {
@@ -21,7 +22,7 @@ func (ts *TopicsService) All() (models.Topics, error) {
 		return topics, nil
 	}
 
-	err := ts.DB.
+	err := ts.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&topics).
 		Order("id").

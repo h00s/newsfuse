@@ -7,6 +7,7 @@ import (
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
+	"github.com/uptrace/bun"
 )
 
 type StoriesService struct {
@@ -30,7 +31,7 @@ func NewStoriesService() *StoriesService {
 
 func (ss *StoriesService) Get(headlineID int64) (*models.Story, error) {
 	var story models.Story
-	err := ss.DB.
+	err := ss.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&story).
 		Where("headline_id = ?", headlineID).
@@ -55,7 +56,7 @@ func (ss *StoriesService) Get(headlineID int64) (*models.Story, error) {
 
 func (ss *StoriesService) Scrape(headlineID int64) (models.Story, error) {
 	var headline models.Headline
-	err := ss.DB.
+	err := ss.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&headline).
 		Where("id = ?", headlineID).
@@ -77,7 +78,7 @@ func (ss *StoriesService) Scrape(headlineID int64) (models.Story, error) {
 }
 
 func (ss *StoriesService) Save(story *models.Story) error {
-	_, err := ss.DB.
+	_, err := ss.DB.Conn().(*bun.DB).
 		NewInsert().
 		Model(story).
 		Returning("id").
@@ -93,7 +94,7 @@ func (ss *StoriesService) Save(story *models.Story) error {
 
 func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
 	var story models.Story
-	err := ss.DB.
+	err := ss.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&story).
 		Where("id = ?", storyID).
@@ -119,7 +120,7 @@ func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
 	}
 
 	story.Summary = summary
-	go ss.DB.
+	go ss.DB.Conn().(*bun.DB).
 		NewUpdate().
 		Model(&story).
 		Column("summary").

@@ -3,11 +3,11 @@ package migrate
 import (
 	"context"
 
-	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
+	"github.com/uptrace/bun"
 )
 
-func AddHeadline(db *raptor.DB) error {
+func AddHeadline(db *bun.DB) error {
 	_, err := db.
 		NewCreateTable().
 		Model((*models.Headline)(nil)).

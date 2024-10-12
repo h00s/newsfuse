@@ -12,6 +12,7 @@ import (
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/h00s/newsfuse/internal/scrapers"
+	"github.com/uptrace/bun"
 )
 
 type HeadlinesService struct {
@@ -59,7 +60,7 @@ func (hs *HeadlinesService) Receive() {
 		slices.Reverse(headlines)
 		newHeadlines := false
 		for _, headline := range headlines {
-			exists, err := hs.DB.
+			exists, err := hs.DB.Conn().(*bun.DB).
 				NewSelect().
 				Model(&headline).
 				Where("url = ?", headline.URL).
@@ -70,7 +71,7 @@ func (hs *HeadlinesService) Receive() {
 			}
 
 			if !exists {
-				_, err = hs.DB.
+				_, err = hs.DB.Conn().(*bun.DB).
 					NewInsert().
 					Model(&headline).
 					Exec(context.Background())
@@ -107,7 +108,7 @@ func (hs *HeadlinesService) All(topicID int64) (models.Headlines, error) {
 }
 
 func (hs *HeadlinesService) allFromDB(topicID int64, headlines *models.Headlines) error {
-	if err := hs.DB.
+	if err := hs.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(headlines).
 		Join("JOIN sources s ON headline.source_id = s.id").
@@ -124,7 +125,7 @@ func (hs *HeadlinesService) allFromDB(topicID int64, headlines *models.Headlines
 
 func (hs *HeadlinesService) AllByLastID(topicID, lastID int64) (models.Headlines, error) {
 	var headlines models.Headlines
-	if err := hs.DB.
+	if err := hs.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&headlines).
 		Join("JOIN sources s ON headline.source_id = s.id").
@@ -142,7 +143,7 @@ func (hs *HeadlinesService) AllByLastID(topicID, lastID int64) (models.Headlines
 
 func (hs *HeadlinesService) Search(query string) (models.Headlines, error) {
 	var headlines models.Headlines
-	if err := hs.DB.
+	if err := hs.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model(&headlines).
 		Where("title ILIKE ?", "%"+query+"%").
@@ -157,7 +158,7 @@ func (hs *HeadlinesService) Search(query string) (models.Headlines, error) {
 }
 
 func (hs *HeadlinesService) Count(topicID int64, since time.Time) (int, error) {
-	count, err := hs.DB.
+	count, err := hs.DB.Conn().(*bun.DB).
 		NewSelect().
 		Model((*models.Headline)(nil)).
 		Join("JOIN sources s ON headline.source_id = s.id").
