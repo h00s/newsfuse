@@ -5,12 +5,12 @@ go 1.23.2
 // replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
 
 require (
-	github.com/go-raptor/connector/bun/postgres v1.0.2
+	github.com/go-raptor/connector/bun/postgres v1.0.3
 	github.com/go-raptor/raptor/v3 v3.1.0
 	github.com/gocolly/colly/v2 v2.1.0
-	github.com/madebywelch/anthropic-go/v3 v3.2.1
-	github.com/redis/go-redis/v9 v9.6.1
-	github.com/uptrace/bun v1.2.3
+	github.com/madebywelch/anthropic-go/v3 v3.2.2
+	github.com/redis/go-redis/v9 v9.7.0
+	github.com/uptrace/bun v1.2.5
 )
 
 require (
@@ -46,7 +46,7 @@ require (
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
-	github.com/uptrace/bun/dialect/pgdialect v1.2.3 // indirect
+	github.com/uptrace/bun/dialect/pgdialect v1.2.5 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
