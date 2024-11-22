@@ -32,7 +32,7 @@ func (c *Claude) Summarize(story string) (string, error) {
 	content := "Napravi sažetak vijesti bez navoda da se radi o sažetku. Odgovor mora sadržavati samo tekst sažetka vijesti i to do 600 znakova: " + story
 	request := anthropic.NewMessageRequest(
 		[]anthropic.MessagePartRequest{{Role: "user", Content: []anthropic.ContentBlock{anthropic.NewTextContentBlock(content)}}},
-		anthropic.WithModel[anthropic.MessageRequest](anthropic.Claude3Haiku),
+		anthropic.WithModel[anthropic.MessageRequest](anthropic.Claude35Haiku),
 		anthropic.WithMaxTokens[anthropic.MessageRequest](1000),
 	)
 
