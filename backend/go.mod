@@ -5,12 +5,12 @@ go 1.23.2
 // replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
 
 require (
-	github.com/go-raptor/connector/bun/postgres v1.0.3
+	github.com/go-raptor/connector/bun/postgres v1.0.4
 	github.com/go-raptor/raptor/v3 v3.1.0
 	github.com/gocolly/colly/v2 v2.1.0
-	github.com/madebywelch/anthropic-go/v3 v3.2.2
+	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/redis/go-redis/v9 v9.7.0
-	github.com/uptrace/bun v1.2.5
+	github.com/uptrace/bun v1.2.6
 )
 
 require (
@@ -46,19 +46,19 @@ require (
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
-	github.com/uptrace/bun/dialect/pgdialect v1.2.5 // indirect
+	github.com/uptrace/bun/dialect/pgdialect v1.2.6 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
-	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
-	golang.org/x/crypto v0.28.0 // indirect
-	golang.org/x/net v0.30.0 // indirect
-	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
-	golang.org/x/text v0.19.0 // indirect
-	golang.org/x/time v0.7.0 // indirect
+	github.com/wk8/go-ordered-map/v2 v2.1.9-0.20240816141633-0a40785b4f41 // indirect
+	golang.org/x/crypto v0.29.0 // indirect
+	golang.org/x/net v0.31.0 // indirect
+	golang.org/x/sync v0.9.0 // indirect
+	golang.org/x/sys v0.27.0 // indirect
+	golang.org/x/text v0.20.0 // indirect
+	golang.org/x/time v0.8.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/protobuf v1.35.1 // indirect
+	google.golang.org/protobuf v1.35.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
