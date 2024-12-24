@@ -5,7 +5,7 @@ go 1.23.2
 // replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
 
 require (
-	github.com/go-raptor/connector/bun/postgres v1.0.4
+	github.com/go-raptor/connector/bun/postgres v1.0.5
 	github.com/go-raptor/raptor/v3 v3.1.4
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
@@ -30,7 +30,7 @@ require (
 	github.com/invopop/jsonschema v0.12.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.1 // indirect
+	github.com/jackc/pgx/v5 v5.7.2 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
@@ -58,6 +58,6 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/protobuf v1.36.0 // indirect
+	google.golang.org/protobuf v1.36.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
