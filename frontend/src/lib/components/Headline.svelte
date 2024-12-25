@@ -5,7 +5,7 @@
   import Story from '$lib/components/Story.svelte'
   
   onMount(() => {
-    newHeadline = lastAccessedAt < new Date(headline.published_at).getTime() ? true : false;
+    newHeadline = lastAccessedAt < new Date(headline.publishedAt).getTime() ? true : false;
   });
 
   function sendDataToParent() {
@@ -54,11 +54,11 @@
       </h3>
 
       <span class="text-gray-400 pl-1">
-        {humanizeDuration(headline.published_at)}
+        {humanizeDuration(headline.publishedAt)}
       </span>
     </div>
 
-    {#if source.is_scrapable}
+    {#if source.isScrapable}
       <button on:click="{toggleStory}" class="text-news-light focus:outline-none pl-1">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           {#if showStory}

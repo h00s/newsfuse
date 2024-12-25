@@ -15,7 +15,7 @@
   </div>
   <div class="border-t-2 border-news-light">
     {#each searchedHeadlines as headline (headline.id)}
-      <Headline {headline} source={sources[headline.source_id]} {lastAccessedAt} />
+      <Headline {headline} source={sources[headline.sourceId]} {lastAccessedAt} />
       <hr class="border-news-separator">
     {/each}
   </div>

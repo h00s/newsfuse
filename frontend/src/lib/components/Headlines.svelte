@@ -18,7 +18,7 @@
 
 <div>
   {#each headlines as headline (headline.id)}
-    <Headline {headline} source={sources[headline.source_id]} {lastAccessedAt} on:headlineDisplayed={handleHeadlineDisplayed} />
+    <Headline {headline} source={sources[headline.sourceId]} {lastAccessedAt} on:headlineDisplayed={handleHeadlineDisplayed} />
     <hr class="border-news-separator">
   {/each}
 </div>
