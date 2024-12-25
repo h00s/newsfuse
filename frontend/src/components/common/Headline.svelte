@@ -1,8 +1,8 @@
 <script>
   import { onMount, createEventDispatcher } from 'svelte';
-  import { humanizeDuration } from '$lib/helpers/date'
   import { inview } from 'svelte-inview';
-  import Story from '$lib/components/Story.svelte'
+  import { humanizeDuration } from '$lib/utils/date'
+  import Story from '$comp/common/Story.svelte'
   
   onMount(() => {
     newHeadline = lastAccessedAt < new Date(headline.publishedAt).getTime() ? true : false;

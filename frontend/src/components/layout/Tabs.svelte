@@ -1,6 +1,6 @@
 <script>
   import { getLastAccessedAt } from '$lib/stores/topics'
-  import Tab from '$lib/components/Tab.svelte'
+  import Tab from '$comp/common/Tab.svelte'
 
   export let topics;
   export let selectedTopic;

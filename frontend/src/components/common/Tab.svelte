@@ -1,7 +1,7 @@
 <script>
-  import { setLastAccessedAt } from '$lib/stores/topics'
-  import { countNewSince } from '$lib/repositories/headlines'
   import { afterUpdate } from 'svelte';
+  import { setLastAccessedAt } from '$lib/stores/topics'
+  import { countNewSince } from '$svc/headlines'
 
   afterUpdate(() => {
     countNewSince(topic.id, lastAccessedAt).then((data) => {

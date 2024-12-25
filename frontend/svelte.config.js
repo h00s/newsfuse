@@ -14,7 +14,11 @@ const config = {
 				precompress: false,
 				strict: true
 			}				
-		)
+		),
+		alias: {
+      $svc: 'src/services',
+			$comp: 'src/components'
+    }
 	},
 	preprocess: vitePreprocess()
 };

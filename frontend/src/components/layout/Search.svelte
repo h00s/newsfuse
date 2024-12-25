@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { searchHeadlines } from '$lib/repositories/headlines';
-  import SearchDetails from '$lib/components/SearchDetails.svelte';
+  import { searchHeadlines } from '$svc/headlines';
+  import SearchDetails from '$comp/common/SearchDetails.svelte';
 
   onMount(() => {
     inputSearch.focus();

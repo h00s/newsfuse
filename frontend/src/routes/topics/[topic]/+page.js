@@ -1,7 +1,7 @@
 import { getLastAccessedAt } from '$lib/stores/topics'
-import { fetchHeadlinesByTopic } from '$lib/repositories/headlines';
-import { fetchSources } from '$lib/repositories/sources';
-import { fetchTopics } from '$lib/repositories/topics';
+import { fetchHeadlinesByTopic } from '$svc/headlines';
+import { fetchSources } from '$svc/sources';
+import { fetchTopics } from '$svc/topics';
 
 export async function load({ fetch, params }) {
   let [topics, headlines, sources] = await Promise.all([

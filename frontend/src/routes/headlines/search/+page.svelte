@@ -1,7 +1,7 @@
 <script>
-  import Navbar from '$lib/components/Navbar.svelte';
-  import Search from '$lib/components/Search.svelte';
-  import Footer from '$lib/components/Footer.svelte';
+  import Navbar from '$comp/layout/Navbar.svelte';
+  import Search from '$comp/layout/Search.svelte';
+  import Footer from '$comp/layout/Footer.svelte';
 
   export let data;
 </script>

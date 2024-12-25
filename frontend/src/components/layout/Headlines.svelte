@@ -1,6 +1,6 @@
 <script>
-  import { fetchHeadlinesByTopicAndLastId } from '$lib/repositories/headlines';
-  import Headline from '$lib/components/Headline.svelte';
+  import { fetchHeadlinesByTopicAndLastId } from '$svc/headlines';
+  import Headline from '$comp/common/Headline.svelte';
 
   async function handleHeadlineDisplayed(event) {
     let headlineId = event.detail;

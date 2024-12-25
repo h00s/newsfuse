@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { fetchStoryByHeadline, fetchStorySummary } from '$lib/repositories/stories';
+  import { fetchStoryByHeadline, fetchStorySummary } from '$svc/stories';
 
   onMount(() => {
     if (story === undefined) {
