@@ -9,14 +9,14 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.8",
-    "@sveltejs/kit": "^2.15.1",
+    "@sveltejs/kit": "^2.15.2",
     "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "autoprefixer": "^10.4.20",
     "daisyui": "latest",
     "postcss": "^8.4.49",
-    "svelte": "^5.16.0",
+    "svelte": "^5.17.3",
     "tailwindcss": "^3.4.17",
-    "vite": "^6.0.6"
+    "vite": "^6.0.7"
   },
   "dependencies": {
     "svelte-inview": "^4.0.4",
