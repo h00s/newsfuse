@@ -16,6 +16,7 @@ export default {
     themes: [
       {
         dark: {
+          'primary': '#38bdf8',
           'base-content': '#38bdf8',
         },
       }
