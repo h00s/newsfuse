@@ -15,12 +15,7 @@ export default {
   daisyui: {
     themes: [
       {
-        'light': {
-          primary: '#0fa5e9',
-        },
-      },
-      {
-        'dark': {
+        dark: {
           'base-content': '#38bdf8',
         },
       }

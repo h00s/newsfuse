@@ -1,5 +1,5 @@
 <footer class="footer footer-center p-4 text-news-light opacity-40">
   <aside>
-    <p>©2024 | Handwritten with love ❤️</p>
+    <p>©2025 | Handwritten with love ❤️</p>
   </aside>
 </footer>

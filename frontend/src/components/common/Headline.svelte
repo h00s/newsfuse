@@ -43,9 +43,9 @@
     {/if}
     <div class="flex-1">
       <h3 class="text-gray-900 inline"
-        class:dark:text-white={newHeadline}
+        class:text-white={newHeadline}
         class:font-bold={newHeadline}
-        class:dark:text-slate-300={!newHeadline}
+        class:text-slate-300={!newHeadline}
         class:font-medium={!newHeadline}
       >
         <a class="mb-4" href="{headline.url}">

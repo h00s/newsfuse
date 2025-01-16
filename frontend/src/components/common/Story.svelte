@@ -49,7 +49,7 @@
   export let headlineId;
 </script>
 
-<div class="story pb-2 text-gray-700 dark:text-gray-300">
+<div class="story pb-2 text-gray-300">
   {#if story === undefined}
     <div class="pt-4">
       <span class="loading loading-spinner loading-sm"></span>
