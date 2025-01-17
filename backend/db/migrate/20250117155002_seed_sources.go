@@ -7,7 +7,13 @@ import (
 	"github.com/uptrace/bun"
 )
 
-func SeedSource(db *bun.DB) error {
+type SeedSources struct{}
+
+func (m SeedSources) Name() string {
+	return "seed_sources"
+}
+
+func (m SeedSources) Up(db *bun.DB) error {
 	sources := models.Sources{
 		models.Source{Name: "klikni.hr", TopicID: 1, IsScrapable: true},
 		models.Source{Name: "MojPortal.hr", TopicID: 1, IsScrapable: true},
@@ -24,6 +30,27 @@ func SeedSource(db *bun.DB) error {
 	_, err := db.
 		NewInsert().
 		Model(&sources).
+		Exec(context.Background())
+
+	return err
+}
+
+func (m SeedSources) Down(db *bun.DB) error {
+	sourceNames := []string{
+		"klikni.hr",
+		"MojPortal.hr",
+		"Radio Daruvar",
+		"Index.hr",
+		"N1Info.hr",
+		"Hacker News",
+		"Bug",
+		"Telegram",
+	}
+
+	_, err := db.
+		NewDelete().
+		Model((*models.Source)(nil)).
+		Where("name IN (?)", bun.In(sourceNames)).
 		Exec(context.Background())
 
 	return err

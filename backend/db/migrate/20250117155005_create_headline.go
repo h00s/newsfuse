@@ -7,7 +7,13 @@ import (
 	"github.com/uptrace/bun"
 )
 
-func AddHeadline(db *bun.DB) error {
+type CreateHeadline struct{}
+
+func (m CreateHeadline) Name() string {
+	return "create_headline_table"
+}
+
+func (m CreateHeadline) Up(db *bun.DB) error {
 	_, err := db.
 		NewCreateTable().
 		Model((*models.Headline)(nil)).
@@ -34,5 +40,15 @@ func AddHeadline(db *bun.DB) error {
 		Column("published_at").
 		Exec(context.Background())
 
+	return err
+}
+
+func (m CreateHeadline) Down(db *bun.DB) error {
+	_, err := db.
+		NewDropTable().
+		Model((*models.Headline)(nil)).
+		IfExists().
+		Cascade().
+		Exec(context.Background())
 	return err
 }

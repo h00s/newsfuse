@@ -1,12 +1,12 @@
 module github.com/h00s/newsfuse
 
-go 1.23.2
+go 1.23.5
 
 // replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
 
 require (
-	github.com/go-raptor/connector/bun/postgres v1.0.6
-	github.com/go-raptor/raptor/v3 v3.1.4
+	github.com/go-raptor/connector/bun/postgres v1.0.7
+	github.com/go-raptor/raptor/v3 v3.2.2
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/redis/go-redis/v9 v9.7.0
@@ -24,6 +24,7 @@ require (
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
+	github.com/go-raptor/connector v1.0.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
@@ -58,6 +59,6 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.9.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/protobuf v1.36.2 // indirect
+	google.golang.org/protobuf v1.36.3 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

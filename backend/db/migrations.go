@@ -7,11 +7,11 @@ import (
 
 func Migrations() postgres.Migrations {
 	return postgres.Migrations{
-		1: migrate.AddTopic,
-		2: migrate.SeedTopic,
-		3: migrate.AddSource,
-		4: migrate.SeedSource,
-		5: migrate.AddHeadline,
-		6: migrate.AddStory,
+		"20250117155001": &migrate.CreateSource{},
+		"20250117155002": &migrate.SeedSources{},
+		"20250117155003": &migrate.CreateTopic{},
+		"20250117155004": &migrate.SeedTopics{},
+		"20250117155005": &migrate.CreateHeadline{},
+		"20250117155006": &migrate.CreateStory{},
 	}
 }
