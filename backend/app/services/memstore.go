@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"encoding/json"
+	"strconv"
 
 	"github.com/go-raptor/raptor/v3"
 	"github.com/redis/go-redis/v9"
@@ -14,11 +15,16 @@ type Memstore struct {
 }
 
 func NewMemstore(c *raptor.Config) *Memstore {
+	db, err := strconv.Atoi(c.AppConfig["redis_db"])
+	if err != nil {
+		db = 0
+	}
+
 	return &Memstore{
 		client: redis.NewClient(&redis.Options{
-			Addr:     c.AppConfig["redis_address"].(string),
-			Password: c.AppConfig["redis_password"].(string),
-			DB:       int(c.AppConfig["redis_db"].(int64)),
+			Addr:     c.AppConfig["redis_address"],
+			Password: c.AppConfig["redis_password"],
+			DB:       db,
 		}),
 	}
 }

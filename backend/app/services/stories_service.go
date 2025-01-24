@@ -22,7 +22,7 @@ func NewStoriesService() *StoriesService {
 
 	ss.OnInit(func() error {
 		var err error
-		ss.claude, err = internal.NewClaude(ss.Config.AppConfig["anthropic_key"].(string))
+		ss.claude, err = internal.NewClaude(ss.Config.AppConfig["anthropic_key"])
 		return err
 	})
 
