@@ -8,7 +8,7 @@ import (
 	"slices"
 	"time"
 
-	"github.com/go-raptor/raptor/v3"
+	"github.com/go-raptor/raptor/v3/core"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/h00s/newsfuse/internal/scrapers"
@@ -16,7 +16,7 @@ import (
 )
 
 type HeadlinesService struct {
-	raptor.Service
+	core.Service
 	Scrapers         map[int]internal.Scraper
 	HeadlinesChannel chan models.Headlines
 	Sources          *SourcesService
@@ -99,7 +99,7 @@ func (hs *HeadlinesService) All(topicID int64) (models.Headlines, error) {
 	}
 
 	if err := hs.allFromDB(topicID, &headlines); err != nil {
-		return headlines, raptor.NewErrorInternal(err.Error())
+		return headlines, core.NewErrorInternal(err.Error())
 	}
 
 	go hs.memstoreSetHeadlinesByTopicID(topicID, &headlines)
@@ -135,7 +135,7 @@ func (hs *HeadlinesService) AllByLastID(topicID, lastID int64) (models.Headlines
 		Limit(30).
 		Scan(context.Background()); err != nil {
 		hs.Log.Error("Error getting headlines", "error", err)
-		return headlines, raptor.NewErrorInternal(err.Error())
+		return headlines, core.NewErrorInternal(err.Error())
 	}
 
 	return headlines, nil
@@ -151,7 +151,7 @@ func (hs *HeadlinesService) Search(query string) (models.Headlines, error) {
 		Limit(100).
 		Scan(context.Background()); err != nil {
 		hs.Log.Error("Error searching headlines", "error", err.Error())
-		return headlines, raptor.NewErrorInternal(err.Error())
+		return headlines, core.NewErrorInternal(err.Error())
 	}
 
 	return headlines, nil
@@ -167,7 +167,7 @@ func (hs *HeadlinesService) Count(topicID int64, since time.Time) (int, error) {
 
 	if err != nil {
 		hs.Log.Error("Error counting headlines", "error", err.Error())
-		return 0, raptor.NewErrorInternal(err.Error())
+		return 0, core.NewErrorInternal(err.Error())
 	}
 
 	return count, nil

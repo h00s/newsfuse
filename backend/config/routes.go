@@ -1,27 +1,29 @@
 package config
 
-import "github.com/go-raptor/raptor/v3"
+import (
+	"github.com/go-raptor/raptor/v3/router"
+)
 
-func Routes() raptor.Routes {
-	return raptor.CollectRoutes(
-		raptor.Scope("api/v1",
-			raptor.Scope("topics",
-				raptor.Get("", "Topics#All"),
-				raptor.Get(":id/headlines", "Headlines#All"),
-				raptor.Get(":id/headlines/count", "Headlines#Count"),
+func Routes() router.Routes {
+	return router.CollectRoutes(
+		router.Scope("api/v1",
+			router.Scope("topics",
+				router.Get("", "Topics.All"),
+				router.Get(":id/headlines", "Headlines.All"),
+				router.Get(":id/headlines/count", "Headlines.Count"),
 			),
 
-			raptor.Scope("headlines",
-				raptor.Get(":id/story", "Stories#Get"),
-				raptor.Get("search", "Headlines#Search"),
+			router.Scope("headlines",
+				router.Get(":id/story", "Stories.Get"),
+				router.Get("search", "Headlines.Search"),
 			),
 
-			raptor.Scope("sources",
-				raptor.Get("", "Sources#All"),
+			router.Scope("sources",
+				router.Get("", "Sources.All"),
 			),
 
-			raptor.Scope("stories",
-				raptor.Get(":id/summarize", "Stories#Summarize"),
+			router.Scope("stories",
+				router.Get(":id/summarize", "Stories.Summarize"),
 			),
 		),
 	)

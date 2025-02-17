@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/go-raptor/raptor/v3"
+	"github.com/go-raptor/raptor/v3/core"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/uptrace/bun"
 )
 
 type TopicsService struct {
-	raptor.Service
+	core.Service
 	Memstore *Memstore
 }
 
@@ -29,7 +29,7 @@ func (ts *TopicsService) All() (models.Topics, error) {
 		Scan(context.Background())
 	if err != nil {
 		ts.Log.Error("Error geting topics", "Error", err.Error())
-		return topics, raptor.NewErrorInternal(err.Error())
+		return topics, core.NewErrorInternal(err.Error())
 	}
 
 	go ts.memstoreSetTopics(&topics)

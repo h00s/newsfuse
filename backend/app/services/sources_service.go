@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/go-raptor/raptor/v3"
+	"github.com/go-raptor/raptor/v3/core"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/uptrace/bun"
 )
@@ -29,7 +30,7 @@ func (ss *SourcesService) All() (models.Sources, error) {
 		Scan(context.Background())
 	if err != nil {
 		ss.Log.Error(err.Error())
-		return sources, raptor.NewErrorInternal(err.Error())
+		return sources, core.NewErrorInternal(err.Error())
 	}
 	go ss.memstoreSetSources(&sources)
 	return sources, nil
