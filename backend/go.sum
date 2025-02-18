@@ -1,7 +1,5 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
-github.com/BurntSushi/toml v1.4.0 h1:kuoIxZQy2WRRk1pttg9asf+WVv6tWQuBNVmK8+nqPr0=
-github.com/BurntSushi/toml v1.4.0/go.mod h1:ukJfTF/6rtPPRCnwkur4qwRxa8vTRFBF0uk2lLoLwho=
 github.com/PuerkitoBio/goquery v1.5.1/go.mod h1:GsLWisAFVj4WgDibEWF4pvYnkVQBpKBKeU+7zCJoLcc=
 github.com/PuerkitoBio/goquery v1.10.1 h1:Y8JGYUkXWTGRB6Ars3+j3kN0xg1YqqlwvdTV8WTFQcU=
 github.com/PuerkitoBio/goquery v1.10.1/go.mod h1:IYiHrOMps66ag56LEH7QYDDupKXyo5A8qrjIx3ZtujY=
@@ -40,14 +38,10 @@ github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/go-raptor/connector v1.0.0 h1:cXv1/++veq7HUNM3H0mh2FzpEIOaAbOQVDRSFg/kJAg=
 github.com/go-raptor/connector v1.0.0/go.mod h1:PhsrQUzoy0XBqUXTK7clyBT0ou0gDVMnxH0EpgpHcrI=
-github.com/go-raptor/connector/bun/postgres v1.0.7 h1:fqS03y7HiUNZefRV0Kk4TXzE15tWLw18gOyX77QIom8=
-github.com/go-raptor/connector/bun/postgres v1.0.7/go.mod h1:zNIlzG92itndWX2aa5Dr86fiUlGmfpuUT/W/kgbQkxg=
 github.com/go-raptor/connector/bun/postgres v1.0.8 h1:4aDo9yhu4xhv6UQqzTt85+9OKmcl3wQoX0zl2u3Q7go=
 github.com/go-raptor/connector/bun/postgres v1.0.8/go.mod h1:IOuJwenKLRPufmW6Vi7PuCrFq9Qs0ECLwXvOZzC0th4=
-github.com/go-raptor/raptor/v3 v3.3.0 h1:ILqYx4blgXH7rrPaMAJH5tHdSWSzliPEJP2f4U7p6fY=
-github.com/go-raptor/raptor/v3 v3.3.0/go.mod h1:rT5k1V5kx7zOX/KL/j17NZzwRqvJ1dl7LAhAWf6Uh+8=
-github.com/go-raptor/raptor/v3 v3.3.1 h1:84teh3YYX2APHwkN+PPOzFqUsMDSwjhr9cNlklS4IW8=
-github.com/go-raptor/raptor/v3 v3.3.1/go.mod h1:rT5k1V5kx7zOX/KL/j17NZzwRqvJ1dl7LAhAWf6Uh+8=
+github.com/go-raptor/raptor/v3 v3.3.2 h1:Meyda/3nhg6oRt08Za+eFdW9VAAeUIunJhmP8qW/d1A=
+github.com/go-raptor/raptor/v3 v3.3.2/go.mod h1:4GaFa15jn7EFFj8lYevrChTAiTyxixLjCHN4UjKqvaA=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0/go.mod h1:Hof5T3ZswNVsOHYmba1u03W65HDWgpV5HifSuueE0EA=
@@ -114,8 +108,6 @@ github.com/mattn/go-isatty v0.0.20/go.mod h1:W+V8PltTTMOvKvAeJH7IuucS94S2C6jfK/D
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
-github.com/puzpuzpuz/xsync/v3 v3.4.1 h1:wWXLKXwzpsduC3kUSahiL45MWxkGb+AQG0dsri4iftA=
-github.com/puzpuzpuz/xsync/v3 v3.4.1/go.mod h1:VjzYrABPabuM4KyBh1Ftq6u8nhwY5tBPKP9jpmh0nnA=
 github.com/puzpuzpuz/xsync/v3 v3.5.1 h1:GJYJZwO6IdxN/IKbneznS6yPkVC+c3zyY/j19c++5Fg=
 github.com/puzpuzpuz/xsync/v3 v3.5.1/go.mod h1:VjzYrABPabuM4KyBh1Ftq6u8nhwY5tBPKP9jpmh0nnA=
 github.com/pwntr/tinter v1.1.2 h1:Lc+c27RLcUxG78LndKaZ1l2s7ERlhRyHltA4N8u9gPI=
@@ -138,12 +130,8 @@ github.com/temoto/robotstxt v1.1.2 h1:W2pOjSJ6SWvldyEuiFXNxz3xZ8aiWX5LbfDiOFd7Fx
 github.com/temoto/robotstxt v1.1.2/go.mod h1:+1AmkuG3IYkh1kv0d2qEB9Le88ehNO0zwOr3ujewlOo=
 github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc h1:9lRDQMhESg+zvGYmW5DyG0UqvY96Bu5QYsTLvCHdrgo=
 github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc/go.mod h1:bciPuU6GHm1iF1pBvUfxfsH0Wmnc2VbpgvbI9ZWuIRs=
-github.com/uptrace/bun v1.2.8 h1:HEiLvy9wc7ehU5S02+O6NdV5BLz48lL4REPhTkMX3Dg=
-github.com/uptrace/bun v1.2.8/go.mod h1:JBq0uBKsKqNT0Ccce1IAFZY337Wkf08c6F6qlmfOHE8=
 github.com/uptrace/bun v1.2.9 h1:OOt2DlIcRUMSZPr6iXDFg/LaQd59kOxbAjpIVHddKRs=
 github.com/uptrace/bun v1.2.9/go.mod h1:r2ZaaGs9Ru5bpGTr8GQfp8jp+TlCav9grYCPOu2CJSg=
-github.com/uptrace/bun/dialect/pgdialect v1.2.8 h1:9n3qVh6yc+u7F3lpXzsWrAFJG1yLHUC2thjCCVEDpM8=
-github.com/uptrace/bun/dialect/pgdialect v1.2.8/go.mod h1:plksD43MjAlPGYLD9/SzsLUpGH5poXE9IB1+ka/sEzE=
 github.com/uptrace/bun/dialect/pgdialect v1.2.9 h1:caf5uFbOGiXvadV6pA5gn87k0awFFxL1kuuY3SpxnWk=
 github.com/uptrace/bun/dialect/pgdialect v1.2.9/go.mod h1:m7L9JtOp/Lt8HccET70ULxplMweE/u0S9lNUSxz2duo=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=

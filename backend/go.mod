@@ -6,7 +6,7 @@ go 1.24.0
 
 require (
 	github.com/go-raptor/connector/bun/postgres v1.0.8
-	github.com/go-raptor/raptor/v3 v3.3.1
+	github.com/go-raptor/raptor/v3 v3.3.2
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/redis/go-redis/v9 v9.7.0
@@ -14,7 +14,6 @@ require (
 )
 
 require (
-	github.com/BurntSushi/toml v1.4.0 // indirect
 	github.com/PuerkitoBio/goquery v1.10.1 // indirect
 	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/antchfx/htmlquery v1.3.4 // indirect
