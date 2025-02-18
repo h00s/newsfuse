@@ -46,6 +46,8 @@ github.com/go-raptor/connector/bun/postgres v1.0.8 h1:4aDo9yhu4xhv6UQqzTt85+9OKm
 github.com/go-raptor/connector/bun/postgres v1.0.8/go.mod h1:IOuJwenKLRPufmW6Vi7PuCrFq9Qs0ECLwXvOZzC0th4=
 github.com/go-raptor/raptor/v3 v3.3.0 h1:ILqYx4blgXH7rrPaMAJH5tHdSWSzliPEJP2f4U7p6fY=
 github.com/go-raptor/raptor/v3 v3.3.0/go.mod h1:rT5k1V5kx7zOX/KL/j17NZzwRqvJ1dl7LAhAWf6Uh+8=
+github.com/go-raptor/raptor/v3 v3.3.1 h1:84teh3YYX2APHwkN+PPOzFqUsMDSwjhr9cNlklS4IW8=
+github.com/go-raptor/raptor/v3 v3.3.1/go.mod h1:rT5k1V5kx7zOX/KL/j17NZzwRqvJ1dl7LAhAWf6Uh+8=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0/go.mod h1:Hof5T3ZswNVsOHYmba1u03W65HDWgpV5HifSuueE0EA=

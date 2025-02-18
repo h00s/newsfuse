@@ -2,11 +2,11 @@ module github.com/h00s/newsfuse
 
 go 1.24.0
 
-//replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
+// replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
 
 require (
 	github.com/go-raptor/connector/bun/postgres v1.0.8
-	github.com/go-raptor/raptor/v3 v3.3.0
+	github.com/go-raptor/raptor/v3 v3.3.1
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/redis/go-redis/v9 v9.7.0
