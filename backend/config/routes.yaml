@@ -1,0 +1,20 @@
+routes:
+  /api/v1:
+    /topics:
+      - get: ""
+        handler: Topics.All
+      - get: ":id/headlines"
+        handler: Headlines.All
+      - get: ":id/headlines/count"
+        handler: Headlines.Count
+    /headlines:
+      - get: ":id/story"
+        handler: Stories.Get
+      - get: "search"
+        handler: Headlines.Search
+    /sources:
+      - get: ""
+        handler: Sources.All
+    /stories:
+      - get: ":id/summarize"
+        handler: Stories.Summarize
