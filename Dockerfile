@@ -21,6 +21,7 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY --from=backend /out/newsfuse ./
+COPY --from=backend /app/config/routes.yaml ./config/routes.yaml
 COPY --from=frontend /app/build ./public
 
 EXPOSE 3000
