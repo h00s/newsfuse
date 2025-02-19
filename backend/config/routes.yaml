@@ -1,23 +1,23 @@
 routes:
   /api/v1:
     /topics:
-      "/":
+      /:
         GET: Topics.All
-      "/:id/headlines":
+      /:id/headlines:
         GET: Headlines.All
-      "/:id/headlines/count":
+      /:id/headlines/count:
         GET: Headlines.Count
 
     /headlines:
-      "/:id/story":
+      /:id/story:
         GET: Stories.Get
-      "/search":
+      /search:
         GET: Headlines.Search
 
     /sources:
-      "/":
+      /:
         GET: Sources.All
 
     /stories:
-      "/:id/summarize":
+      /:id/summarize:
         GET: Stories.Summarize
