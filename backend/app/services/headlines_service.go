@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/go-raptor/errs"
-	"github.com/go-raptor/raptor/v3/core"
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/h00s/newsfuse/internal/scrapers"
@@ -17,7 +17,7 @@ import (
 )
 
 type HeadlinesService struct {
-	core.Service
+	raptor.Service
 	Scrapers         map[int]internal.Scraper
 	HeadlinesChannel chan models.Headlines
 	Sources          *SourcesService

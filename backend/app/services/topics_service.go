@@ -6,13 +6,13 @@ import (
 	"errors"
 
 	"github.com/go-raptor/errs"
-	"github.com/go-raptor/raptor/v3/core"
+	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/uptrace/bun"
 )
 
 type TopicsService struct {
-	core.Service
+	raptor.Service
 	Memstore *Memstore
 }
 

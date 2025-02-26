@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/go-raptor/components"
 	"github.com/go-raptor/raptor/v3"
 	"github.com/h00s/newsfuse/app/services"
 )
@@ -10,7 +11,7 @@ type TopicsController struct {
 	Topics *services.TopicsService
 }
 
-func (sc *TopicsController) All(c *raptor.Context) error {
+func (sc *TopicsController) All(c *components.Context) error {
 	topics, err := sc.Topics.All()
 	if err != nil {
 		return c.JSONError(err)
