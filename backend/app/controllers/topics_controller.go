@@ -16,5 +16,5 @@ func (sc *TopicsController) All(c *components.Context) error {
 	if err != nil {
 		return c.JSONError(err)
 	}
-	return c.JSON(topics)
+	return c.JSONResponse(topics)
 }

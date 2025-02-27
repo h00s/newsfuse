@@ -3,10 +3,10 @@ module github.com/h00s/newsfuse
 go 1.24.0
 
 require (
-	github.com/go-raptor/components v1.0.1
+	github.com/go-raptor/components v1.0.2
 	github.com/go-raptor/connector/bun/postgres v1.0.9
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.4.3
+	github.com/go-raptor/raptor/v3 v3.4.4
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/redis/go-redis/v9 v9.7.1

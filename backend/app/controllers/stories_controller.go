@@ -26,7 +26,7 @@ func (sc *StoriesController) Get(c *components.Context) error {
 		return c.JSONError(errs.NewErrorNotFound("Story not found"))
 	}
 
-	return c.JSON(story)
+	return c.JSONResponse(story)
 }
 
 func (sc *StoriesController) Summarize(c *components.Context) error {
@@ -40,5 +40,5 @@ func (sc *StoriesController) Summarize(c *components.Context) error {
 		return c.JSONError(errs.NewErrorNotFound("Story not found"))
 	}
 
-	return c.JSON(story)
+	return c.JSONResponse(story)
 }

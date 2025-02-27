@@ -26,14 +26,14 @@ func (hc *HeadlinesController) All(c *components.Context) error {
 	if lastID, err := strconv.ParseInt(c.QueryParam("last_id"), 10, 64); err == nil {
 		headlines, err = hc.Headlines.AllByLastID(topicID, lastID)
 		if err == nil {
-			return c.JSON(headlines)
+			return c.JSONResponse(headlines)
 		}
 		return c.JSONError(err)
 	}
 
 	headlines, err = hc.Headlines.All(topicID)
 	if err == nil {
-		return c.JSON(headlines)
+		return c.JSONResponse(headlines)
 	}
 	return c.JSONError(err)
 }
@@ -47,7 +47,7 @@ func (hc *HeadlinesController) Search(c *components.Context) error {
 	var headlines models.Headlines
 	headlines, err := hc.Headlines.Search(query)
 	if err == nil {
-		return c.JSON(headlines)
+		return c.JSONResponse(headlines)
 	}
 	return c.JSONError(err)
 }
@@ -63,7 +63,7 @@ func (hc *HeadlinesController) Count(c *components.Context) error {
 		sinceTime := time.Unix(int64(since/1000), 0)
 		count, err := hc.Headlines.Count(topicID, sinceTime)
 		if err == nil {
-			return c.JSON(
+			return c.JSONResponse(
 				raptor.Map{
 					"count": count,
 				},
