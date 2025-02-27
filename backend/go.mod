@@ -3,10 +3,10 @@ module github.com/h00s/newsfuse
 go 1.24.0
 
 require (
-	github.com/go-raptor/components v1.0.0
+	github.com/go-raptor/components v1.0.1
 	github.com/go-raptor/connector/bun/postgres v1.0.9
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.4.1
+	github.com/go-raptor/raptor/v3 v3.4.3
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/redis/go-redis/v9 v9.7.1
@@ -41,7 +41,7 @@ require (
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
-	github.com/pwntr/tinter v1.1.2 // indirect
+	github.com/pwntr/tinter v1.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
