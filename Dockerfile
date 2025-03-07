@@ -1,7 +1,5 @@
 FROM golang:alpine AS backend
 
-RUN apk add --no-cache git
-
 WORKDIR /app
 
 COPY backend ./
