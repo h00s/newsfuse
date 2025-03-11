@@ -8,8 +8,8 @@ require (
 	github.com/go-raptor/errs v1.0.0
 	github.com/go-raptor/raptor/v3 v3.4.5
 	github.com/gocolly/colly/v2 v2.1.0
+	github.com/h00s/litecache v1.0.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
-	github.com/redis/go-redis/v9 v9.7.1
 	github.com/uptrace/bun v1.2.11
 )
 
@@ -21,8 +21,6 @@ require (
 	github.com/antchfx/xpath v1.3.3 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/go-raptor/config v1.0.1 // indirect
 	github.com/go-raptor/connector v1.0.1 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect

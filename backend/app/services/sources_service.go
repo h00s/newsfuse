@@ -8,13 +8,14 @@ import (
 
 	"github.com/go-raptor/errs"
 	"github.com/go-raptor/raptor/v3"
+	"github.com/h00s/litecache"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/uptrace/bun"
 )
 
 type SourcesService struct {
 	raptor.Service
-	Memstore *Memstore
+	Cache *litecache.LiteCache
 }
 
 func (ss *SourcesService) All() (models.Sources, error) {
@@ -54,37 +55,35 @@ func (ss *SourcesService) Get(id int64) models.Source {
 }
 
 func (ss *SourcesService) memstoreGetSources(sources *models.Sources) error {
-	data, err := ss.Memstore.Get("sources")
-	if err == nil && data != "" {
+	if data, ok := ss.Cache.Get("sources"); ok {
 		json.Unmarshal([]byte(data), sources)
 		return nil
 	}
-
 	ss.Log.Warn("Sources not found in memstore")
 	return errors.New("sources not found in memstore")
 }
 
 func (ss *SourcesService) memstoreSetSources(sources *models.Sources) {
-	err := ss.Memstore.Set("sources", *sources)
+	data, err := json.Marshal(*sources)
 	if err != nil {
 		ss.Log.Warn("Error setting sources in memstore", "error", err.Error())
 	}
+	ss.Cache.Set("sources", data)
 }
 
 func (ss *SourcesService) memstoreGetSource(id int64, source *models.Source) error {
-	data, err := ss.Memstore.Get(fmt.Sprintf("sources:%d", id))
-	if err == nil && data != "" {
+	if data, ok := ss.Cache.Get(fmt.Sprintf("sources:%d", id)); ok {
 		json.Unmarshal([]byte(data), source)
 		return nil
 	}
-
 	ss.Log.Warn("Source not found in memstore", "source", id)
 	return errors.New("source not found in memstore")
 }
 
 func (ss *SourcesService) memstoreSetSource(source *models.Source) {
-	err := ss.Memstore.Set(fmt.Sprintf("sources:%d", source.ID), *source)
+	data, err := json.Marshal(*source)
 	if err != nil {
 		ss.Log.Warn("Error setting source in memstore", "error", err.Error())
 	}
+	ss.Cache.Set(fmt.Sprintf("sources:%d", source.ID), data)
 }
