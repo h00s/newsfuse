@@ -12,6 +12,6 @@ func Services(c *raptor.Config) raptor.Services {
 		&services.SourcesService{},
 		services.NewStoriesService(),
 		&services.TopicsService{},
-		litecache.NewLiteCache(300),
+		litecache.NewLiteCache(),
 	}
 }
