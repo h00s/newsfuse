@@ -8,7 +8,7 @@ require (
 	github.com/go-raptor/errs v1.0.0
 	github.com/go-raptor/raptor/v3 v3.4.5
 	github.com/gocolly/colly/v2 v2.1.0
-	github.com/h00s/litecache v1.0.0
+	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/uptrace/bun v1.2.11
 )
