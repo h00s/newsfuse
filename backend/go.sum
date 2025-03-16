@@ -30,6 +30,8 @@ github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/go-raptor/components v1.0.3 h1:pvpQkAchYLvJFz+6AlHeyPW3/vGci9KglN+8fyhR9kE=
 github.com/go-raptor/components v1.0.3/go.mod h1:FXkpzeUKU/g8626Y8AEvnTDiHckUjHiQeeJcgawTktw=
+github.com/go-raptor/components v1.0.5 h1:LxAphigzY8wB8nbbpAJDO9M+yiYCW0vF89cCB4mBvJ0=
+github.com/go-raptor/components v1.0.5/go.mod h1:FXkpzeUKU/g8626Y8AEvnTDiHckUjHiQeeJcgawTktw=
 github.com/go-raptor/config v1.0.1 h1:kBB+XmV6Hj8TueNTjf/FfwuB7q4eP0GObNh6NddSWl4=
 github.com/go-raptor/config v1.0.1/go.mod h1:SkoS8NFSnDxB6qpO7RvY2ndM3GlbvAVAyyFwKJlX8tA=
 github.com/go-raptor/connector v1.0.1 h1:wlfLqEM8GWrMQXtDThTCVSoPbFCeUZuYMH7CKXUn7yc=
@@ -40,6 +42,8 @@ github.com/go-raptor/errs v1.0.0 h1:0oTG63Ci9pM0FBPlPRcN71QkPMLHZnm3FXB8zmg4FKU=
 github.com/go-raptor/errs v1.0.0/go.mod h1:hu7Sr80lB11sOUW1hWRyMmc9G/ECOhYjNv1RFs+L0BQ=
 github.com/go-raptor/raptor/v3 v3.4.5 h1:fSyE7tSpmH8rC0rDccgcTEL1z0EDbOy+URNZe5eXE9o=
 github.com/go-raptor/raptor/v3 v3.4.5/go.mod h1:AaQDq+XFbI3Q1ILLdOxF4XZEhmRoK4dM6+uf7ByAFMc=
+github.com/go-raptor/raptor/v3 v3.4.7 h1:1eSnBZJuqJcEHhJo45HoxJH8tW5NW5JxI9W6+D9LEBQ=
+github.com/go-raptor/raptor/v3 v3.4.7/go.mod h1:91OOpDvkXg19Xv6GibTAYRNrLPXH5BBFOmMZoGk/JdA=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0/go.mod h1:Hof5T3ZswNVsOHYmba1u03W65HDWgpV5HifSuueE0EA=
