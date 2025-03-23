@@ -5,7 +5,7 @@ go 1.24.1
 require (
 	github.com/go-logistiq/handler v1.0.2
 	github.com/go-raptor/components v1.0.6
-	github.com/go-raptor/connector/bun/postgres v1.0.9
+	github.com/go-raptor/connector/bun/postgres v1.0.10
 	github.com/go-raptor/errs v1.0.0
 	github.com/go-raptor/raptor/v3 v3.4.8
 	github.com/gocolly/colly/v2 v2.1.0
@@ -30,7 +30,7 @@ require (
 	github.com/invopop/jsonschema v0.13.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.2 // indirect
+	github.com/jackc/pgx/v5 v5.7.3 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect

@@ -38,6 +38,8 @@ github.com/go-raptor/connector v1.0.1 h1:wlfLqEM8GWrMQXtDThTCVSoPbFCeUZuYMH7CKXU
 github.com/go-raptor/connector v1.0.1/go.mod h1:PhsrQUzoy0XBqUXTK7clyBT0ou0gDVMnxH0EpgpHcrI=
 github.com/go-raptor/connector/bun/postgres v1.0.9 h1:V4rTSOJDzXyHc1yqXQHRuevYucjFl3Gs/JtDWGgzkj0=
 github.com/go-raptor/connector/bun/postgres v1.0.9/go.mod h1:YVbQeNSl26L9/L8CiGZKGDhU/DDE567iOV7Ef0xc2e4=
+github.com/go-raptor/connector/bun/postgres v1.0.10 h1:o0oyQtNj0qq0pH7jGV0kkgA9ZQN0R2G5QMUHhToFhvs=
+github.com/go-raptor/connector/bun/postgres v1.0.10/go.mod h1:ZMKjpwXZeTk4kyh6VroiA11WZqeCP4+zAe0k+Ygs1Fs=
 github.com/go-raptor/errs v1.0.0 h1:0oTG63Ci9pM0FBPlPRcN71QkPMLHZnm3FXB8zmg4FKU=
 github.com/go-raptor/errs v1.0.0/go.mod h1:hu7Sr80lB11sOUW1hWRyMmc9G/ECOhYjNv1RFs+L0BQ=
 github.com/go-raptor/raptor/v3 v3.4.8 h1:w/DTWn4bGnmKRLAcD83Z19q+UVxulg+5minIEZIUlV0=
@@ -84,6 +86,8 @@ github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7Ulw
 github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761/go.mod h1:5TJZWKEWniPve33vlWYSoGYefn3gLQRzjfDlhSJ9ZKM=
 github.com/jackc/pgx/v5 v5.7.2 h1:mLoDLV6sonKlvjIEsV56SkWNCnuNv531l94GaIzO+XI=
 github.com/jackc/pgx/v5 v5.7.2/go.mod h1:ncY89UGWxg82EykZUwSpUKEfccBGGYq1xjrOpsbsfGQ=
+github.com/jackc/pgx/v5 v5.7.3 h1:PO1wNKj/bTAwxSJnO1Z4Ai8j4magtqg2SLNjEDzcXQo=
+github.com/jackc/pgx/v5 v5.7.3/go.mod h1:ncY89UGWxg82EykZUwSpUKEfccBGGYq1xjrOpsbsfGQ=
 github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
 github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
 github.com/jawher/mow.cli v1.1.0/go.mod h1:aNaQlc7ozF3vw6IJ2dHjp2ZFiA4ozMIYY6PyuRJwlUg=
