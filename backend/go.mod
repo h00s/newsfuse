@@ -3,11 +3,11 @@ module github.com/h00s/newsfuse
 go 1.24.1
 
 require (
-	github.com/go-logistiq/handler v1.0.3
+	github.com/go-logistiq/handler v1.0.5
 	github.com/go-raptor/components v1.0.6
 	github.com/go-raptor/connector/bun/postgres v1.0.10
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.4.8
+	github.com/go-raptor/raptor/v3 v3.4.9
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
@@ -56,7 +56,7 @@ require (
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.9-0.20240816141633-0a40785b4f41 // indirect
 	golang.org/x/crypto v0.36.0 // indirect
-	golang.org/x/net v0.37.0 // indirect
+	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/sync v0.12.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
