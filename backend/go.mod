@@ -3,12 +3,12 @@ module github.com/h00s/newsfuse
 go 1.24.1
 
 require (
-	github.com/go-logistiq/handler v1.0.5
-	github.com/go-raptor/components v1.0.6
+	github.com/go-logistiq/handler v1.0.6
+	github.com/go-raptor/components v1.0.7
 	github.com/go-raptor/connector/bun/postgres v1.0.10
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.4.9
-	github.com/gocolly/colly/v2 v2.1.0
+	github.com/go-raptor/raptor/v3 v3.4.10
+	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/uptrace/bun v1.2.11
@@ -21,6 +21,7 @@ require (
 	github.com/antchfx/xmlquery v1.4.4 // indirect
 	github.com/antchfx/xpath v1.3.3 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
+	github.com/bits-and-blooms/bitset v1.22.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/go-raptor/config v1.0.1 // indirect
 	github.com/go-raptor/connector v1.0.1 // indirect
@@ -43,6 +44,7 @@ require (
 	github.com/nats-io/nats.go v1.40.1 // indirect
 	github.com/nats-io/nkeys v0.4.10 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
+	github.com/nlnwa/whatwg-url v0.6.2 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
 	github.com/pwntr/tinter v1.2.0 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
