@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/go-raptor/raptor/v3"
+	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/config"
 	"github.com/h00s/newsfuse/config/components"
-	"github.com/h00s/newsfuse/config/utils"
 )
 
 func main() {
