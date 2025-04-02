@@ -24,10 +24,10 @@ github.com/go-raptor/components v1.0.8 h1:g/m8wJH11Bp2PKvMzzOyETBCUdM04d9UioJwiV
 github.com/go-raptor/components v1.0.8/go.mod h1:niUi4f9weapA1oCb6+KK2SZ8uk7wmyOVKiULkrKDPxY=
 github.com/go-raptor/config v1.0.1 h1:kBB+XmV6Hj8TueNTjf/FfwuB7q4eP0GObNh6NddSWl4=
 github.com/go-raptor/config v1.0.1/go.mod h1:SkoS8NFSnDxB6qpO7RvY2ndM3GlbvAVAyyFwKJlX8tA=
-github.com/go-raptor/connector/bun/postgres v1.0.11 h1:bwzrKnsCwIxP8W63fT2LUjac4/BkW2wWe6K8n4uCo94=
-github.com/go-raptor/connector/bun/postgres v1.0.11/go.mod h1:+fl2lvJPDFPn2jhbyNgvy31PHIJFBV9Px9SKBopggqs=
 github.com/go-raptor/connectors v1.0.2 h1:aAFXlSssExRE0HC6YIj+mSMR2ZP7tZn8qNxRADcekoE=
 github.com/go-raptor/connectors v1.0.2/go.mod h1:o5EsfDhvcxtH00SOh6ehIa2nE/Y2oCrSoorxrSGeEys=
+github.com/go-raptor/connectors/bun/postgres v1.0.12 h1:TN+Lqfif+riajeS2Ezb9d9kxgzz+dnaXv3BH1jgJz+k=
+github.com/go-raptor/connectors/bun/postgres v1.0.12/go.mod h1:Wqzk4pWuMxYFekNtzmGL7Sdx/cYBMG9BuV32VBda15w=
 github.com/go-raptor/errs v1.0.0 h1:0oTG63Ci9pM0FBPlPRcN71QkPMLHZnm3FXB8zmg4FKU=
 github.com/go-raptor/errs v1.0.0/go.mod h1:hu7Sr80lB11sOUW1hWRyMmc9G/ECOhYjNv1RFs+L0BQ=
 github.com/go-raptor/raptor/v3 v3.4.12 h1:YikAj5eSyiPcFlLATJ0fGG699mm041TagHiKPJrjnO0=

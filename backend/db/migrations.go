@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/go-raptor/connector/bun/postgres"
+	"github.com/go-raptor/connectors/bun/postgres"
 	"github.com/h00s/newsfuse/db/migrate"
 )
 
