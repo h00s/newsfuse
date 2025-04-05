@@ -2,12 +2,14 @@ module github.com/h00s/newsfuse
 
 go 1.24.2
 
+// replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
+
 require (
 	github.com/go-logistiq/handler v1.0.6
 	github.com/go-raptor/components v1.0.8
 	github.com/go-raptor/connectors/bun/postgres v1.0.12
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.4.12
+	github.com/go-raptor/raptor/v3 v3.4.14
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
@@ -60,7 +62,7 @@ require (
 	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/sync v0.12.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
