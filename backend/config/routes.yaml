@@ -21,3 +21,6 @@ routes:
     /stories:
       /:id/summarize:
         GET: Stories.Summarize
+  
+  /*:
+    GET: SPA.Index
