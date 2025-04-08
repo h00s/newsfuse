@@ -3,14 +3,15 @@ module github.com/h00s/newsfuse
 go 1.24.2
 
 // replace github.com/go-raptor/raptor/v3 => ../../go-raptor/raptor/v3
+
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
 require (
-	github.com/go-logistiq/handler v1.0.6
-	github.com/go-raptor/components v1.1.1
+	github.com/go-logistiq/handler v1.0.7
+	github.com/go-raptor/components v1.1.2
 	github.com/go-raptor/connectors/bun/postgres v1.0.12
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.5.2
+	github.com/go-raptor/raptor/v3 v3.5.4
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
@@ -22,7 +23,7 @@ require (
 	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/antchfx/htmlquery v1.3.4 // indirect
 	github.com/antchfx/xmlquery v1.4.4 // indirect
-	github.com/antchfx/xpath v1.3.3 // indirect
+	github.com/antchfx/xpath v1.3.4 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
@@ -44,7 +45,7 @@ require (
 	github.com/mailru/easyjson v0.9.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/nats-io/nats.go v1.40.1 // indirect
+	github.com/nats-io/nats.go v1.41.0 // indirect
 	github.com/nats-io/nkeys v0.4.10 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/nlnwa/whatwg-url v0.6.2 // indirect
