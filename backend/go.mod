@@ -12,7 +12,7 @@ require (
 	github.com/go-raptor/connectors/bun/postgres v1.0.12
 	github.com/go-raptor/controllers/spa v1.0.2
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.5.4
+	github.com/go-raptor/raptor/v3 v3.5.5
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
