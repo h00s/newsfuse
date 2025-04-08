@@ -7,10 +7,10 @@ go 1.24.2
 
 require (
 	github.com/go-logistiq/handler v1.0.6
-	github.com/go-raptor/components v1.1.0
+	github.com/go-raptor/components v1.1.1
 	github.com/go-raptor/connectors/bun/postgres v1.0.12
 	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.5.1
+	github.com/go-raptor/raptor/v3 v3.5.2
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
@@ -61,7 +61,7 @@ require (
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.9-0.20240816141633-0a40785b4f41 // indirect
 	golang.org/x/crypto v0.37.0 // indirect
-	golang.org/x/net v0.38.0 // indirect
+	golang.org/x/net v0.39.0 // indirect
 	golang.org/x/sync v0.13.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/text v0.24.0 // indirect

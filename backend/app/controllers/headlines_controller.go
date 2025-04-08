@@ -15,7 +15,7 @@ type HeadlinesController struct {
 	Headlines *services.HeadlinesService
 }
 
-func (hc *HeadlinesController) All(c *raptor.Context) error {
+func (hc *HeadlinesController) All(c raptor.State) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(errs.NewErrorBadRequest("Invalid Topic ID"))
@@ -37,7 +37,7 @@ func (hc *HeadlinesController) All(c *raptor.Context) error {
 	return c.JSONError(err)
 }
 
-func (hc *HeadlinesController) Search(c *raptor.Context) error {
+func (hc *HeadlinesController) Search(c raptor.State) error {
 	query := c.QueryParam("query")
 	if query == "" || len(query) < 3 {
 		return c.JSONError(errs.NewErrorBadRequest("Invalid query"))
@@ -51,7 +51,7 @@ func (hc *HeadlinesController) Search(c *raptor.Context) error {
 	return c.JSONError(err)
 }
 
-func (hc *HeadlinesController) Count(c *raptor.Context) error {
+func (hc *HeadlinesController) Count(c raptor.State) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(errs.NewErrorBadRequest("Invalid Topic ID"))

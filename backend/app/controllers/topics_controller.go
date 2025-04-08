@@ -10,7 +10,7 @@ type TopicsController struct {
 	Topics *services.TopicsService
 }
 
-func (sc *TopicsController) All(c *raptor.Context) error {
+func (sc *TopicsController) All(c raptor.State) error {
 	topics, err := sc.Topics.All()
 	if err != nil {
 		return c.JSONError(err)

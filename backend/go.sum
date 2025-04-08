@@ -24,6 +24,8 @@ github.com/go-raptor/components v1.0.8 h1:g/m8wJH11Bp2PKvMzzOyETBCUdM04d9UioJwiV
 github.com/go-raptor/components v1.0.8/go.mod h1:niUi4f9weapA1oCb6+KK2SZ8uk7wmyOVKiULkrKDPxY=
 github.com/go-raptor/components v1.1.0 h1:kPEd6b4c9xnjkjL9iCP/5Pe71X4+iVi/n2i20NemRFM=
 github.com/go-raptor/components v1.1.0/go.mod h1:5GOauvxQnVn0qqhbQU6ZDs1LRcR9OVzEZjzTVV+fg2g=
+github.com/go-raptor/components v1.1.1 h1:2kR/2ut/KFbp7ekKG03FiZJwsGX1jbMuI9kFsJg2TPo=
+github.com/go-raptor/components v1.1.1/go.mod h1:5GOauvxQnVn0qqhbQU6ZDs1LRcR9OVzEZjzTVV+fg2g=
 github.com/go-raptor/config v1.0.1 h1:kBB+XmV6Hj8TueNTjf/FfwuB7q4eP0GObNh6NddSWl4=
 github.com/go-raptor/config v1.0.1/go.mod h1:SkoS8NFSnDxB6qpO7RvY2ndM3GlbvAVAyyFwKJlX8tA=
 github.com/go-raptor/connectors v1.0.2 h1:aAFXlSssExRE0HC6YIj+mSMR2ZP7tZn8qNxRADcekoE=
@@ -36,6 +38,8 @@ github.com/go-raptor/raptor/v3 v3.5.0 h1:+R7camqPuPkJ1zjiKAM1+K2IL40Rp/TBgHYL2qy
 github.com/go-raptor/raptor/v3 v3.5.0/go.mod h1:2kOHfOxeasOYP8OSqYGu0BkOsNfjWqqbTIrgqcboJvs=
 github.com/go-raptor/raptor/v3 v3.5.1 h1:eTaZUBBtYb2Pm4GhYso9nmStFiAVfuVdd7uWddS0Z6g=
 github.com/go-raptor/raptor/v3 v3.5.1/go.mod h1:LCEsosjDz1Y03rFWY88XMQ8sAzx0d/h/lUZb7+M7lao=
+github.com/go-raptor/raptor/v3 v3.5.2 h1:h/GSEupFuwNJ2PqAXvlh9aSX5J8L6GjQO3iaTnF0WoQ=
+github.com/go-raptor/raptor/v3 v3.5.2/go.mod h1:7AxVK1DaYvs+ScnLEJVh7cK9+ttVQHsGSNAhhkFo8UI=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly/v2 v2.2.0 h1:FQGxcqvTdFAvOpMRhk52o20Qsf6KtRU5HSf0bITS38I=
@@ -154,6 +158,8 @@ golang.org/x/net v0.33.0/go.mod h1:HXLR5J+9DxmrqMwG9qjGCxZ+zKXxBru04zlTvWlWuN4=
 golang.org/x/net v0.34.0/go.mod h1:di0qlW3YNM5oh6GqDGQr92MyTozJPmybPK4Ev/Gm31k=
 golang.org/x/net v0.38.0 h1:vRMAPTMaeGqVhG5QyLJHqNDwecKTomGeqbnfZyKlBI8=
 golang.org/x/net v0.38.0/go.mod h1:ivrbrMbzFq5J41QOQh0siUuly180yBYtLp+CKbEaFx8=
+golang.org/x/net v0.39.0 h1:ZCu7HMWDxpXpaiKdhzIfaltL9Lp31x/3fCP11bc6/fY=
+golang.org/x/net v0.39.0/go.mod h1:X7NRbYVEA+ewNkCNyJ513WmMdQ3BineSwVtN2zD/d+E=
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.1.0/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=

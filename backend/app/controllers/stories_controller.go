@@ -14,7 +14,7 @@ type StoriesController struct {
 	Stories *services.StoriesService
 }
 
-func (sc *StoriesController) Get(c *raptor.Context) error {
+func (sc *StoriesController) Get(c raptor.State) error {
 	headlineID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(errs.NewErrorBadRequest("Invalid Headline ID"))
@@ -28,7 +28,7 @@ func (sc *StoriesController) Get(c *raptor.Context) error {
 	return c.JSONResponse(story)
 }
 
-func (sc *StoriesController) Summarize(c *raptor.Context) error {
+func (sc *StoriesController) Summarize(c raptor.State) error {
 	storyID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		return c.JSONError(errs.NewErrorBadRequest("Invalid Story ID"))

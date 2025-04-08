@@ -10,7 +10,7 @@ type SourcesController struct {
 	Sources *services.SourcesService
 }
 
-func (sc *SourcesController) All(c *raptor.Context) error {
+func (sc *SourcesController) All(c raptor.State) error {
 	sources, err := sc.Sources.All()
 	if err != nil {
 		return c.JSONError(err)
