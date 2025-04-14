@@ -13,7 +13,7 @@ type TopicsController struct {
 func (sc *TopicsController) All(c raptor.State) error {
 	topics, err := sc.Topics.All()
 	if err != nil {
-		return c.JSONError(err)
+		return err
 	}
 	return c.JSONResponse(topics)
 }

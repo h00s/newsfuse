@@ -8,11 +8,11 @@ go 1.24.2
 
 require (
 	github.com/go-logistiq/handler v1.0.8
-	github.com/go-raptor/components v1.1.2
+	github.com/go-raptor/components v1.1.3
 	github.com/go-raptor/connectors/bun/postgres v1.0.12
 	github.com/go-raptor/controllers/spa v1.0.2
-	github.com/go-raptor/errs v1.0.0
-	github.com/go-raptor/raptor/v3 v3.5.5
+	github.com/go-raptor/errs v1.0.1
+	github.com/go-raptor/raptor/v3 v3.5.6
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.1
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
@@ -28,7 +28,7 @@ require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/bits-and-blooms/bitset v1.22.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect
-	github.com/go-raptor/config v1.0.1 // indirect
+	github.com/go-raptor/config v1.0.2 // indirect
 	github.com/go-raptor/connectors v1.0.2 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect

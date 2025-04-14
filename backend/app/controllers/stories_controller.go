@@ -17,12 +17,12 @@ type StoriesController struct {
 func (sc *StoriesController) Get(c raptor.State) error {
 	headlineID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return c.JSONError(errs.NewErrorBadRequest("Invalid Headline ID"))
+		return errs.NewErrorBadRequest("Invalid Headline ID")
 	}
 
 	story, err := sc.Stories.Get(headlineID)
 	if err != nil {
-		return c.JSONError(errs.NewErrorNotFound("Story not found"))
+		return errs.NewErrorNotFound("Story not found")
 	}
 
 	return c.JSONResponse(story)
@@ -31,12 +31,12 @@ func (sc *StoriesController) Get(c raptor.State) error {
 func (sc *StoriesController) Summarize(c raptor.State) error {
 	storyID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return c.JSONError(errs.NewErrorBadRequest("Invalid Story ID"))
+		return errs.NewErrorBadRequest("Invalid Story ID")
 	}
 
 	story, err := sc.Stories.Summarize(storyID)
 	if err != nil {
-		return c.JSONError(errs.NewErrorNotFound("Story not found"))
+		return errs.NewErrorNotFound("Story not found")
 	}
 
 	return c.JSONResponse(story)

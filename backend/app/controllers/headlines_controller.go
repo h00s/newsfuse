@@ -18,58 +18,59 @@ type HeadlinesController struct {
 func (hc *HeadlinesController) All(c raptor.State) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return c.JSONError(errs.NewErrorBadRequest("Invalid Topic ID"))
+		return errs.NewErrorBadRequest("Invalid Topic ID")
 	}
 
 	var headlines models.Headlines
 	if lastID, err := strconv.ParseInt(c.QueryParam("last_id"), 10, 64); err == nil {
 		headlines, err = hc.Headlines.AllByLastID(topicID, lastID)
-		if err == nil {
-			return c.JSONResponse(headlines)
+		if err != nil {
+			return err
 		}
-		return c.JSONError(err)
+		return c.JSONResponse(headlines)
 	}
 
 	headlines, err = hc.Headlines.All(topicID)
-	if err == nil {
-		return c.JSONResponse(headlines)
+	if err != nil {
+		return err
 	}
-	return c.JSONError(err)
+	return c.JSONResponse(headlines)
 }
 
 func (hc *HeadlinesController) Search(c raptor.State) error {
 	query := c.QueryParam("query")
 	if query == "" || len(query) < 3 {
-		return c.JSONError(errs.NewErrorBadRequest("Invalid query"))
+		return errs.NewErrorBadRequest("Invalid query")
 	}
 
 	var headlines models.Headlines
 	headlines, err := hc.Headlines.Search(query)
-	if err == nil {
-		return c.JSONResponse(headlines)
+	if err != nil {
+		return err
 	}
-	return c.JSONError(err)
+	return c.JSONResponse(headlines)
 }
 
 func (hc *HeadlinesController) Count(c raptor.State) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return c.JSONError(errs.NewErrorBadRequest("Invalid Topic ID"))
+		return errs.NewErrorBadRequest("Invalid Topic ID")
 	}
+
 	status := c.QueryParam("status")
 	since, err := strconv.Atoi(c.QueryParam("since"))
 	if err == nil && status != "" && since != 0 {
 		sinceTime := time.Unix(int64(since/1000), 0)
 		count, err := hc.Headlines.Count(topicID, sinceTime)
-		if err == nil {
-			return c.JSONResponse(
-				raptor.Map{
-					"count": count,
-				},
-			)
+		if err != nil {
+			return err
 		}
-		return c.JSONError(err)
+		return c.JSONResponse(
+			raptor.Map{
+				"count": count,
+			},
+		)
 	}
 
-	return c.JSONError(errs.NewErrorBadRequest("Invalid query parameters"))
+	return errs.NewErrorBadRequest("Invalid query parameters")
 }
