@@ -25,11 +25,11 @@ func NewMojportalhr(h chan (models.Headlines), sourceID int64) *Mojportalhr {
 		),
 	}
 
-	s.ScrapeHeadline("div[class^='article_teaser__horizontal_box2']", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("a.se-card--link", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
-			Title:       strings.TrimSpace(e.ChildText("span[class*='article_teaser__title_text']")),
-			URL:         "https://www.mojportal.hr" + strings.TrimSpace(e.ChildAttr("a[class*='article_teaser__title_link']", "href")),
+			Title:       strings.TrimSpace(e.ChildText("div.se-card--head")),
+			URL:         "https://www.mojportal.hr" + strings.TrimSpace(e.Attr("href")),
 			PublishedAt: time.Now(),
 		})
 	})
@@ -38,5 +38,5 @@ func NewMojportalhr(h chan (models.Headlines), sourceID int64) *Mojportalhr {
 }
 
 func (s *Mojportalhr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='article__container']", "p:not([class])", false)
+	return s.DefaultScraper.ScrapeStory(url, "div.se-article--text", "p:not([class])", false)
 }
