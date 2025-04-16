@@ -27,6 +27,8 @@ github.com/go-logistiq/handler v1.0.8 h1:h8dxC1yeIrYiiEXcZ1PK7KMFAUXH4qsLdz5rlOf
 github.com/go-logistiq/handler v1.0.8/go.mod h1:okxpxerfq9ZrkdLymCJ1vh0e5t+0tLcCssscokNgFVg=
 github.com/go-logistiq/handler v1.0.9 h1:cxCIJSP73HsAr7ucnK9tmeI8cND3rTnWrERZNfh8aAw=
 github.com/go-logistiq/handler v1.0.9/go.mod h1:DjzG1UdTu1IvhqbV1HaKwEs7/45ngkRWtzKa8yN3WLc=
+github.com/go-logistiq/handler v1.0.10 h1:xalv2ILh1abLrbElypHSWiMbS/efbHl/dPUCOAfJZbE=
+github.com/go-logistiq/handler v1.0.10/go.mod h1:DjzG1UdTu1IvhqbV1HaKwEs7/45ngkRWtzKa8yN3WLc=
 github.com/go-raptor/components v1.1.2 h1:M4oTUvhC8KJV98rEBFZN1SvmZrWv0Ei0ZupeZQjHLpE=
 github.com/go-raptor/components v1.1.2/go.mod h1:5GOauvxQnVn0qqhbQU6ZDs1LRcR9OVzEZjzTVV+fg2g=
 github.com/go-raptor/components v1.1.3 h1:aw15MhlDmOqMBda+w/z++0oepZ8QzvBk1wGvP+faPsQ=
