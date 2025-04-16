@@ -10,24 +10,25 @@ import (
 	"github.com/go-raptor/raptor/v3"
 )
 
-func NewLogistiqHandler(c *raptor.Config) (*handler.Handler, error) {
+func NewLogistiqHandler(utils *raptor.Utils) (*handler.Handler, error) {
 	var err error
-	batchSize, err := strconv.Atoi(c.AppConfig["logistiq_batch_size"])
+	batchSize, err := strconv.Atoi(utils.Config.AppConfig["logistiq_batch_size"])
 	if err != nil {
 		return nil, errors.New("logistiq_batch_size must be an integer")
 	}
-	timeoutSeconds, err := strconv.Atoi(c.AppConfig["logistiq_timeout_seconds"])
+	timeoutSeconds, err := strconv.Atoi(utils.Config.AppConfig["logistiq_timeout_seconds"])
 	if err != nil {
 		return nil, errors.New("logistiq_timeout_seconds must be an integer")
 	}
 
 	opts := handler.Options{
-		Level:     components.ParseLogLevel(c.GeneralConfig.LogLevel),
-		BatchSize: batchSize,
-		Timeout:   time.Duration(timeoutSeconds) * time.Second,
-		NATSURL:   c.AppConfig["logistiq_nats_url"],
-		Subject:   c.AppConfig["logistiq_subject"],
+		Level:      components.ParseLogLevel(utils.Config.GeneralConfig.LogLevel),
+		BatchSize:  batchSize,
+		Timeout:    time.Duration(timeoutSeconds) * time.Second,
+		NATSURL:    utils.Config.AppConfig["logistiq_nats_url"],
+		Subject:    utils.Config.AppConfig["logistiq_subject"],
+		SetHandler: utils.SetHandler,
 	}
 
-	return handler.New(opts)
+	return handler.New(opts), nil
 }

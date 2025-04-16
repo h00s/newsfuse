@@ -7,7 +7,7 @@ go 1.24.2
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
 require (
-	github.com/go-logistiq/handler v1.0.8
+	github.com/go-logistiq/handler v1.0.9
 	github.com/go-raptor/components v1.1.3
 	github.com/go-raptor/connectors/bun/postgres v1.0.12
 	github.com/go-raptor/controllers/spa v1.0.2
@@ -20,7 +20,7 @@ require (
 )
 
 require (
-	github.com/PuerkitoBio/goquery v1.10.2 // indirect
+	github.com/PuerkitoBio/goquery v1.10.3 // indirect
 	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/antchfx/htmlquery v1.3.4 // indirect
 	github.com/antchfx/xmlquery v1.4.4 // indirect
@@ -47,7 +47,7 @@ require (
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/nats-io/nats.go v1.41.1 // indirect
-	github.com/nats-io/nkeys v0.4.10 // indirect
+	github.com/nats-io/nkeys v0.4.11 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/nlnwa/whatwg-url v0.6.2 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
