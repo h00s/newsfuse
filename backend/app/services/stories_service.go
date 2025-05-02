@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/go-raptor/raptor/v3"
+	"github.com/go-raptor/raptor/v4"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/uptrace/bun"

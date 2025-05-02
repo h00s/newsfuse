@@ -3,7 +3,7 @@ package config
 import (
 	_ "embed"
 
-	"github.com/go-raptor/raptor/v3/router"
+	"github.com/go-raptor/raptor/v4/router"
 )
 
 //go:embed routes.yaml

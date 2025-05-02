@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/go-raptor/errs"
-	"github.com/go-raptor/raptor/v3"
+	"github.com/go-raptor/raptor/v4"
+	"github.com/go-raptor/raptor/v4/core"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/services"
 )
@@ -15,10 +15,10 @@ type HeadlinesController struct {
 	Headlines *services.HeadlinesService
 }
 
-func (hc *HeadlinesController) All(c raptor.State) error {
+func (hc *HeadlinesController) All(c *raptor.Context) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return errs.NewErrorBadRequest("Invalid Topic ID")
+		return core.NewErrorBadRequest("Invalid Topic ID")
 	}
 
 	var headlines models.Headlines
@@ -27,20 +27,20 @@ func (hc *HeadlinesController) All(c raptor.State) error {
 		if err != nil {
 			return err
 		}
-		return c.JSONResponse(headlines)
+		return c.Data(headlines)
 	}
 
 	headlines, err = hc.Headlines.All(topicID)
 	if err != nil {
 		return err
 	}
-	return c.JSONResponse(headlines)
+	return c.Data(headlines)
 }
 
-func (hc *HeadlinesController) Search(c raptor.State) error {
+func (hc *HeadlinesController) Search(c *raptor.Context) error {
 	query := c.QueryParam("query")
 	if query == "" || len(query) < 3 {
-		return errs.NewErrorBadRequest("Invalid query")
+		return core.NewErrorBadRequest("Invalid query")
 	}
 
 	var headlines models.Headlines
@@ -48,13 +48,13 @@ func (hc *HeadlinesController) Search(c raptor.State) error {
 	if err != nil {
 		return err
 	}
-	return c.JSONResponse(headlines)
+	return c.Data(headlines)
 }
 
-func (hc *HeadlinesController) Count(c raptor.State) error {
+func (hc *HeadlinesController) Count(c *raptor.Context) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return errs.NewErrorBadRequest("Invalid Topic ID")
+		return core.NewErrorBadRequest("Invalid Topic ID")
 	}
 
 	status := c.QueryParam("status")
@@ -65,12 +65,12 @@ func (hc *HeadlinesController) Count(c raptor.State) error {
 		if err != nil {
 			return err
 		}
-		return c.JSONResponse(
-			raptor.Map{
+		return c.Data(
+			map[string]interface{}{
 				"count": count,
 			},
 		)
 	}
 
-	return errs.NewErrorBadRequest("Invalid query parameters")
+	return core.NewErrorBadRequest("Invalid query parameters")
 }

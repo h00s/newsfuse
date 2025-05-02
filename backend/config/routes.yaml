@@ -3,13 +3,13 @@ routes:
     /topics:
       /:
         GET: Topics.All
-      /:id/headlines:
+      /{id}/headlines:
         GET: Headlines.All
-      /:id/headlines/count:
+      /{id}/headlines/count:
         GET: Headlines.Count
 
     /headlines:
-      /:id/story:
+      /{id}/story:
         GET: Stories.Get
       /search:
         GET: Headlines.Search
@@ -19,8 +19,8 @@ routes:
         GET: Sources.All
 
     /stories:
-      /:id/summarize:
+      /{id}/summarize:
         GET: Stories.Summarize
   
-  /*:
+  /:
     GET: SPA.Index

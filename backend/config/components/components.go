@@ -2,7 +2,7 @@ package components
 
 import (
 	"github.com/go-raptor/connectors/bun/postgres"
-	"github.com/go-raptor/raptor/v3"
+	"github.com/go-raptor/raptor/v4"
 	"github.com/h00s/newsfuse/db"
 )
 
