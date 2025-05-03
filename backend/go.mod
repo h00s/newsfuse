@@ -9,6 +9,7 @@ go 1.24.2
 require (
 	github.com/go-logistiq/logistiq v1.0.14
 	github.com/go-raptor/connectors/bun/postgres v1.0.13
+	github.com/go-raptor/controllers/spa v1.0.3
 	github.com/go-raptor/middlewares/cors v1.0.1
 	github.com/go-raptor/raptor/v4 v4.0.0-alpha.5
 	github.com/gocolly/colly/v2 v2.2.0

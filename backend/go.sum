@@ -25,6 +25,8 @@ github.com/go-raptor/connectors v1.0.2 h1:aAFXlSssExRE0HC6YIj+mSMR2ZP7tZn8qNxRAD
 github.com/go-raptor/connectors v1.0.2/go.mod h1:o5EsfDhvcxtH00SOh6ehIa2nE/Y2oCrSoorxrSGeEys=
 github.com/go-raptor/connectors/bun/postgres v1.0.13 h1:k3vTzmBlP3iIjW4jgnY1XZWqF1d3WTlLrby8OxEedEk=
 github.com/go-raptor/connectors/bun/postgres v1.0.13/go.mod h1:4P9+5cxF+T0qWF50pEncXhL+xnY6EdWehOAyjXW/Ti8=
+github.com/go-raptor/controllers/spa v1.0.3 h1:KGQWSW2VjNdvhxLbFd/bg2jMZ0X9uG2PT96hASFshps=
+github.com/go-raptor/controllers/spa v1.0.3/go.mod h1:+SVhJpfRsi2BTI7PN4nNYEvNWrWw/k3i09ozOmuLt5E=
 github.com/go-raptor/middlewares/cors v1.0.1 h1:+0SjfGVwNcI/497ITDQwto9Y2NZFw60b2b+yMLwstLA=
 github.com/go-raptor/middlewares/cors v1.0.1/go.mod h1:SK1fT84M094IbxN4f3j8mTXeZ2K/UT8zHmSbvgL35As=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.5 h1:kyBLaAr6xODOX0taOexYD3ZeKeo/aJ4Nd6VBvv0Rmek=
