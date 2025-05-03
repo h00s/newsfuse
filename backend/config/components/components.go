@@ -11,6 +11,6 @@ func New(c *raptor.Config) *raptor.Components {
 		DatabaseConnector: postgres.NewPostgresConnector(c.DatabaseConfig, db.Migrations()),
 		Controllers:       Controllers(),
 		Services:          Services(c),
-		Middlewares:       Middlewares(),
+		Middlewares:       Middlewares(c),
 	}
 }
