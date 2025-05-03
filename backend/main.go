@@ -10,7 +10,7 @@ import (
 func main() {
 	app := raptor.New()
 
-	logistiq, err := utils.NewLogistiqHandler(app.Core.Resources.Config)
+	logistiq, err := utils.NewLogistiqHandler(app.Core)
 	if err != nil {
 		app.Core.Resources.Log.Error("Failed to create Logistiq handler", "error", err)
 		return
