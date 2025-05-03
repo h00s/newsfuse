@@ -7,7 +7,7 @@ go 1.24.2
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
 require (
-	github.com/go-logistiq/handler v1.0.11
+	github.com/go-logistiq/handler v1.0.12
 	github.com/go-raptor/connectors/bun/postgres v1.0.13
 	github.com/go-raptor/middlewares/cors v1.0.1
 	github.com/go-raptor/raptor/v4 v4.0.0-alpha.5

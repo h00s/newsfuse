@@ -21,6 +21,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/go-logistiq/handler v1.0.11 h1:FMgioIC86TIG3Nb7uaHrYQJ+tJnfbQAElFGhMTpEYqE=
 github.com/go-logistiq/handler v1.0.11/go.mod h1:YW2xgFXreYaTz8AcuzdN+gye88PGLT2KQhQTUp1cOuk=
+github.com/go-logistiq/handler v1.0.12 h1:LrQjLmPwsxvhoLWc8CuUOkLVWVLW3ZoYGPIJ6NM/1U8=
+github.com/go-logistiq/handler v1.0.12/go.mod h1:YW2xgFXreYaTz8AcuzdN+gye88PGLT2KQhQTUp1cOuk=
 github.com/go-raptor/connectors v1.0.2 h1:aAFXlSssExRE0HC6YIj+mSMR2ZP7tZn8qNxRADcekoE=
 github.com/go-raptor/connectors v1.0.2/go.mod h1:o5EsfDhvcxtH00SOh6ehIa2nE/Y2oCrSoorxrSGeEys=
 github.com/go-raptor/connectors/bun/postgres v1.0.13 h1:k3vTzmBlP3iIjW4jgnY1XZWqF1d3WTlLrby8OxEedEk=
