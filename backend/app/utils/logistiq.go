@@ -5,12 +5,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/go-logistiq/handler"
+	"github.com/go-logistiq/logistiq"
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/core"
 )
 
-func NewLogistiq(c *raptor.Config) (*handler.Logistiq, error) {
+func NewLogistiqHandler(c *raptor.Config) (*logistiq.LogistiqHandler, error) {
 	var err error
 	batchSize, err := strconv.Atoi(c.AppConfig["logistiq_batch_size"])
 	if err != nil {
@@ -21,7 +21,7 @@ func NewLogistiq(c *raptor.Config) (*handler.Logistiq, error) {
 		return nil, errors.New("logistiq_timeout_seconds must be an integer")
 	}
 
-	opts := handler.Options{
+	opts := logistiq.Options{
 		Level:     core.ParseLogLevel(c.GeneralConfig.LogLevel),
 		BatchSize: batchSize,
 		Timeout:   time.Duration(timeoutSeconds) * time.Second,
@@ -29,5 +29,5 @@ func NewLogistiq(c *raptor.Config) (*handler.Logistiq, error) {
 		Subject:   c.AppConfig["logistiq_subject"],
 	}
 
-	return handler.New(opts)
+	return logistiq.NewLogistiqHandler(opts)
 }
