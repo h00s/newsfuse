@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/go-raptor/raptor/v4"
-	"github.com/go-raptor/raptor/v4/core"
+	"github.com/go-raptor/raptor/v4/errs"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/services"
 )
@@ -18,7 +18,7 @@ type HeadlinesController struct {
 func (hc *HeadlinesController) All(c *raptor.Context) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return core.NewErrorBadRequest("Invalid Topic ID")
+		return errs.NewErrorBadRequest("Invalid Topic ID")
 	}
 
 	var headlines models.Headlines
@@ -40,7 +40,7 @@ func (hc *HeadlinesController) All(c *raptor.Context) error {
 func (hc *HeadlinesController) Search(c *raptor.Context) error {
 	query := c.QueryParam("query")
 	if query == "" || len(query) < 3 {
-		return core.NewErrorBadRequest("Invalid query")
+		return errs.NewErrorBadRequest("Invalid query")
 	}
 
 	var headlines models.Headlines
@@ -54,7 +54,7 @@ func (hc *HeadlinesController) Search(c *raptor.Context) error {
 func (hc *HeadlinesController) Count(c *raptor.Context) error {
 	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
-		return core.NewErrorBadRequest("Invalid Topic ID")
+		return errs.NewErrorBadRequest("Invalid Topic ID")
 	}
 
 	status := c.QueryParam("status")
@@ -72,5 +72,5 @@ func (hc *HeadlinesController) Count(c *raptor.Context) error {
 		)
 	}
 
-	return core.NewErrorBadRequest("Invalid query parameters")
+	return errs.NewErrorBadRequest("Invalid query parameters")
 }

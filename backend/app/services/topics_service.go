@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	"github.com/go-raptor/raptor/v4"
-	"github.com/go-raptor/raptor/v4/core"
+	"github.com/go-raptor/raptor/v4/errs"
 	"github.com/h00s/litecache"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/uptrace/bun"
@@ -31,7 +31,7 @@ func (ts *TopicsService) All() (models.Topics, error) {
 		Scan(context.Background())
 	if err != nil {
 		ts.Log.Error("Error geting topics", "Error", err.Error())
-		return topics, core.NewErrorInternal(err.Error())
+		return topics, errs.NewErrorInternal(err.Error())
 	}
 
 	go ts.memstoreSetTopics(&topics)
