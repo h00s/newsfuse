@@ -7,13 +7,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-raptor/raptor/v4/core"
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 )
 
 type Scraper interface {
 	Start()
-	//Init(u *raptor.Utils)
+	Init(r *core.Resources)
 	ScrapeStory(url string) (string, error)
 }
 
@@ -29,7 +30,7 @@ type DefaultScraper struct {
 
 	OffHours []int
 
-	//utils     *raptor.Utils
+	resources *core.Resources
 	collector *colly.Collector
 }
 
@@ -46,14 +47,14 @@ func NewScraper(headlinesChannel chan (models.Headlines), name, url string, minR
 
 		OffHours: offHours,
 
-		//utils:     nil,
+		resources: nil,
 		collector: colly.NewCollector(),
 	}
 }
 
-/*func (s *DefaultScraper) Init(u *raptor.Utils) {
-	s.utils = u
-}*/
+func (s *DefaultScraper) Init(r *core.Resources) {
+	s.resources = r
+}
 
 func (s *DefaultScraper) AddHeadline(h models.Headline) {
 	title := strings.TrimSpace(h.Title)
@@ -80,7 +81,7 @@ func (s *DefaultScraper) ScrapeStory(url, element, childElement string, html boo
 			if html {
 				contentsHTML, err := el.DOM.Html()
 				if err != nil {
-					//s.utils.Log.Error("Error getting HTML", "error", err.Error())
+					s.resources.Log.Error("Error getting HTML", "error", err.Error())
 					contents = ""
 				} else {
 					contents = strings.TrimSpace(contentsHTML)
@@ -111,20 +112,20 @@ func (s *DefaultScraper) Start() {
 
 	s.collector.OnScraped(func(r *colly.Response) {
 		s.headlinesChannel <- s.headlines
-		//s.utils.Log.Info("Finished scraping", "scraper", s.Name)
+		s.resources.Log.Info("Finished scraping", "scraper", s.Name)
 	})
 
 	go func() {
 		for {
-			//s.utils.Log.Info("Started scraping", "scraper", s.Name)
+			s.resources.Log.Info("Started scraping", "scraper", s.Name)
 			if !slices.Contains(s.OffHours, time.Now().Hour()) {
 				s.collector.Visit(s.URL)
 				s.collector.Wait()
 			} else {
-				//s.utils.Log.Info("Skipping scraping", "scraper", s.Name, "hour", time.Now().Hour())
+				s.resources.Log.Info("Skipping scraping", "scraper", s.Name, "hour", time.Now().Hour())
 			}
 			waitTime := rand.Intn(s.MaxRefreshInterval-s.MinRefreshInterval) + s.MinRefreshInterval
-			//s.utils.Log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
+			s.resources.Log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
 			time.Sleep(time.Duration(waitTime) * time.Minute)
 		}
 	}()
