@@ -31,10 +31,14 @@ github.com/go-raptor/middlewares/cors v1.0.1 h1:+0SjfGVwNcI/497ITDQwto9Y2NZFw60b
 github.com/go-raptor/middlewares/cors v1.0.1/go.mod h1:SK1fT84M094IbxN4f3j8mTXeZ2K/UT8zHmSbvgL35As=
 github.com/go-raptor/middlewares/cors v1.0.2 h1:3G3P8G01V7RGXQKO4uH38z7F7FWVERQ297GlNrRmNXA=
 github.com/go-raptor/middlewares/cors v1.0.2/go.mod h1:flJ00tMK9B5R8JMmfnd/2R+ZnezWskFHNRXwElOL+KA=
+github.com/go-raptor/middlewares/logger v1.0.0 h1:n06UdBuQsEcdE3ub4tzQh+XubIEVKtq2Hn5VxDBwtCw=
+github.com/go-raptor/middlewares/logger v1.0.0/go.mod h1:Pl+wsruKrfiRhs9tI+fF0etGcEScBkcNmwUH2J9H0P8=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.7 h1:Lg4Ss436GY696XOOuhlGQ0i3HbUfLCGYDM89Hm/aK58=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.7/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.10 h1:0eUpUYIyiBg0WcSMKmxKmhXocbeJCHREv8/m+hEXcLM=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.10/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
+github.com/go-raptor/raptor/v4 v4.0.0-alpha.12 h1:f845NNLvbFjgsOKbgrrmXbh+SugliwyT90a/LfyOrqA=
+github.com/go-raptor/raptor/v4 v4.0.0-alpha.12/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly/v2 v2.2.0 h1:FQGxcqvTdFAvOpMRhk52o20Qsf6KtRU5HSf0bITS38I=
