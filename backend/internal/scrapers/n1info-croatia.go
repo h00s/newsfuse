@@ -23,11 +23,11 @@ func NewN1InfoCroatia(h chan (models.Headlines), sourceID int64) *N1InfoCroatia 
 		),
 	}
 
-	s.ScrapeHeadline("a[class='uc-block-post-grid-title-link']", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("h3[data-testid='article-title']", func(e *colly.HTMLElement) {
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
-			Title:       e.Text,
-			URL:         e.Attr("href"),
+			Title:       e.ChildText("a"),
+			URL:         "https://n1info.hr" + e.ChildAttr("a", "href"),
 			PublishedAt: time.Now(),
 		})
 	})
@@ -36,5 +36,5 @@ func NewN1InfoCroatia(h chan (models.Headlines), sourceID int64) *N1InfoCroatia 
 }
 
 func (s *N1InfoCroatia) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='entry-content']", "p:not([class])", false)
+	return s.DefaultScraper.ScrapeStory(url, "div.article-content-wrapper", "p[data-block-key]", false)
 }
