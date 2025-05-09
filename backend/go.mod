@@ -10,8 +10,8 @@ require (
 	github.com/go-logistiq/logistiq v1.0.14
 	github.com/go-raptor/connectors/bun/postgres v1.0.13
 	github.com/go-raptor/controllers/spa v1.0.3
-	github.com/go-raptor/middlewares/cors v1.0.1
-	github.com/go-raptor/raptor/v4 v4.0.0-alpha.7
+	github.com/go-raptor/middlewares/cors v1.0.2
+	github.com/go-raptor/raptor/v4 v4.0.0-alpha.10
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.2
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
