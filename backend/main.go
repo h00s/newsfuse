@@ -15,7 +15,7 @@ func main() {
 		app.Core.Resources.Log.Error("Failed to create Logistiq handler", "error", err)
 		return
 	}
-	// app.Core.Resources.SetLogHandler(logistiq)
+	app.Core.Resources.SetLogHandler(logistiq)
 	defer logistiq.Close()
 
 	app.Configure(components.New(app.Core.Resources.Config))
