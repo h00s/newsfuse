@@ -40,6 +40,7 @@ func NewHeadlinesService() *HeadlinesService {
 			8:  scrapers.NewHackerNews(headlinesChannel, 8),
 			9:  scrapers.NewBughr(headlinesChannel, 9),
 			10: scrapers.NewTelegram(headlinesChannel, 10),
+			11: scrapers.NewHCL(headlinesChannel, 11),
 		},
 		HeadlinesChannel: headlinesChannel,
 	}
