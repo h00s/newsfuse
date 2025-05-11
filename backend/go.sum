@@ -33,6 +33,8 @@ github.com/go-raptor/middlewares/logger v1.0.0 h1:n06UdBuQsEcdE3ub4tzQh+XubIEVKt
 github.com/go-raptor/middlewares/logger v1.0.0/go.mod h1:Pl+wsruKrfiRhs9tI+fF0etGcEScBkcNmwUH2J9H0P8=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.12 h1:f845NNLvbFjgsOKbgrrmXbh+SugliwyT90a/LfyOrqA=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.12/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
+github.com/go-raptor/raptor/v4 v4.0.0-alpha.15 h1:18UBan6QDyAsbdellOOG15FrGni4NjTaPJhabcFIqfs=
+github.com/go-raptor/raptor/v4 v4.0.0-alpha.15/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
