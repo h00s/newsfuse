@@ -12,7 +12,7 @@ require (
 	github.com/go-raptor/controllers/spa v1.0.3
 	github.com/go-raptor/middlewares/cors v1.0.2
 	github.com/go-raptor/middlewares/logger v1.0.0
-	github.com/go-raptor/raptor/v4 v4.0.0-alpha.15
+	github.com/go-raptor/raptor/v4 v4.0.0-alpha.16
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.2
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
