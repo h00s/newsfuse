@@ -23,4 +23,4 @@ routes:
         GET: Stories.Summarize
   
   /:
-    GET: SPA.Index
+    ANY: SPA.Index
