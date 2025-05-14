@@ -41,6 +41,8 @@ github.com/go-raptor/raptor/v4 v4.0.0-alpha.17 h1:40mFbO6qeNKbTsD8uPbq+a/qypi6fv
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.17/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.18 h1:EMmyAZOHAtUS4nrYWzybGXzlkMDzFDjwL/f2wyXcJEU=
 github.com/go-raptor/raptor/v4 v4.0.0-alpha.18/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
+github.com/go-raptor/raptor/v4 v4.0.0-alpha.19 h1:hncbpk1UK5yNLKTZ1ohP6NFxb5u4RbGYXhx/pAaNLs0=
+github.com/go-raptor/raptor/v4 v4.0.0-alpha.19/go.mod h1:8c5+zuJy2yb2WAkjvQCa8mXPu8P4WEQRI7s9UpOOaEw=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
