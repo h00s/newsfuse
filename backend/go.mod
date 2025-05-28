@@ -7,12 +7,12 @@ go 1.24.3
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
 require (
-	github.com/go-logistiq/logistiq v1.0.14
-	github.com/go-raptor/connectors/bun/postgres v1.0.13
+	github.com/go-logistiq/logistiq v1.0.15
+	github.com/go-raptor/connectors/bun/postgres v1.0.14
 	github.com/go-raptor/controllers/spa v1.0.3
 	github.com/go-raptor/middlewares/cors v1.0.2
 	github.com/go-raptor/middlewares/logger v1.0.0
-	github.com/go-raptor/raptor/v4 v4.0.0-alpha.20
+	github.com/go-raptor/raptor/v4 v4.0.2
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/h00s/litecache v1.0.2
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
@@ -32,11 +32,11 @@ require (
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/h00s/tint v1.0.7 // indirect
+	github.com/h00s/tint v1.1.2 // indirect
 	github.com/invopop/jsonschema v0.13.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.4 // indirect
+	github.com/jackc/pgx/v5 v5.7.5 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
