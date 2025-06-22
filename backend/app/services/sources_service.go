@@ -8,14 +8,13 @@ import (
 
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
-	"github.com/h00s/litecache"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/uptrace/bun"
 )
 
 type SourcesService struct {
 	raptor.Service
-	Cache *litecache.LiteCache
+	Cache *CacheService
 }
 
 func (ss *SourcesService) All() (models.Sources, error) {
@@ -56,7 +55,7 @@ func (ss *SourcesService) Get(id int64) models.Source {
 
 func (ss *SourcesService) memstoreGetSources(sources *models.Sources) error {
 	if data, ok := ss.Cache.Get("sources"); ok {
-		json.Unmarshal([]byte(data), sources)
+		json.Unmarshal(data, sources)
 		return nil
 	}
 	ss.Log.Warn("Sources not found in memstore")
@@ -73,7 +72,7 @@ func (ss *SourcesService) memstoreSetSources(sources *models.Sources) {
 
 func (ss *SourcesService) memstoreGetSource(id int64, source *models.Source) error {
 	if data, ok := ss.Cache.Get(fmt.Sprintf("sources:%d", id)); ok {
-		json.Unmarshal([]byte(data), source)
+		json.Unmarshal(data, source)
 		return nil
 	}
 	ss.Log.Warn("Source not found in memstore", "source", id)

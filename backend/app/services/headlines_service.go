@@ -10,7 +10,6 @@ import (
 
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
-	"github.com/h00s/litecache"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
 	"github.com/h00s/newsfuse/internal/scrapers"
@@ -22,7 +21,7 @@ type HeadlinesService struct {
 	Scrapers         map[int]internal.Scraper
 	HeadlinesChannel chan models.Headlines
 	Sources          *SourcesService
-	Cache            *litecache.LiteCache
+	Cache            *CacheService
 }
 
 func NewHeadlinesService() *HeadlinesService {
@@ -178,7 +177,7 @@ func (hs *HeadlinesService) Count(topicID int64, since time.Time) (int, error) {
 
 func (hs *HeadlinesService) memstoreGetHeadlinesByTopicID(topicID int64, headlines *models.Headlines) error {
 	if data, ok := hs.Cache.Get(fmt.Sprintf("headlines:%d", topicID)); ok {
-		json.Unmarshal([]byte(data), headlines)
+		json.Unmarshal(data, headlines)
 		return nil
 	}
 	hs.Log.Warn("Headlines not found in memstore", "topic", topicID)

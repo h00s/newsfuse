@@ -7,14 +7,13 @@ import (
 
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
-	"github.com/h00s/litecache"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/uptrace/bun"
 )
 
 type TopicsService struct {
 	raptor.Service
-	Cache *litecache.LiteCache
+	Cache *CacheService
 }
 
 func (ts *TopicsService) All() (models.Topics, error) {
@@ -40,7 +39,7 @@ func (ts *TopicsService) All() (models.Topics, error) {
 
 func (ts *TopicsService) memstoreGetTopics(topics *models.Topics) error {
 	if data, ok := ts.Cache.Get("topics"); ok {
-		json.Unmarshal([]byte(data), topics)
+		json.Unmarshal(data, topics)
 		return nil
 	}
 	ts.Log.Warn("Topics not found in memstore")
