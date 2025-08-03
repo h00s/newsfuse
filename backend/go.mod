@@ -8,15 +8,15 @@ go 1.24.3
 
 require (
 	github.com/dgraph-io/ristretto/v2 v2.2.0
-	github.com/go-logistiq/logistiq v1.0.16
-	github.com/go-raptor/connectors/bun/postgres v1.0.15
+	github.com/go-logistiq/logistiq v1.0.17
+	github.com/go-raptor/connectors/bun/postgres v1.0.16
 	github.com/go-raptor/controllers/spa v1.0.3
 	github.com/go-raptor/middlewares/cors v1.0.2
 	github.com/go-raptor/middlewares/logger v1.0.0
 	github.com/go-raptor/raptor/v4 v4.0.2
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
-	github.com/uptrace/bun v1.2.14
+	github.com/uptrace/bun v1.2.15
 )
 
 require (
@@ -44,7 +44,7 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
-	github.com/nats-io/nats.go v1.43.0 // indirect
+	github.com/nats-io/nats.go v1.44.0 // indirect
 	github.com/nats-io/nkeys v0.4.11 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/nlnwa/whatwg-url v0.6.2 // indirect
@@ -53,15 +53,15 @@ require (
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
-	github.com/uptrace/bun/dialect/pgdialect v1.2.14 // indirect
+	github.com/uptrace/bun/dialect/pgdialect v1.2.15 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.9-0.20240816141633-0a40785b4f41 // indirect
-	golang.org/x/crypto v0.39.0 // indirect
-	golang.org/x/net v0.41.0 // indirect
-	golang.org/x/sync v0.15.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
+	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/sync v0.16.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
+	golang.org/x/text v0.27.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
