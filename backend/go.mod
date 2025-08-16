@@ -1,6 +1,6 @@
 module github.com/h00s/newsfuse
 
-go 1.24.3
+go 1.25
 
 //replace github.com/go-raptor/raptor/v4 => ../../go-raptor/raptor/v4
 
@@ -11,9 +11,9 @@ require (
 	github.com/go-logistiq/logistiq v1.0.17
 	github.com/go-raptor/connectors/bun/postgres v1.0.16
 	github.com/go-raptor/controllers/spa v1.0.3
-	github.com/go-raptor/middlewares/cors v1.0.2
+	github.com/go-raptor/middlewares/cors v1.0.3
 	github.com/go-raptor/middlewares/logger v1.0.0
-	github.com/go-raptor/raptor/v4 v4.0.4
+	github.com/go-raptor/raptor/v4 v4.0.6
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/uptrace/bun v1.2.15
