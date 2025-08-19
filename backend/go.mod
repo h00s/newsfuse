@@ -7,13 +7,13 @@ go 1.25
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
 require (
-	github.com/dgraph-io/ristretto/v2 v2.2.0
+	github.com/dgraph-io/ristretto/v2 v2.3.0
 	github.com/go-logistiq/logistiq v1.0.17
 	github.com/go-raptor/connectors/bun/postgres v1.0.16
 	github.com/go-raptor/controllers/spa v1.0.3
 	github.com/go-raptor/middlewares/cors v1.0.3
-	github.com/go-raptor/middlewares/logger v1.0.0
-	github.com/go-raptor/raptor/v4 v4.0.6
+	github.com/go-raptor/middlewares/logger v1.0.1
+	github.com/go-raptor/raptor/v4 v4.0.7
 	github.com/gocolly/colly/v2 v2.2.0
 	github.com/madebywelch/anthropic-go/v3 v3.2.3
 	github.com/uptrace/bun v1.2.15
@@ -24,7 +24,7 @@ require (
 	github.com/andybalholm/cascadia v1.3.3 // indirect
 	github.com/antchfx/htmlquery v1.3.4 // indirect
 	github.com/antchfx/xmlquery v1.4.4 // indirect
-	github.com/antchfx/xpath v1.3.4 // indirect
+	github.com/antchfx/xpath v1.3.5 // indirect
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
 	github.com/bits-and-blooms/bitset v1.24.0 // indirect
 	github.com/buger/jsonparser v1.1.1 // indirect

@@ -9,6 +9,8 @@ github.com/antchfx/xmlquery v1.4.4/go.mod h1:AEPEEPYE9GnA2mj5Ur2L5Q5/2PycJ0N9Fus
 github.com/antchfx/xpath v1.3.3/go.mod h1:i54GszH55fYfBmoZXapTHN8T8tkcHfRgLyVwwqzXNcs=
 github.com/antchfx/xpath v1.3.4 h1:1ixrW1VnXd4HurCj7qnqnR0jo14g8JMe20Fshg1Vgz4=
 github.com/antchfx/xpath v1.3.4/go.mod h1:i54GszH55fYfBmoZXapTHN8T8tkcHfRgLyVwwqzXNcs=
+github.com/antchfx/xpath v1.3.5 h1:PqbXLC3TkfeZyakF5eeh3NTWEbYl4VHNVeufANzDbKQ=
+github.com/antchfx/xpath v1.3.5/go.mod h1:i54GszH55fYfBmoZXapTHN8T8tkcHfRgLyVwwqzXNcs=
 github.com/bahlo/generic-list-go v0.2.0 h1:5sz/EEAK+ls5wF+NeqDpk5+iNdMDXrh3z3nPnH1Wvgk=
 github.com/bahlo/generic-list-go v0.2.0/go.mod h1:2KvAjgMlE5NNynlg/5iLrrCCZ2+5xWbdbCW3pNTGyYg=
 github.com/bits-and-blooms/bitset v1.20.0/go.mod h1:7hO7Gc7Pp1vODcmWvKMRA9BNmbv6a/7QIWpPxHddWR8=
@@ -25,6 +27,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dgraph-io/ristretto/v2 v2.2.0 h1:bkY3XzJcXoMuELV8F+vS8kzNgicwQFAaGINAEJdWGOM=
 github.com/dgraph-io/ristretto/v2 v2.2.0/go.mod h1:RZrm63UmcBAaYWC1DotLYBmTvgkrs0+XhBd7Npn7/zI=
+github.com/dgraph-io/ristretto/v2 v2.3.0 h1:qTQ38m7oIyd4GAed/QkUZyPFNMnvVWyazGXRwvOt5zk=
+github.com/dgraph-io/ristretto/v2 v2.3.0/go.mod h1:gpoRV3VzrEY1a9dWAYV6T1U7YzfgttXdd/ZzL1s9OZM=
 github.com/dgryski/go-farm v0.0.0-20240924180020-3414d57e47da h1:aIftn67I1fkbMa512G+w+Pxci9hJPB8oMnkcP3iZF38=
 github.com/dgryski/go-farm v0.0.0-20240924180020-3414d57e47da/go.mod h1:SqUrOPUnsFjfmXRMNPybcSiG0BgUW2AuFH8PAnS2iTw=
 github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=
@@ -47,12 +51,16 @@ github.com/go-raptor/middlewares/cors v1.0.3 h1:l3e1dq3SQQ8TcrR8LQQ4KIZY6JcOHsGo
 github.com/go-raptor/middlewares/cors v1.0.3/go.mod h1:pS8C/elOgsuNit1ylwHrFIczJqMGOxqw00DtJjy02RM=
 github.com/go-raptor/middlewares/logger v1.0.0 h1:n06UdBuQsEcdE3ub4tzQh+XubIEVKtq2Hn5VxDBwtCw=
 github.com/go-raptor/middlewares/logger v1.0.0/go.mod h1:Pl+wsruKrfiRhs9tI+fF0etGcEScBkcNmwUH2J9H0P8=
+github.com/go-raptor/middlewares/logger v1.0.1 h1:4eizH+V5aJgmR9ebduAH1D96tIc+ooui15BSR6ghRpE=
+github.com/go-raptor/middlewares/logger v1.0.1/go.mod h1:jWZQZWsgruiblewDiVfBr2nuR6Sg8RTAt0I6t/j8d4g=
 github.com/go-raptor/raptor/v4 v4.0.2 h1:As9LQsLXBYyXVfG/F8oRUQIG1JkFuh/VBF+pBPahMw4=
 github.com/go-raptor/raptor/v4 v4.0.2/go.mod h1:HilAUjnoSgSvI10RYrs2cijKs6rjnf9rL0hn+iWt8wk=
 github.com/go-raptor/raptor/v4 v4.0.4 h1:3UJw3rURf9G/yBOnt11qwtRFo4BZkWeNxtcxPBfkU+I=
 github.com/go-raptor/raptor/v4 v4.0.4/go.mod h1:HilAUjnoSgSvI10RYrs2cijKs6rjnf9rL0hn+iWt8wk=
 github.com/go-raptor/raptor/v4 v4.0.6 h1:/7DHt4zY2sCtxEFAiicVPhosfuPYAzpadKUo1Fx4MY4=
 github.com/go-raptor/raptor/v4 v4.0.6/go.mod h1:XNGtjbQU3SoVmfQZl4oTQbnxpwEWGLDDfBllxbp2j/A=
+github.com/go-raptor/raptor/v4 v4.0.7 h1:b5391oagQxNA3LF9aF3as+H0YftLhXiuTKiCTAsKtaI=
+github.com/go-raptor/raptor/v4 v4.0.7/go.mod h1:XNGtjbQU3SoVmfQZl4oTQbnxpwEWGLDDfBllxbp2j/A=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
