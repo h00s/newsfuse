@@ -31,7 +31,7 @@ func NewStoriesService() *StoriesService {
 
 func (ss *StoriesService) Get(headlineID int64) (*models.Story, error) {
 	var story models.Story
-	err := ss.DB.Conn().(*bun.DB).
+	err := ss.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&story).
 		Where("headline_id = ?", headlineID).
@@ -56,7 +56,7 @@ func (ss *StoriesService) Get(headlineID int64) (*models.Story, error) {
 
 func (ss *StoriesService) Scrape(headlineID int64) (models.Story, error) {
 	var headline models.Headline
-	err := ss.DB.Conn().(*bun.DB).
+	err := ss.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&headline).
 		Where("id = ?", headlineID).
@@ -78,7 +78,7 @@ func (ss *StoriesService) Scrape(headlineID int64) (models.Story, error) {
 }
 
 func (ss *StoriesService) Save(story *models.Story) error {
-	_, err := ss.DB.Conn().(*bun.DB).
+	_, err := ss.Database.Conn().(*bun.DB).
 		NewInsert().
 		Model(story).
 		Returning("id").
@@ -94,7 +94,7 @@ func (ss *StoriesService) Save(story *models.Story) error {
 
 func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
 	var story models.Story
-	err := ss.DB.Conn().(*bun.DB).
+	err := ss.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&story).
 		Where("id = ?", storyID).
@@ -120,7 +120,7 @@ func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
 	}
 
 	story.Summary = summary
-	go ss.DB.Conn().(*bun.DB).
+	go ss.Database.Conn().(*bun.DB).
 		NewUpdate().
 		Model(&story).
 		Column("summary").

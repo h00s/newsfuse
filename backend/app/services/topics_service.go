@@ -23,7 +23,7 @@ func (ts *TopicsService) All() (models.Topics, error) {
 		return topics, nil
 	}
 
-	err := ts.DB.Conn().(*bun.DB).
+	err := ts.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&topics).
 		Order("id").
