@@ -39,6 +39,8 @@ github.com/go-logistiq/logistiq v1.0.17 h1:DprLa4sRJ4ARahZojWB9wtZ8EjXwIrBKf+dT6
 github.com/go-logistiq/logistiq v1.0.17/go.mod h1:aPpLi4lSdp/nge1AaJJ2ApZQdTtduL9xDo0h30cuJMY=
 github.com/go-logistiq/logistiq v1.0.18 h1:3ScJX9la0nkj4LkZMlR3MDofW6KV5gZxhJgPreDkXA4=
 github.com/go-logistiq/logistiq v1.0.18/go.mod h1:ZLfosfEkSij89xm4k6+cBK1L9FF8jcWCTXbgaU21gcs=
+github.com/go-logistiq/logistiq v1.0.19 h1:XzXYCozd8BCgD7ktL5bU5dy2tPO/+hPkShAlkRu6dnA=
+github.com/go-logistiq/logistiq v1.0.19/go.mod h1:Hfo75C1p6Gf1acwgcZc3GBxV0jKh7U9iGKHaEke6OmM=
 github.com/go-raptor/connectors v1.0.2 h1:aAFXlSssExRE0HC6YIj+mSMR2ZP7tZn8qNxRADcekoE=
 github.com/go-raptor/connectors v1.0.2/go.mod h1:o5EsfDhvcxtH00SOh6ehIa2nE/Y2oCrSoorxrSGeEys=
 github.com/go-raptor/connectors/bun/postgres v1.0.15 h1:1RC0JSDO7gfckOMRDqEeiRAcz7OSxAxRTWbIGJLd3u4=
@@ -67,6 +69,8 @@ github.com/go-raptor/raptor/v4 v4.0.7 h1:b5391oagQxNA3LF9aF3as+H0YftLhXiuTKiCTAs
 github.com/go-raptor/raptor/v4 v4.0.7/go.mod h1:XNGtjbQU3SoVmfQZl4oTQbnxpwEWGLDDfBllxbp2j/A=
 github.com/go-raptor/raptor/v4 v4.0.9 h1:IC7PZ9dqDSIOvtNSja5SNWUPv0ey/b6vSICwbdbZNHE=
 github.com/go-raptor/raptor/v4 v4.0.9/go.mod h1:XNGtjbQU3SoVmfQZl4oTQbnxpwEWGLDDfBllxbp2j/A=
+github.com/go-raptor/raptor/v4 v4.0.10 h1:pPBS6BNcj+WOQGDkT/e4cUSA/mG8wYVhQ8ZG+Swz5Aw=
+github.com/go-raptor/raptor/v4 v4.0.10/go.mod h1:XNGtjbQU3SoVmfQZl4oTQbnxpwEWGLDDfBllxbp2j/A=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
@@ -110,12 +114,16 @@ github.com/madebywelch/anthropic-go/v3 v3.2.3 h1:8ejVqk4jQH4qJ8SaX5ySJmLYM7HQWId
 github.com/madebywelch/anthropic-go/v3 v3.2.3/go.mod h1:mbJC8899hdNCDtXYTDpbiYOKmfTDhilEvRIkSZv2mKU=
 github.com/mailru/easyjson v0.9.0 h1:PrnmzHw7262yW8sTBwxi1PdJA3Iw/EKBa8psRf7d9a4=
 github.com/mailru/easyjson v0.9.0/go.mod h1:1+xMtQp2MRNVL/V1bOzuP3aP8VNwRW55fQUto+XFtTU=
+github.com/mailru/easyjson v0.9.1 h1:LbtsOm5WAswyWbvTEOqhypdPeZzHavpZx96/n553mR8=
+github.com/mailru/easyjson v0.9.1/go.mod h1:1+xMtQp2MRNVL/V1bOzuP3aP8VNwRW55fQUto+XFtTU=
 github.com/nats-io/nats.go v1.43.0 h1:uRFZ2FEoRvP64+UUhaTokyS18XBCR/xM2vQZKO4i8ug=
 github.com/nats-io/nats.go v1.43.0/go.mod h1:iRWIPokVIFbVijxuMQq4y9ttaBTMe0SFdlZfMDd+33g=
 github.com/nats-io/nats.go v1.44.0 h1:ECKVrDLdh/kDPV1g0gAQ+2+m2KprqZK5O/eJAyAnH2M=
 github.com/nats-io/nats.go v1.44.0/go.mod h1:iRWIPokVIFbVijxuMQq4y9ttaBTMe0SFdlZfMDd+33g=
 github.com/nats-io/nats.go v1.45.0 h1:/wGPbnYXDM0pLKFjZTX+2JOw9TQPoIgTFrUaH97giwA=
 github.com/nats-io/nats.go v1.45.0/go.mod h1:iRWIPokVIFbVijxuMQq4y9ttaBTMe0SFdlZfMDd+33g=
+github.com/nats-io/nats.go v1.46.0 h1:iUcX+MLT0HHXskGkz+Sg20sXrPtJLsOojMDTDzOHSb8=
+github.com/nats-io/nats.go v1.46.0/go.mod h1:iRWIPokVIFbVijxuMQq4y9ttaBTMe0SFdlZfMDd+33g=
 github.com/nats-io/nkeys v0.4.11 h1:q44qGV008kYd9W1b1nEBkNzvnWxtRSQ7A8BoqRrcfa0=
 github.com/nats-io/nkeys v0.4.11/go.mod h1:szDimtgmfOi9n25JpfIdGw12tZFYXqhGxjhVxsatHVE=
 github.com/nats-io/nuid v1.0.1 h1:5iA8DT8V7q8WK2EScv2padNa/rTESc1KdnPw4TC2paw=
