@@ -9,8 +9,9 @@ func Services(c *raptor.Config) raptor.Services {
 	return raptor.Services{
 		services.NewHeadlinesService(),
 		&services.SourcesService{},
-		services.NewStoriesService(),
+		&services.StoriesService{},
 		&services.TopicsService{},
 		services.NewCacheService(),
+		services.NewGenAIService(),
 	}
 }

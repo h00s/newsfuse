@@ -6,27 +6,14 @@ import (
 
 	"github.com/go-raptor/raptor/v4"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
 	"github.com/uptrace/bun"
 )
 
 type StoriesService struct {
 	raptor.Service
+
 	Headlines *HeadlinesService
-
-	claude *internal.Claude
-}
-
-func NewStoriesService() *StoriesService {
-	ss := &StoriesService{}
-
-	ss.OnInit(func() error {
-		var err error
-		ss.claude, err = internal.NewClaude(ss.Config.AppConfig["anthropic_key"])
-		return err
-	})
-
-	return ss
+	GenAI     *GenAIService
 }
 
 func (ss *StoriesService) Get(headlineID int64) (*models.Story, error) {
@@ -113,7 +100,7 @@ func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
 		return story, nil
 	}
 
-	summary, err := ss.claude.Summarize(story.Content)
+	summary, err := ss.GenAI.Summarize(story.Content)
 	if err != nil {
 		ss.Log.Error("Error summarizing story", "error", err.Error())
 		return story, err
