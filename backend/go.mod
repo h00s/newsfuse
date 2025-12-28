@@ -9,11 +9,11 @@ go 1.25
 require (
 	github.com/dgraph-io/ristretto/v2 v2.3.0
 	github.com/go-logistiq/logistiq v1.0.22
-	github.com/go-raptor/connectors/bun/postgres v1.0.18
+	github.com/go-raptor/connectors/bun/postgres v1.0.19
 	github.com/go-raptor/controllers/spa v1.0.3
 	github.com/go-raptor/middlewares/cors v1.0.3
 	github.com/go-raptor/middlewares/logger v1.0.1
-	github.com/go-raptor/raptor/v4 v4.1.3
+	github.com/go-raptor/raptor/v4 v4.1.4
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/uptrace/bun v1.2.16
 	google.golang.org/genai v1.40.0
@@ -46,7 +46,7 @@ require (
 	github.com/h00s/tint v1.1.4 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.7.6 // indirect
+	github.com/jackc/pgx/v5 v5.8.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
