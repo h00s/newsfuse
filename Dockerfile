@@ -13,7 +13,7 @@ RUN bun install --frozen-lockfile
 COPY frontend ./
 RUN bun run build
 
-FROM gcr.io/distroless/static-debian12:latest
+FROM gcr.io/distroless/static-debian13:latest
 WORKDIR /app
 COPY --from=backend /out/newsfuse ./
 COPY --from=frontend /app/build ./public
