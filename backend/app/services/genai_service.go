@@ -32,9 +32,9 @@ func NewGenAIService() *GenAIService {
 func (s *GenAIService) Summarize(story string) (string, error) {
 	replacer := strings.NewReplacer("<p>", "", "</p>", "")
 	story = replacer.Replace(story)
-	if len(story) > 2500 {
+	/* if len(story) > 2500 {
 		story = story[:2500]
-	}
+	} */
 	content := "Napravi sažetak vijesti bez navoda da se radi o sažetku. Odgovor mora sadržavati samo tekst sažetka vijesti i to do 600 znakova na hrvatskom jeziku: " + story
 
 	result, err := s.genai.Models.GenerateContent(
