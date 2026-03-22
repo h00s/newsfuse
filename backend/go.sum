@@ -39,6 +39,8 @@ github.com/go-raptor/connectors v1.0.2 h1:aAFXlSssExRE0HC6YIj+mSMR2ZP7tZn8qNxRAD
 github.com/go-raptor/connectors v1.0.2/go.mod h1:o5EsfDhvcxtH00SOh6ehIa2nE/Y2oCrSoorxrSGeEys=
 github.com/go-raptor/connectors/bun/postgres v1.0.20 h1:ZpY04gvVdY2ADdbNmdNXa1nMXw51NH6edtfohPHhhsE=
 github.com/go-raptor/connectors/bun/postgres v1.0.20/go.mod h1:GgDnbiaI+P2yGFj92oYc0dMsUoZ2vDlVUZcglUQmWrI=
+github.com/go-raptor/connectors/bun/postgres v1.0.21 h1:+YqXqkKO8v7yZX8O0nSvYjesRqnFuUBvaKl+emX9pG4=
+github.com/go-raptor/connectors/bun/postgres v1.0.21/go.mod h1:DfdB698rj/Oc8GiJ+N3eTzgzVMVY2EDbh5VyLt5iXwQ=
 github.com/go-raptor/controllers/spa v1.0.3 h1:KGQWSW2VjNdvhxLbFd/bg2jMZ0X9uG2PT96hASFshps=
 github.com/go-raptor/controllers/spa v1.0.3/go.mod h1:+SVhJpfRsi2BTI7PN4nNYEvNWrWw/k3i09ozOmuLt5E=
 github.com/go-raptor/middlewares/cors v1.0.3 h1:l3e1dq3SQQ8TcrR8LQQ4KIZY6JcOHsGoMjIMFOSHXOo=
@@ -49,6 +51,7 @@ github.com/go-raptor/raptor/v4 v4.1.5 h1:icYlZIlfm28Uqyemtz+u9G2zoHpXSr/1q3nWj1w
 github.com/go-raptor/raptor/v4 v4.1.5/go.mod h1:d6Z05zch1dw9QUPEUym5w78Yui+TeWirP/ke9Shj7UQ=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
+github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
 github.com/gocolly/colly/v2 v2.3.0 h1:HSFh0ckbgVd2CSGRE+Y/iA4goUhGROJwyQDCMXGFBWM=
 github.com/gocolly/colly/v2 v2.3.0/go.mod h1:Qp54s/kQbwCQvFVx8KzKCSTXVJ1wWT4QeAKEu33x1q8=
 github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
@@ -80,6 +83,8 @@ github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7Ulw
 github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761/go.mod h1:5TJZWKEWniPve33vlWYSoGYefn3gLQRzjfDlhSJ9ZKM=
 github.com/jackc/pgx/v5 v5.8.0 h1:TYPDoleBBme0xGSAX3/+NujXXtpZn9HBONkQC7IEZSo=
 github.com/jackc/pgx/v5 v5.8.0/go.mod h1:QVeDInX2m9VyzvNeiCJVjCkNFqzsNb43204HshNSZKw=
+github.com/jackc/pgx/v5 v5.9.0 h1:T/dI+2TvmI2H8s/KH1/lXIbz1CUFk3gn5oTjr0/mBsE=
+github.com/jackc/pgx/v5 v5.9.0/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
 github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
 github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
