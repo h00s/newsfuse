@@ -2,7 +2,7 @@ module github.com/h00s/newsfuse
 
 go 1.26
 
-//replace github.com/go-raptor/raptor/v4 => ../../go-raptor/raptor/v4
+// replace github.com/go-raptor/raptor/v4 => ../../go-raptor/raptor/v4
 
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
@@ -12,7 +12,7 @@ require (
 	github.com/go-raptor/controllers/spa v1.0.4
 	github.com/go-raptor/middlewares/cors v1.0.4
 	github.com/go-raptor/middlewares/logger v1.0.2
-	github.com/go-raptor/raptor/v4 v4.1.7
+	github.com/go-raptor/raptor/v4 v4.1.8
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.1.3
 	github.com/uptrace/bun v1.2.18
