@@ -12,7 +12,7 @@ require (
 	github.com/go-raptor/controllers/spa v1.0.4
 	github.com/go-raptor/middlewares/cors v1.0.4
 	github.com/go-raptor/middlewares/logger v1.0.2
-	github.com/go-raptor/raptor/v4 v4.1.8
+	github.com/go-raptor/raptor/v4 v4.1.9
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.1.3
 	github.com/uptrace/bun v1.2.18
@@ -69,7 +69,7 @@ require (
 	golang.org/x/text v0.35.0 // indirect
 	google.golang.org/api v0.273.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260319201613-d00831a3d3e7 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260330182312-d5a96adf58d8 // indirect
 	google.golang.org/grpc v1.79.3 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
