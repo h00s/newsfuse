@@ -9,7 +9,7 @@ import (
 
 func Middlewares() raptor.Middlewares {
 	return raptor.Middlewares{
-		core.Use(logger.New()),
+		core.Use(&logger.LoggerMiddleware{}),
 		core.Use(&cors.CORSMiddleware{}),
 	}
 }

@@ -11,7 +11,7 @@ require (
 	github.com/go-raptor/connectors/bun/postgres v1.0.25
 	github.com/go-raptor/controllers/spa v1.0.4
 	github.com/go-raptor/middlewares/cors v1.0.6
-	github.com/go-raptor/middlewares/logger v1.0.3
+	github.com/go-raptor/middlewares/logger v1.0.4
 	github.com/go-raptor/raptor/v4 v4.1.16
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.1.3

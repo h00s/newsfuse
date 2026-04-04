@@ -53,6 +53,8 @@ github.com/go-raptor/middlewares/logger v1.0.2 h1:UKazA59GAScYEtonz/c4PvkFmJ2nsI
 github.com/go-raptor/middlewares/logger v1.0.2/go.mod h1:tBtwW8UaECy9jk4L62Tl286jjVSCSmEeDHQ1k5V2QQI=
 github.com/go-raptor/middlewares/logger v1.0.3 h1:AjDmLUM5AoXnBy023H3nTlopPwlxYquqwjEHjhmMjhg=
 github.com/go-raptor/middlewares/logger v1.0.3/go.mod h1:tBtwW8UaECy9jk4L62Tl286jjVSCSmEeDHQ1k5V2QQI=
+github.com/go-raptor/middlewares/logger v1.0.4 h1:r6VMr9XuoZUoj6XqoJbBGvcgiZuLnQBhrKj4f82Au+M=
+github.com/go-raptor/middlewares/logger v1.0.4/go.mod h1:gcK3adBl37OQjGuIOfkFlFYIIQnjThrdHVlXDQECu7U=
 github.com/go-raptor/raptor/v4 v4.1.7 h1:pzXEUlB+B9CAMofbxYMfZs03hSdKBJ3cLl4EI2EH83k=
 github.com/go-raptor/raptor/v4 v4.1.7/go.mod h1:amWvz3EODKHgedCD8w8SB4wZbIp6Xbz8/MfJks/WVqs=
 github.com/go-raptor/raptor/v4 v4.1.8 h1:mtv3qxD3mfWqF/K0R+udFbAdutP7NCgGXx9aADFEwf8=
