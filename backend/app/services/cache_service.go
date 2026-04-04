@@ -11,32 +11,25 @@ type CacheService struct {
 	cache *ristretto.Cache[string, []byte]
 }
 
-func NewCacheService() *CacheService {
-	cs := &CacheService{}
-
-	cs.OnInit(func() error {
-		var err error
-
-		cs.cache, err = ristretto.NewCache(&ristretto.Config[string, []byte]{
-			NumCounters: 500,
-			MaxCost:     100000,
-			BufferItems: 64,
-		})
-
-		return err
+func (s *CacheService) Setup() error {
+	var err error
+	s.cache, err = ristretto.NewCache(&ristretto.Config[string, []byte]{
+		NumCounters: 500,
+		MaxCost:     100000,
+		BufferItems: 64,
 	})
 
-	return cs
+	return err
 }
 
-func (cs *CacheService) Get(key string) ([]byte, bool) {
-	value, found := cs.cache.Get(key)
+func (s *CacheService) Get(key string) ([]byte, bool) {
+	value, found := s.cache.Get(key)
 	if !found {
 		return nil, false
 	}
 	return value, true
 }
 
-func (cs *CacheService) Set(key string, value []byte) {
-	cs.cache.Set(key, value, 1)
+func (s *CacheService) Set(key string, value []byte) {
+	s.cache.Set(key, value, 1)
 }

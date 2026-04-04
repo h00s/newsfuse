@@ -14,19 +14,13 @@ type GenAIService struct {
 	genai *genai.Client
 }
 
-func NewGenAIService() *GenAIService {
-	s := &GenAIService{}
-
-	s.OnInit(func() error {
-		var err error
-		s.genai, err = genai.NewClient(context.Background(), &genai.ClientConfig{
-			APIKey:  s.Config.AppConfig["gemini_key"],
-			Backend: genai.BackendGeminiAPI,
-		})
-		return err
+func (s *GenAIService) Setup() error {
+	var err error
+	s.genai, err = genai.NewClient(context.Background(), &genai.ClientConfig{
+		APIKey:  s.Config.AppConfig["gemini_key"],
+		Backend: genai.BackendGeminiAPI,
 	})
-
-	return s
+	return err
 }
 
 func (s *GenAIService) Summarize(story string) (string, error) {

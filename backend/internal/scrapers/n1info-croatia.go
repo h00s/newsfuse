@@ -3,6 +3,8 @@ package scrapers
 import (
 	"time"
 
+	"log/slog"
+
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
@@ -12,9 +14,9 @@ type N1InfoCroatia struct {
 	internal.DefaultScraper
 }
 
-func NewN1InfoCroatia(h chan (models.Headlines), sourceID int64) *N1InfoCroatia {
+func NewN1InfoCroatia(h chan models.Headlines, log *slog.Logger, sourceID int64) *N1InfoCroatia {
 	s := &N1InfoCroatia{
-		DefaultScraper: *internal.NewScraper(h,
+		DefaultScraper: *internal.NewScraper(h, log,
 			"N1",
 			"https://n1info.hr/vijesti/",
 			10,

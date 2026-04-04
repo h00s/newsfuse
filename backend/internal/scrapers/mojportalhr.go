@@ -4,6 +4,8 @@ import (
 	"strings"
 	"time"
 
+	"log/slog"
+
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
@@ -14,9 +16,9 @@ type Mojportalhr struct {
 	Source models.Source
 }
 
-func NewMojportalhr(h chan (models.Headlines), sourceID int64) *Mojportalhr {
+func NewMojportalhr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Mojportalhr {
 	s := &Mojportalhr{
-		DefaultScraper: *internal.NewScraper(h,
+		DefaultScraper: *internal.NewScraper(h, log,
 			"MojPortal.hr",
 			"https://www.mojportal.hr/",
 			15,

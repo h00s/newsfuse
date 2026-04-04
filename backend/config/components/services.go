@@ -5,13 +5,13 @@ import (
 	"github.com/h00s/newsfuse/app/services"
 )
 
-func Services(c *raptor.Config) raptor.Services {
+func Services() raptor.Services {
 	return raptor.Services{
-		services.NewHeadlinesService(),
 		&services.SourcesService{},
 		&services.StoriesService{},
 		&services.TopicsService{},
-		services.NewCacheService(),
-		services.NewGenAIService(),
+		&services.CacheService{},
+		&services.GenAIService{},
+		&services.HeadlinesService{},
 	}
 }

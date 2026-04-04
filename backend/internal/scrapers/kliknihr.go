@@ -1,6 +1,7 @@
 package scrapers
 
 import (
+	"log/slog"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -12,9 +13,9 @@ type Kliknihr struct {
 	internal.DefaultScraper
 }
 
-func NewKliknihr(h chan (models.Headlines), sourceID int64) *Kliknihr {
+func NewKliknihr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Kliknihr {
 	s := &Kliknihr{
-		DefaultScraper: *internal.NewScraper(h,
+		DefaultScraper: *internal.NewScraper(h, log,
 			"klikni.hr",
 			"https://www.klikni.hr",
 			15,

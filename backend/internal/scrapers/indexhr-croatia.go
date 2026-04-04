@@ -4,6 +4,8 @@ import (
 	"strings"
 	"time"
 
+	"log/slog"
+
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
@@ -13,9 +15,9 @@ type IndexhrCroatia struct {
 	internal.DefaultScraper
 }
 
-func NewIndexhrCroatia(h chan (models.Headlines), sourceID int64) *IndexhrCroatia {
+func NewIndexhrCroatia(h chan models.Headlines, log *slog.Logger, sourceID int64) *IndexhrCroatia {
 	s := &IndexhrCroatia{
-		DefaultScraper: *internal.NewScraper(h,
+		DefaultScraper: *internal.NewScraper(h, log,
 			"Index.hr",
 			"https://www.index.hr/vijesti/rubrika/hrvatska/22.aspx",
 			5,

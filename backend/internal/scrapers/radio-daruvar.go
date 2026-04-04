@@ -4,6 +4,8 @@ import (
 	"strings"
 	"time"
 
+	"log/slog"
+
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
@@ -13,9 +15,9 @@ type RadioDaruvar struct {
 	internal.DefaultScraper
 }
 
-func NewRadioDaruvar(h chan (models.Headlines), sourceID int64) *RadioDaruvar {
+func NewRadioDaruvar(h chan models.Headlines, log *slog.Logger, sourceID int64) *RadioDaruvar {
 	s := &RadioDaruvar{
-		DefaultScraper: *internal.NewScraper(h,
+		DefaultScraper: *internal.NewScraper(h, log,
 			"Radio Daruvar",
 			"https://www.radio-daruvar.hr/",
 			30,

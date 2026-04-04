@@ -6,11 +6,11 @@ import (
 	"github.com/h00s/newsfuse/db"
 )
 
-func New(c *raptor.Config) *raptor.Components {
+func New() *raptor.Components {
 	return &raptor.Components{
-		DatabaseConnector: postgres.NewPostgresConnector(c.DatabaseConfig, db.Migrations()),
+		DatabaseConnector: postgres.NewPostgresConnector(db.Migrations()),
 		Controllers:       Controllers(),
-		Services:          Services(c),
-		Middlewares:       Middlewares(c),
+		Services:          Services(),
+		Middlewares:       Middlewares(),
 	}
 }

@@ -2,24 +2,23 @@ package internal
 
 import (
 	"fmt"
+	"log/slog"
 	"math/rand"
 	"slices"
 	"strings"
 	"time"
 
-	"github.com/go-raptor/raptor/v4/core"
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 )
 
 type Scraper interface {
 	Start()
-	Init(r *core.Resources)
 	ScrapeStory(url string) (string, error)
 }
 
 type DefaultScraper struct {
-	headlinesChannel chan (models.Headlines)
+	headlinesChannel chan models.Headlines
 	headlines        models.Headlines
 
 	Name string
@@ -30,11 +29,11 @@ type DefaultScraper struct {
 
 	OffHours []int
 
-	resources *core.Resources
+	log       *slog.Logger
 	collector *colly.Collector
 }
 
-func NewScraper(headlinesChannel chan (models.Headlines), name, url string, minRefreshInterval, maxRefreshInterval int, offHours []int) *DefaultScraper {
+func NewScraper(headlinesChannel chan models.Headlines, log *slog.Logger, name, url string, minRefreshInterval, maxRefreshInterval int, offHours []int) *DefaultScraper {
 	return &DefaultScraper{
 		headlinesChannel: headlinesChannel,
 		headlines:        nil,
@@ -47,13 +46,9 @@ func NewScraper(headlinesChannel chan (models.Headlines), name, url string, minR
 
 		OffHours: offHours,
 
-		resources: nil,
+		log:       log,
 		collector: colly.NewCollector(),
 	}
-}
-
-func (s *DefaultScraper) Init(r *core.Resources) {
-	s.resources = r
 }
 
 func (s *DefaultScraper) AddHeadline(h models.Headline) {
@@ -81,7 +76,7 @@ func (s *DefaultScraper) ScrapeStory(url, element, childElement string, html boo
 			if html {
 				contentsHTML, err := el.DOM.Html()
 				if err != nil {
-					s.resources.Log.Error("Error getting HTML", "error", err.Error())
+					s.log.Error("Error getting HTML", "error", err.Error())
 					contents = ""
 				} else {
 					contents = strings.TrimSpace(contentsHTML)
@@ -112,20 +107,20 @@ func (s *DefaultScraper) Start() {
 
 	s.collector.OnScraped(func(r *colly.Response) {
 		s.headlinesChannel <- s.headlines
-		s.resources.Log.Info("Finished scraping", "scraper", s.Name)
+		s.log.Info("Finished scraping", "scraper", s.Name)
 	})
 
 	go func() {
 		for {
-			s.resources.Log.Info("Started scraping", "scraper", s.Name)
+			s.log.Info("Started scraping", "scraper", s.Name)
 			if !slices.Contains(s.OffHours, time.Now().Hour()) {
 				s.collector.Visit(s.URL)
 				s.collector.Wait()
 			} else {
-				s.resources.Log.Info("Skipping scraping", "scraper", s.Name, "hour", time.Now().Hour())
+				s.log.Info("Skipping scraping", "scraper", s.Name, "hour", time.Now().Hour())
 			}
 			waitTime := rand.Intn(s.MaxRefreshInterval-s.MinRefreshInterval) + s.MinRefreshInterval
-			s.resources.Log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
+			s.log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
 			time.Sleep(time.Duration(waitTime) * time.Minute)
 		}
 	}()

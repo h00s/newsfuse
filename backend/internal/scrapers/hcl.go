@@ -4,6 +4,8 @@ import (
 	"strings"
 	"time"
 
+	"log/slog"
+
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/internal"
@@ -13,9 +15,9 @@ type HCL struct {
 	internal.DefaultScraper
 }
 
-func NewHCL(h chan (models.Headlines), sourceID int64) *HCL {
+func NewHCL(h chan models.Headlines, log *slog.Logger, sourceID int64) *HCL {
 	s := &HCL{
-		DefaultScraper: *internal.NewScraper(h,
+		DefaultScraper: *internal.NewScraper(h, log,
 			"HCL",
 			"https://www.hcl.hr/",
 			10,
