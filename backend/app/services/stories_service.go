@@ -16,44 +16,42 @@ type StoriesService struct {
 	GenAI     *GenAIService
 }
 
-func (ss *StoriesService) Get(headlineID int64) (*models.Story, error) {
+func (s *StoriesService) Get(headlineID int64) (*models.Story, error) {
 	var story models.Story
-	err := ss.Database.Conn().(*bun.DB).
+	err := s.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&story).
 		Where("headline_id = ?", headlineID).
 		Scan(context.Background())
-
 	if err != nil {
 		if err == sql.ErrNoRows {
-			story, err = ss.Scrape(headlineID)
+			story, err = s.Scrape(headlineID)
 			if err != nil {
-				ss.Log.Error("Error scraping story", "error", err.Error())
+				s.Log.Error("Error scraping story", "error", err.Error())
 				return nil, err
 			}
-			ss.Save(&story)
+			s.Save(&story)
 			return &story, nil
 		}
-		ss.Log.Error("Error getting story", "error", err.Error())
+		s.Log.Error("Error getting story", "error", err.Error())
 		return nil, err
 	}
 
 	return &story, nil
 }
 
-func (ss *StoriesService) Scrape(headlineID int64) (models.Story, error) {
+func (s *StoriesService) Scrape(headlineID int64) (models.Story, error) {
 	var headline models.Headline
-	err := ss.Database.Conn().(*bun.DB).
+	err := s.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&headline).
 		Where("id = ?", headlineID).
 		Scan(context.Background())
-
 	if err != nil {
 		return models.Story{}, err
 	}
 
-	content, err := ss.Headlines.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
+	content, err := s.Headlines.Scrapers[int(headline.SourceID)].ScrapeStory(headline.URL)
 	if err != nil {
 		return models.Story{}, err
 	}
@@ -64,34 +62,32 @@ func (ss *StoriesService) Scrape(headlineID int64) (models.Story, error) {
 	}, nil
 }
 
-func (ss *StoriesService) Save(story *models.Story) error {
-	_, err := ss.Database.Conn().(*bun.DB).
+func (s *StoriesService) Save(story *models.Story) error {
+	_, err := s.Database.Conn().(*bun.DB).
 		NewInsert().
 		Model(story).
 		Returning("id").
 		Exec(context.Background())
-
 	if err != nil {
-		ss.Log.Error("Error creating story", "error", err.Error())
+		s.Log.Error("Error creating story", "error", err.Error())
 		return err
 	}
 
 	return nil
 }
 
-func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
+func (s *StoriesService) Summarize(storyID int64) (models.Story, error) {
 	var story models.Story
-	err := ss.Database.Conn().(*bun.DB).
+	err := s.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&story).
 		Where("id = ?", storyID).
 		Scan(context.Background())
-
 	if err != nil {
 		if err == sql.ErrNoRows {
-			ss.Log.Error("Story not found", "storyID", storyID)
+			s.Log.Error("Story not found", "storyID", storyID)
 		} else {
-			ss.Log.Error("Error getting story", "error", err.Error())
+			s.Log.Error("Error getting story", "error", err.Error())
 		}
 		return story, err
 	}
@@ -100,14 +96,14 @@ func (ss *StoriesService) Summarize(storyID int64) (models.Story, error) {
 		return story, nil
 	}
 
-	summary, err := ss.GenAI.Summarize(story.Content)
+	summary, err := s.GenAI.Summarize(story.Content)
 	if err != nil {
-		ss.Log.Error("Error summarizing story", "error", err.Error())
+		s.Log.Error("Error summarizing story", "error", err.Error())
 		return story, err
 	}
 
 	story.Summary = summary
-	go ss.Database.Conn().(*bun.DB).
+	go s.Database.Conn().(*bun.DB).
 		NewUpdate().
 		Model(&story).
 		Column("summary").

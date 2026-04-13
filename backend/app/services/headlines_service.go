@@ -18,6 +18,7 @@ import (
 
 type HeadlinesService struct {
 	raptor.Service
+
 	Scrapers         map[int]internal.Scraper
 	HeadlinesChannel chan models.Headlines
 	Sources          *SourcesService
@@ -158,7 +159,6 @@ func (s *HeadlinesService) Count(topicID int64, since time.Time) (int, error) {
 		Join("JOIN sources s ON headline.source_id = s.id").
 		Where("s.topic_id = ? AND headline.published_at > ?", topicID, since).
 		Count(context.Background())
-
 	if err != nil {
 		s.Log.Error("Error counting headlines", "error", err.Error())
 		return 0, errs.NewErrorInternal(err.Error())

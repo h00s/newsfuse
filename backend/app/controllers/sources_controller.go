@@ -7,13 +7,15 @@ import (
 
 type SourcesController struct {
 	raptor.Controller
+
 	Sources *services.SourcesService
 }
 
-func (sc *SourcesController) All(c *raptor.Context) error {
-	sources, err := sc.Sources.All()
+func (c *SourcesController) All(ctx *raptor.Context) error {
+	sources, err := c.Sources.All()
 	if err != nil {
 		return err
 	}
-	return c.Data(sources)
+
+	return ctx.Data(sources)
 }

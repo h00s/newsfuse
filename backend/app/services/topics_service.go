@@ -13,43 +13,44 @@ import (
 
 type TopicsService struct {
 	raptor.Service
+
 	Cache *CacheService
 }
 
-func (ts *TopicsService) All() (models.Topics, error) {
+func (s *TopicsService) All() (models.Topics, error) {
 	var topics models.Topics
 
-	if err := ts.memstoreGetTopics(&topics); err == nil {
+	if err := s.memstoreGetTopics(&topics); err == nil {
 		return topics, nil
 	}
 
-	err := ts.Database.Conn().(*bun.DB).
+	err := s.Database.Conn().(*bun.DB).
 		NewSelect().
 		Model(&topics).
 		Order("id").
 		Scan(context.Background())
 	if err != nil {
-		ts.Log.Error("Error geting topics", "Error", err.Error())
+		s.Log.Error("Error geting topics", "Error", err.Error())
 		return topics, errs.NewErrorInternal(err.Error())
 	}
 
-	go ts.memstoreSetTopics(&topics)
+	go s.memstoreSetTopics(&topics)
 	return topics, nil
 }
 
-func (ts *TopicsService) memstoreGetTopics(topics *models.Topics) error {
-	if data, ok := ts.Cache.Get("topics"); ok {
+func (s *TopicsService) memstoreGetTopics(topics *models.Topics) error {
+	if data, ok := s.Cache.Get("topics"); ok {
 		json.Unmarshal(data, topics)
 		return nil
 	}
-	ts.Log.Warn("Topics not found in memstore")
+	s.Log.Warn("Topics not found in memstore")
 	return errors.New("topics not found in memstore")
 }
 
-func (ts *TopicsService) memstoreSetTopics(topics *models.Topics) {
+func (s *TopicsService) memstoreSetTopics(topics *models.Topics) {
 	data, err := json.Marshal(*topics)
 	if err != nil {
-		ts.Log.Warn("Error setting topics in memstore", "error", err.Error())
+		s.Log.Warn("Error setting topics in memstore", "error", err.Error())
 	}
-	ts.Cache.Set("topics", data)
+	s.Cache.Set("topics", data)
 }

@@ -1,3 +1,4 @@
+// Package controllers contains all newsfuse controllers
 package controllers
 
 import (
@@ -12,60 +13,62 @@ import (
 
 type HeadlinesController struct {
 	raptor.Controller
+
 	Headlines *services.HeadlinesService
 }
 
-func (hc *HeadlinesController) All(c *raptor.Context) error {
-	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
+func (c *HeadlinesController) All(ctx *raptor.Context) error {
+	topicID, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
 	if err != nil {
 		return errs.NewErrorBadRequest("Invalid Topic ID")
 	}
 
 	var headlines models.Headlines
-	if lastID, err := strconv.ParseInt(c.QueryParam("last_id"), 10, 64); err == nil {
-		headlines, err = hc.Headlines.AllByLastID(topicID, lastID)
+	if lastID, err := strconv.ParseInt(ctx.QueryParam("last_id"), 10, 64); err == nil {
+		headlines, err = c.Headlines.AllByLastID(topicID, lastID)
 		if err != nil {
 			return err
 		}
-		return c.Data(headlines)
+		return ctx.Data(headlines)
 	}
 
-	headlines, err = hc.Headlines.All(topicID)
+	headlines, err = c.Headlines.All(topicID)
 	if err != nil {
 		return err
 	}
-	return c.Data(headlines)
+	return ctx.Data(headlines)
 }
 
-func (hc *HeadlinesController) Search(c *raptor.Context) error {
-	query := c.QueryParam("query")
+func (c *HeadlinesController) Search(ctx *raptor.Context) error {
+	query := ctx.QueryParam("query")
 	if query == "" || len(query) < 3 {
 		return errs.NewErrorBadRequest("Invalid query")
 	}
 
 	var headlines models.Headlines
-	headlines, err := hc.Headlines.Search(query)
+	headlines, err := c.Headlines.Search(query)
 	if err != nil {
 		return err
 	}
-	return c.Data(headlines)
+
+	return ctx.Data(headlines)
 }
 
-func (hc *HeadlinesController) Count(c *raptor.Context) error {
-	topicID, err := strconv.ParseInt(c.Param("id"), 10, 64)
+func (c *HeadlinesController) Count(ctx *raptor.Context) error {
+	topicID, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
 	if err != nil {
 		return errs.NewErrorBadRequest("Invalid Topic ID")
 	}
 
-	status := c.QueryParam("status")
-	since, err := strconv.Atoi(c.QueryParam("since"))
+	status := ctx.QueryParam("status")
+	since, err := strconv.Atoi(ctx.QueryParam("since"))
 	if err == nil && status != "" && since != 0 {
 		sinceTime := time.Unix(int64(since/1000), 0)
-		count, err := hc.Headlines.Count(topicID, sinceTime)
+		count, err := c.Headlines.Count(topicID, sinceTime)
 		if err != nil {
 			return err
 		}
-		return c.Data(
+		return ctx.Data(
 			map[string]interface{}{
 				"count": count,
 			},
