@@ -12,11 +12,11 @@ require (
 	github.com/go-raptor/controllers/spa v1.0.4
 	github.com/go-raptor/middlewares/cors v1.0.6
 	github.com/go-raptor/middlewares/logger v1.0.4
-	github.com/go-raptor/raptor/v4 v4.1.16
+	github.com/go-raptor/raptor/v4 v4.1.18
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.1.3
 	github.com/uptrace/bun v1.2.18
-	google.golang.org/genai v1.53.0
+	google.golang.org/genai v1.54.0
 )
 
 require (
@@ -40,8 +40,8 @@ require (
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
-	github.com/googleapis/enterprise-certificate-proxy v0.3.14 // indirect
-	github.com/googleapis/gax-go/v2 v2.21.0 // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.3.15 // indirect
+	github.com/googleapis/gax-go/v2 v2.22.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
@@ -67,9 +67,9 @@ require (
 	golang.org/x/sync v0.20.0 // indirect
 	golang.org/x/sys v0.43.0 // indirect
 	golang.org/x/text v0.36.0 // indirect
-	google.golang.org/api v0.275.0 // indirect
+	google.golang.org/api v0.276.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260406210006-6f92a3bedf2d // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260414002931-afd174a4e478 // indirect
 	google.golang.org/grpc v1.80.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
