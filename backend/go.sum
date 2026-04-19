@@ -45,12 +45,16 @@ github.com/go-raptor/connectors/bun/postgres v1.0.22 h1:/kGik6xu+CYG3gYIekgpZnWh
 github.com/go-raptor/connectors/bun/postgres v1.0.22/go.mod h1:9GGGRGLENyxspxuo6GJBKHGTyI0tvvOBaF3oAVY3NM8=
 github.com/go-raptor/connectors/bun/postgres v1.0.25 h1:4YWbq0HYvOJaFxzzfHqJEIZePCnUuZm+TocxygZe/eo=
 github.com/go-raptor/connectors/bun/postgres v1.0.25/go.mod h1:w3AK2XMHP9R40EkRjQE44ZaHlvQJugoYn72AMSQ9NJ8=
+github.com/go-raptor/connectors/bun/postgres v1.0.26 h1:5MG5kin5ICciwjeZJLWy1nHipgNxpBhW+K7XX5suEyg=
+github.com/go-raptor/connectors/bun/postgres v1.0.26/go.mod h1:zMl7ytH6UjSMhZtj2azgDIJvXfw/icJpcabGqf6+D7Q=
 github.com/go-raptor/controllers/spa v1.0.4 h1:QGp0QNj0h/SZWrBgMgdWbzzMwa8EMADGabJ4uLUsVao=
 github.com/go-raptor/controllers/spa v1.0.4/go.mod h1:s+LCp+uTgvwctlmef2OYeZXOrrjJG3KaC+dzTeFr6rM=
 github.com/go-raptor/middlewares/cors v1.0.4 h1:b5A472R72naQehuMufmxYReNeut1BnUaVBXavckInTk=
 github.com/go-raptor/middlewares/cors v1.0.4/go.mod h1:PS63hy9c8vdfqxP86K6WnLhgQmcYeAhgh96c0dG1K8w=
 github.com/go-raptor/middlewares/cors v1.0.6 h1:1wXeiQELQzGw3hIwR6ErHqRontwbP0ojdwelF0l3KOE=
 github.com/go-raptor/middlewares/cors v1.0.6/go.mod h1:PS63hy9c8vdfqxP86K6WnLhgQmcYeAhgh96c0dG1K8w=
+github.com/go-raptor/middlewares/cors v1.0.7 h1:r0uNo188ZV6ww1uuNZD0OZd8jSL6n5uI8QMyHdGrr50=
+github.com/go-raptor/middlewares/cors v1.0.7/go.mod h1:JaVxrfLg7CetFBOeOlXqYSbGeye/aQLlwa312dfWaXo=
 github.com/go-raptor/middlewares/logger v1.0.2 h1:UKazA59GAScYEtonz/c4PvkFmJ2nsI0/L2Djazt7e1M=
 github.com/go-raptor/middlewares/logger v1.0.2/go.mod h1:tBtwW8UaECy9jk4L62Tl286jjVSCSmEeDHQ1k5V2QQI=
 github.com/go-raptor/middlewares/logger v1.0.3 h1:AjDmLUM5AoXnBy023H3nTlopPwlxYquqwjEHjhmMjhg=
@@ -73,6 +77,8 @@ github.com/go-raptor/raptor/v4 v4.1.16 h1:a+6KOlJmO0y/hq96kAmWaZktf8DDR/5+xfT5b1
 github.com/go-raptor/raptor/v4 v4.1.16/go.mod h1:jpe+upatg2qcfMtHZAydHMMZIx0Ca8rDAwntF8Zuyb4=
 github.com/go-raptor/raptor/v4 v4.1.18 h1:5XS65s2adP2Y0F7evTAxBfGTH968r2A2znvltbkLEkA=
 github.com/go-raptor/raptor/v4 v4.1.18/go.mod h1:jpe+upatg2qcfMtHZAydHMMZIx0Ca8rDAwntF8Zuyb4=
+github.com/go-raptor/raptor/v4 v4.1.19 h1:d662GHZ0RjU++yKhggsn5Bk7pfifatrG8aRgcfTo/0w=
+github.com/go-raptor/raptor/v4 v4.1.19/go.mod h1:jpe+upatg2qcfMtHZAydHMMZIx0Ca8rDAwntF8Zuyb4=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
@@ -111,6 +117,8 @@ github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7Ulw
 github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761/go.mod h1:5TJZWKEWniPve33vlWYSoGYefn3gLQRzjfDlhSJ9ZKM=
 github.com/jackc/pgx/v5 v5.9.1 h1:uwrxJXBnx76nyISkhr33kQLlUqjv7et7b9FjCen/tdc=
 github.com/jackc/pgx/v5 v5.9.1/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
+github.com/jackc/pgx/v5 v5.9.2 h1:3ZhOzMWnR4yJ+RW1XImIPsD1aNSz4T4fyP7zlQb56hw=
+github.com/jackc/pgx/v5 v5.9.2/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
 github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
 github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=

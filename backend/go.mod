@@ -8,11 +8,11 @@ go 1.26
 
 require (
 	github.com/dgraph-io/ristretto/v2 v2.4.0
-	github.com/go-raptor/connectors/bun/postgres v1.0.25
+	github.com/go-raptor/connectors/bun/postgres v1.0.26
 	github.com/go-raptor/controllers/spa v1.0.4
-	github.com/go-raptor/middlewares/cors v1.0.6
+	github.com/go-raptor/middlewares/cors v1.0.7
 	github.com/go-raptor/middlewares/logger v1.0.4
-	github.com/go-raptor/raptor/v4 v4.1.18
+	github.com/go-raptor/raptor/v4 v4.1.19
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.1.3
 	github.com/uptrace/bun v1.2.18
@@ -45,7 +45,7 @@ require (
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/pgx/v5 v5.9.1 // indirect
+	github.com/jackc/pgx/v5 v5.9.2 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
