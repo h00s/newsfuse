@@ -1,19 +1,22 @@
-package migrate
+package migrations
 
 import (
 	"context"
+	"database/sql"
+
+	"github.com/pressly/goose/v3"
+	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/dialect/pgdialect"
 
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/uptrace/bun"
 )
 
-type SeedSources struct{}
-
-func (m SeedSources) Name() string {
-	return "seed_sources"
+func init() {
+	goose.AddMigrationNoTxContext(upSeedSources, downSeedSources)
 }
 
-func (m SeedSources) Up(db *bun.DB) error {
+func upSeedSources(ctx context.Context, sqldb *sql.DB) error {
+	db := bun.NewDB(sqldb, pgdialect.New())
 	sources := models.Sources{
 		models.Source{Name: "klikni.hr", TopicID: 1, IsScrapable: true},
 		models.Source{Name: "MojPortal.hr", TopicID: 1, IsScrapable: true},
@@ -26,32 +29,19 @@ func (m SeedSources) Up(db *bun.DB) error {
 		models.Source{Name: "Bug", TopicID: 4, IsScrapable: true},
 		models.Source{Name: "Telegram", TopicID: 2, IsScrapable: true},
 	}
-
-	_, err := db.
-		NewInsert().
-		Model(&sources).
-		Exec(context.Background())
-
+	_, err := db.NewInsert().Model(&sources).Exec(ctx)
 	return err
 }
 
-func (m SeedSources) Down(db *bun.DB) error {
+func downSeedSources(ctx context.Context, sqldb *sql.DB) error {
+	db := bun.NewDB(sqldb, pgdialect.New())
 	sourceNames := []string{
-		"klikni.hr",
-		"MojPortal.hr",
-		"Radio Daruvar",
-		"Index.hr",
-		"N1Info.hr",
-		"Hacker News",
-		"Bug",
-		"Telegram",
+		"klikni.hr", "MojPortal.hr", "Radio Daruvar",
+		"Index.hr", "N1Info.hr", "Hacker News", "Bug", "Telegram",
 	}
-
-	_, err := db.
-		NewDelete().
+	_, err := db.NewDelete().
 		Model((*models.Source)(nil)).
 		Where("name IN (?)", bun.In(sourceNames)).
-		Exec(context.Background())
-
+		Exec(ctx)
 	return err
 }

@@ -8,7 +8,7 @@ import (
 
 func New() *raptor.Components {
 	return &raptor.Components{
-		DatabaseConnector: postgres.NewPostgresConnector(db.Migrations()),
+		DatabaseConnector: postgres.NewPostgresConnector(db.MigrationsFS()),
 		Controllers:       Controllers(),
 		Services:          Services(),
 		Middlewares:       Middlewares(),

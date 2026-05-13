@@ -8,14 +8,16 @@ go 1.26
 
 require (
 	github.com/dgraph-io/ristretto/v2 v2.4.0
-	github.com/go-raptor/connectors/bun/postgres v1.0.26
+	github.com/go-raptor/connectors/bun/postgres v1.1.0
 	github.com/go-raptor/controllers/spa v1.0.4
 	github.com/go-raptor/middlewares/cors v1.0.7
 	github.com/go-raptor/middlewares/logger v1.0.4
-	github.com/go-raptor/raptor/v4 v4.1.19
+	github.com/go-raptor/raptor/v4 v4.2.0
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.1.3
+	github.com/pressly/goose/v3 v3.27.1
 	github.com/uptrace/bun v1.2.18
+	github.com/uptrace/bun/dialect/pgdialect v1.2.18
 	google.golang.org/genai v1.55.0
 )
 
@@ -34,7 +36,8 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/go-raptor/connectors v1.0.4 // indirect
+	github.com/go-raptor/connectors v1.1.0 // indirect
+	github.com/go-raptor/connectors/goosemigrator v1.0.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
@@ -49,12 +52,13 @@ require (
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect
+	github.com/mfridman/interpolate v0.0.2 // indirect
 	github.com/nlnwa/whatwg-url v0.6.2 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
+	github.com/sethvargo/go-retry v0.3.0 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
-	github.com/uptrace/bun/dialect/pgdialect v1.2.18 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.4.1 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
@@ -62,11 +66,12 @@ require (
 	go.opentelemetry.io/otel v1.43.0 // indirect
 	go.opentelemetry.io/otel/metric v1.43.0 // indirect
 	go.opentelemetry.io/otel/trace v1.43.0 // indirect
+	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.50.0 // indirect
 	golang.org/x/net v0.53.0 // indirect
 	golang.org/x/sync v0.20.0 // indirect
-	golang.org/x/sys v0.43.0 // indirect
-	golang.org/x/text v0.36.0 // indirect
+	golang.org/x/sys v0.44.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 	google.golang.org/api v0.277.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260427160629-7cedc36a6bc4 // indirect
