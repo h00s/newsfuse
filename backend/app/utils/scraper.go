@@ -1,4 +1,5 @@
-package internal
+// Package utils provides utility functions and types for the newsfuse application, including the Scraper interface and its implementation.
+package utils
 
 import (
 	"fmt"

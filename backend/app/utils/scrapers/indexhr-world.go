@@ -1,23 +1,22 @@
 package scrapers
 
 import (
+	"log/slog"
 	"strings"
 	"time"
 
-	"log/slog"
-
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type IndexhrWorld struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewIndexhrWorld(h chan models.Headlines, log *slog.Logger, sourceID int64) *IndexhrWorld {
 	s := &IndexhrWorld{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"Index.hr",
 			"https://www.index.hr/vijesti/rubrika/hrvatska/23.aspx",
 			5,

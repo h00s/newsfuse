@@ -1,23 +1,23 @@
+// Package scrapers implmements all scrapers for different news sources.
 package scrapers
 
 import (
+	"log/slog"
 	"strings"
 	"time"
 
-	"log/slog"
-
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type Bughr struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewBughr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Bughr {
 	s := &Bughr{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"Bug",
 			"https://www.bug.hr",
 			10,

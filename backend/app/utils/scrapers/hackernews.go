@@ -1,22 +1,21 @@
 package scrapers
 
 import (
-	"time"
-
 	"log/slog"
+	"time"
 
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type HackerNews struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewHackerNews(h chan models.Headlines, log *slog.Logger, sourceID int64) *HackerNews {
 	s := &HackerNews{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"Hacker News",
 			"https://news.ycombinator.com/",
 			10,

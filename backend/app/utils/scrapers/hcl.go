@@ -1,23 +1,22 @@
 package scrapers
 
 import (
+	"log/slog"
 	"strings"
 	"time"
 
-	"log/slog"
-
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type HCL struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewHCL(h chan models.Headlines, log *slog.Logger, sourceID int64) *HCL {
 	s := &HCL{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"HCL",
 			"https://www.hcl.hr/",
 			10,

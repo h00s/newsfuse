@@ -11,15 +11,15 @@ import (
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
-	"github.com/h00s/newsfuse/internal/scrapers"
+	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/app/utils/scrapers"
 	"github.com/uptrace/bun"
 )
 
 type HeadlinesService struct {
 	raptor.Service
 
-	Scrapers         map[int]internal.Scraper
+	Scrapers         map[int]utils.Scraper
 	HeadlinesChannel chan models.Headlines
 	Sources          *SourcesService
 	Cache            *CacheService
@@ -27,7 +27,7 @@ type HeadlinesService struct {
 
 func (s *HeadlinesService) Setup() error {
 	s.HeadlinesChannel = make(chan models.Headlines)
-	s.Scrapers = map[int]internal.Scraper{
+	s.Scrapers = map[int]utils.Scraper{
 		1:  scrapers.NewKliknihr(s.HeadlinesChannel, s.Log, 1),
 		2:  scrapers.NewMojportalhr(s.HeadlinesChannel, s.Log, 2),
 		3:  scrapers.NewRadioDaruvar(s.HeadlinesChannel, s.Log, 3),
@@ -169,7 +169,11 @@ func (s *HeadlinesService) Count(topicID int64, since time.Time) (int, error) {
 
 func (s *HeadlinesService) memstoreGetHeadlinesByTopicID(topicID int64, headlines *models.Headlines) error {
 	if data, ok := s.Cache.Get(fmt.Sprintf("headlines:%d", topicID)); ok {
-		json.Unmarshal(data, headlines)
+		err := json.Unmarshal(data, headlines)
+		if err != nil {
+			s.Log.Warn("Error unmarshalling headlines from memstore", "topic", topicID, "error", err.Error())
+			return err
+		}
 		return nil
 	}
 	s.Log.Warn("Headlines not found in memstore", "topic", topicID)

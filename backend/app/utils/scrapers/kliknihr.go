@@ -6,16 +6,16 @@ import (
 
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type Kliknihr struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewKliknihr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Kliknihr {
 	s := &Kliknihr{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"klikni.hr",
 			"https://www.klikni.hr",
 			15,

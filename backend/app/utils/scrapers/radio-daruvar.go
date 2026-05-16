@@ -1,23 +1,22 @@
 package scrapers
 
 import (
+	"log/slog"
 	"strings"
 	"time"
 
-	"log/slog"
-
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type RadioDaruvar struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewRadioDaruvar(h chan models.Headlines, log *slog.Logger, sourceID int64) *RadioDaruvar {
 	s := &RadioDaruvar{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"Radio Daruvar",
 			"https://www.radio-daruvar.hr/",
 			30,

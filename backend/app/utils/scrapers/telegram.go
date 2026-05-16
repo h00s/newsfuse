@@ -1,22 +1,21 @@
 package scrapers
 
 import (
-	"time"
-
 	"log/slog"
+	"time"
 
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type Telegram struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewTelegram(h chan models.Headlines, log *slog.Logger, sourceID int64) *Telegram {
 	s := &Telegram{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"Telegram",
 			"https://www.telegram.hr/vijesti",
 			15,

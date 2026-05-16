@@ -1,22 +1,21 @@
 package scrapers
 
 import (
-	"time"
-
 	"log/slog"
+	"time"
 
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/internal"
+	"github.com/h00s/newsfuse/app/utils"
 )
 
 type N1InfoWorld struct {
-	internal.DefaultScraper
+	utils.DefaultScraper
 }
 
 func NewN1InfoWorld(h chan models.Headlines, log *slog.Logger, sourceID int64) *N1InfoWorld {
 	s := &N1InfoWorld{
-		DefaultScraper: *internal.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(h, log,
 			"N1",
 			"https://n1info.hr/svijet/",
 			10,
