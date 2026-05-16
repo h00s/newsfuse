@@ -1,3 +1,4 @@
+// Package components defines the application's components, such as database connectors, controllers, services, and middlewares.
 package components
 
 import (

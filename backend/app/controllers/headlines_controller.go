@@ -1,4 +1,4 @@
-// Package controllers contains all newsfuse controllers
+// Package controllers contains all HTTP controllers.
 package controllers
 
 import (

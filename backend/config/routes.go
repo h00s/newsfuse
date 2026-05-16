@@ -1,3 +1,4 @@
+// Package config provides configuration for the application, including routes.
 package config
 
 import (

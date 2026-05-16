@@ -1,3 +1,4 @@
+// Package migrations contains database migration scripts for the NewsFuse application.
 package migrations
 
 import (

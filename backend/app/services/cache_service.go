@@ -1,3 +1,4 @@
+// Package services provides various services for the application, including caching, database access, and more.
 package services
 
 import (
