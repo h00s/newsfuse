@@ -25,18 +25,23 @@ func NewHCL(h chan models.Headlines, log *slog.Logger, sourceID int64) *HCL {
 		),
 	}
 
-	s.ScrapeHeadline("div[id^='post-']", func(e *colly.HTMLElement) {
-		title := ""
+	s.ScrapeHeadline("div.articles div[id^='post-']", func(e *colly.HTMLElement) {
+		var title string
 		e.ForEach("div.text h2 a", func(_ int, el *colly.HTMLElement) {
-			sel := el.DOM
+			sel := el.DOM.Clone()
 			sel.Find("span.title").Remove()
 			title = strings.TrimSpace(sel.Text())
 		})
 
+		url := e.ChildAttr("div.text h2 a", "href")
+		if title == "" || url == "" {
+			return
+		}
+
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       title,
-			URL:         e.ChildAttr("div.text h2 a", "href"),
+			URL:         url,
 			PublishedAt: time.Now(),
 		})
 	})
