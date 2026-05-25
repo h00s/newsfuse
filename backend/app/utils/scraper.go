@@ -98,11 +98,11 @@ func (s *DefaultScraper) ScrapeStory(url, element, childElement string, html boo
 }
 
 func (s *DefaultScraper) Start() {
-	s.collector.DisableCookies()
+	// s.collector.DisableCookies()
 	s.collector.AllowURLRevisit = true
 
 	s.collector.OnRequest(func(r *colly.Request) {
-		r.Headers.Set("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+		r.Headers.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0")
 		s.headlines = models.Headlines{}
 	})
 
