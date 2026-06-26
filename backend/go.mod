@@ -12,7 +12,7 @@ require (
 	github.com/go-raptor/controllers/spa v1.0.4
 	github.com/go-raptor/middlewares/cors v1.0.7
 	github.com/go-raptor/middlewares/logger v1.0.5
-	github.com/go-raptor/raptor/v4 v4.2.4
+	github.com/go-raptor/raptor/v4 v4.2.5
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.1.3
 	github.com/pressly/goose/v3 v3.27.1
