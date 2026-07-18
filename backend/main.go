@@ -15,7 +15,7 @@ func main() {
 		components.New(),
 		config.Routes(),
 		raptor.WithLogHandler(func(level *slog.LevelVar) slog.Handler {
-			return tint.NewHandler(os.Stderr, &tint.Options{Level: level})
+			return tint.NewTextHandler(os.Stderr, &tint.Options{Level: level})
 		}),
 	).Run()
 }
