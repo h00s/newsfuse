@@ -2,45 +2,67 @@ package services
 
 import (
 	"context"
+	"errors"
 	"strings"
+	"time"
 
 	"github.com/go-raptor/raptor/v4"
-	"google.golang.org/genai"
+	"github.com/openai/openai-go/v3"
+	"github.com/openai/openai-go/v3/option"
+	"github.com/openai/openai-go/v3/responses"
+	"github.com/openai/openai-go/v3/shared"
+)
+
+const (
+	summarizeModel   = openai.ChatModelGPT5_6Luna
+	summarizeTimeout = 60 * time.Second
+	summarizePrompt  = "Napravi sažetak vijesti bez navoda da se radi o sažetku. " +
+		"Odgovor mora sadržavati samo tekst sažetka vijesti i to do 600 znakova na hrvatskom jeziku."
 )
 
 type GenAIService struct {
 	raptor.Service
 
-	genai *genai.Client
+	openai openai.Client
 }
 
 func (s *GenAIService) Setup() error {
-	var err error
-	s.genai, err = genai.NewClient(context.Background(), &genai.ClientConfig{
-		APIKey:  s.Config.AppConfig["gemini_key"],
-		Backend: genai.BackendGeminiAPI,
-	})
-	return err
+	key := s.Config.AppConfig["openai_key"]
+	if key == "" {
+		return errors.New("openai_key is not set in app config")
+	}
+	s.openai = openai.NewClient(option.WithAPIKey(key))
+	return nil
 }
 
 func (s *GenAIService) Summarize(story string) (string, error) {
 	replacer := strings.NewReplacer("<p>", "", "</p>", "")
 	story = replacer.Replace(story)
-	/* if len(story) > 2500 {
-		story = story[:2500]
-	} */
-	content := "Napravi sažetak vijesti bez navoda da se radi o sažetku. Odgovor mora sadržavati samo tekst sažetka vijesti i to do 600 znakova na hrvatskom jeziku: " + story
 
-	result, err := s.genai.Models.GenerateContent(
-		context.Background(),
-		"gemini-2.5-flash-lite",
-		genai.Text(content),
-		nil,
-	)
+	ctx, cancel := context.WithTimeout(context.Background(), summarizeTimeout)
+	defer cancel()
 
-	if err == nil {
-		return "<p>" + result.Text() + "</p>", nil
+	result, err := s.openai.Responses.New(ctx, responses.ResponseNewParams{
+		Model:        summarizeModel,
+		Instructions: openai.String(summarizePrompt),
+		Input: responses.ResponseNewParamsInputUnion{
+			OfString: openai.String(story),
+		},
+		Reasoning: shared.ReasoningParam{
+			Effort: shared.ReasoningEffortLow,
+		},
+		Text: responses.ResponseTextConfigParam{
+			Verbosity: responses.ResponseTextConfigVerbosityLow,
+		},
+	})
+	if err != nil {
+		return "", err
 	}
 
-	return "", err
+	summary := strings.TrimSpace(result.OutputText())
+	if summary == "" {
+		return "", errors.New("empty summary returned")
+	}
+
+	return "<p>" + summary + "</p>", nil
 }
