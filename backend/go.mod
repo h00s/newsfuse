@@ -1,6 +1,6 @@
 module github.com/h00s/newsfuse
 
-go 1.26
+go 1.27
 
 // replace github.com/go-raptor/raptor/v4 => ../../go-raptor/raptor/v4
 
@@ -12,10 +12,10 @@ require (
 	github.com/go-raptor/controllers/spa/v2 v2.0.0
 	github.com/go-raptor/middlewares/cors v1.0.10
 	github.com/go-raptor/middlewares/logger v1.0.7
-	github.com/go-raptor/raptor/v4 v4.3.1
+	github.com/go-raptor/raptor/v4 v4.3.2
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/lmittmann/tint v1.2.0
-	github.com/openai/openai-go/v3 v3.51.0
+	github.com/openai/openai-go/v3 v3.52.0
 	github.com/pressly/goose/v3 v3.27.3
 	github.com/uptrace/bun v1.2.18
 	github.com/uptrace/bun/dialect/pgdialect v1.2.18

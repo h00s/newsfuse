@@ -39,8 +39,11 @@ github.com/go-raptor/middlewares/logger v1.0.7 h1:EJT1Kg8xT2yZQEvBmS7FvmyZGnty+l
 github.com/go-raptor/middlewares/logger v1.0.7/go.mod h1:EmsMioF0OjbcNOJwK/YLCjogpHgMII4ZgnRnMMbT3ZI=
 github.com/go-raptor/raptor/v4 v4.3.1 h1:9hD1v91KrSwhDo/e9zHEEjq6Wa8RCaCttEC00frLzwI=
 github.com/go-raptor/raptor/v4 v4.3.1/go.mod h1:llA2fmqRtCOJ60AgzdmSJUwm4UhHVfdLIrm/e/H/oD0=
+github.com/go-raptor/raptor/v4 v4.3.2 h1:eQWQxv8ssXYLWZcQsdKxJEpajoTcbO3h3fikrVwX92s=
+github.com/go-raptor/raptor/v4 v4.3.2/go.mod h1:QBCZFYuM0SHuBfoaAmAbbnF6uLUHPTJA8gvnGl/7Jp0=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
+github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
 github.com/gocolly/colly/v2 v2.3.0 h1:HSFh0ckbgVd2CSGRE+Y/iA4goUhGROJwyQDCMXGFBWM=
 github.com/gocolly/colly/v2 v2.3.0/go.mod h1:Qp54s/kQbwCQvFVx8KzKCSTXVJ1wWT4QeAKEu33x1q8=
 github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
@@ -80,6 +83,8 @@ github.com/nlnwa/whatwg-url v0.6.2 h1:jU61lU2ig4LANydbEJmA2nPrtCGiKdtgT0rmMd2VZ/
 github.com/nlnwa/whatwg-url v0.6.2/go.mod h1:x0FPXJzzOEieQtsBT/AKvbiBbQ46YlL6Xa7m02M1ECk=
 github.com/openai/openai-go/v3 v3.51.0 h1:+ys88LqUflSr0nRM37aWxkMMpHn+zqzVJGIK89eumdM=
 github.com/openai/openai-go/v3 v3.51.0/go.mod h1:Vy3y2/I2H/MbqvJGXEK8VbN5+avZV6zxux4I3eBdvaA=
+github.com/openai/openai-go/v3 v3.52.0 h1:VDSjIvI5Sr2/AzGJI6219sM2Il+zBWuopvluMy6KdjE=
+github.com/openai/openai-go/v3 v3.52.0/go.mod h1:Vy3y2/I2H/MbqvJGXEK8VbN5+avZV6zxux4I3eBdvaA=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
