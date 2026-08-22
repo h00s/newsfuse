@@ -14,6 +14,7 @@ func Controllers() raptor.Controllers {
 		&controllers.TopicsController{},
 		spa.NewSPAController(spa.SPAConfig{
 			Directory: "public",
+			Optional:  true,
 		}),
 	}
 }

@@ -9,7 +9,7 @@ go 1.27
 require (
 	github.com/dgraph-io/ristretto/v2 v2.4.2
 	github.com/go-raptor/connectors/bun/postgres v1.1.3
-	github.com/go-raptor/controllers/spa/v2 v2.0.0
+	github.com/go-raptor/controllers/spa/v2 v2.0.1
 	github.com/go-raptor/middlewares/cors v1.0.10
 	github.com/go-raptor/middlewares/logger v1.0.7
 	github.com/go-raptor/raptor/v4 v4.3.2
