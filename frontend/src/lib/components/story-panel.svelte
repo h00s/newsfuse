@@ -53,7 +53,7 @@
   load();
 </script>
 
-<div class="rounded-box border border-base-300 bg-base-100/70 p-4">
+<div class="rounded-box border border-base-300 bg-base-100/70 p-3 sm:p-4">
   {#if story}
     {#if story.summary}
       <section aria-label="Sažetak" class="mb-4 rounded-box border border-accent/30 bg-accent/10 p-3">

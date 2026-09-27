@@ -27,7 +27,11 @@
 {#if feed.items.length === 0}
   {@render empty()}
 {:else}
-  <ul class="list rounded-box border border-base-300 bg-base-200 shadow-sm" aria-label="Naslovi">
+  <!-- Edge to edge on phones (cancelling main's px-3), a rounded card from sm up. -->
+  <ul
+    class="list -mx-3 border-y border-base-300 bg-base-200 sm:mx-0 sm:rounded-box sm:border sm:shadow-sm"
+    aria-label="Naslovi"
+  >
     {#each feed.items as headline (headline.id)}
       <HeadlineItem {headline} isNew={Date.parse(headline.publishedAt) > seenBefore} />
     {/each}
