@@ -53,14 +53,18 @@
   /** Shows the summary, generating it first if the story has none yet; hides it when shown. */
   async function toggleSummary() {
     if (!story || summarizing) return;
-    if (showSummary || story.summary) {
-      showSummary = !showSummary;
+    if (showSummary) {
+      showSummary = false;
+      return;
+    }
+    if (story.summary) {
+      await revealSummary();
       return;
     }
     summarizing = true;
     try {
       story = await summarizeStory(story.id);
-      showSummary = true;
+      await revealSummary();
     } catch (e) {
       toastError(e, {
         429: "Previše sažetaka zaredom. Pokušajte ponovno za minutu.",
@@ -72,14 +76,26 @@
     }
   }
 
+  /** Asking for the summary is asking for the short version: the full text folds back to its
+   *  preview, and the headline with its summary moves to the top. The reader may have tapped from
+   *  the end of a long story, far below where the summary appears. */
+  async function revealSummary() {
+    showSummary = true;
+    expanded = false;
+    await tick();
+    headlineRow()?.scrollIntoView({ block: "start", behavior: scrollBehavior() });
+  }
+
   /** Collapsing a long story that was read to its end would leave the reader far below it, so
    *  bring its headline back into view. */
   async function toggleExpanded() {
     expanded = !expanded;
     if (expanded) return;
     await tick();
-    panel?.closest("[data-headline]")?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
+    headlineRow()?.scrollIntoView({ block: "nearest", behavior: scrollBehavior() });
   }
+
+  const headlineRow = () => panel?.closest("[data-headline]");
 
   // Mounted when the reader opens the headline: that is the action that fetches.
   load();

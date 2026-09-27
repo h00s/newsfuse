@@ -22,7 +22,7 @@
 </script>
 
 <li
-  class="list-row scroll-mt-32 gap-3 rounded-none px-3 py-3 [--list-grid-cols:auto_minmax(0,1fr)_auto] focus-within:bg-base-300/40 sm:px-4"
+  class="list-row scroll-mt-26 gap-3 rounded-none px-3 py-3 [--list-grid-cols:auto_minmax(0,1fr)_auto] focus-within:bg-base-300/40 sm:px-4"
   data-headline
 >
   <SourceAvatar source={headline.source} class="mt-0.5 size-8" />
