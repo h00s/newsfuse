@@ -5,13 +5,17 @@ import (
 	"github.com/h00s/newsfuse/app/services"
 )
 
+// Services are set up in this order, and cleaned up in reverse: the scrapers stop before the
+// database and cache they write to.
 func Services() raptor.Services {
 	return raptor.Services{
-		&services.SourcesService{},
-		&services.StoriesService{},
-		&services.TopicsService{},
+		&services.DatabaseService{},
 		&services.CacheService{},
-		&services.GenAIService{},
+		&services.TopicsService{},
+		&services.SourcesService{},
 		&services.HeadlinesService{},
+		&services.GenAIService{},
+		&services.ScrapersService{},
+		&services.StoriesService{},
 	}
 }

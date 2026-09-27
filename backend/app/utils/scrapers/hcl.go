@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"strings"
 	"time"
 
@@ -14,9 +14,9 @@ type HCL struct {
 	utils.DefaultScraper
 }
 
-func NewHCL(h chan models.Headlines, log *slog.Logger, sourceID int64) *HCL {
+func NewHCL(sourceID int64) *HCL {
 	s := &HCL{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"HCL",
 			"https://www.hcl.hr/",
 			10,
@@ -49,6 +49,6 @@ func NewHCL(h chan models.Headlines, log *slog.Logger, sourceID int64) *HCL {
 	return s
 }
 
-func (s *HCL) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div.article", "p:not([class]):not(.meta p, .tags p)", false)
+func (s *HCL) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div.article", "p:not([class]):not(.meta p, .tags p)", false)
 }

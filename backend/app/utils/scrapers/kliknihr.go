@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -13,9 +13,9 @@ type Kliknihr struct {
 	utils.DefaultScraper
 }
 
-func NewKliknihr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Kliknihr {
+func NewKliknihr(sourceID int64) *Kliknihr {
 	s := &Kliknihr{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"klikni.hr",
 			"https://www.klikni.hr",
 			15,
@@ -36,6 +36,6 @@ func NewKliknihr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Kli
 	return s
 }
 
-func (s *Kliknihr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "section[class='container page-content']", "p:not([class])", false)
+func (s *Kliknihr) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "section[class='container page-content']", "p:not([class])", false)
 }

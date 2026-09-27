@@ -1,189 +1,155 @@
 package services
 
 import (
-	"context"
-	"encoding/json"
-	"errors"
 	"fmt"
 	"slices"
+	"strings"
 	"time"
 
 	"github.com/go-raptor/raptor/v4"
-	"github.com/go-raptor/raptor/v4/errs"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
-	"github.com/h00s/newsfuse/app/utils/scrapers"
 	"github.com/uptrace/bun"
 )
+
+const (
+	headlinesPageSize = 30
+	// The first page of each topic is cached and invalidated on ingest; the TTL only bounds a
+	// race between a read that loaded before an ingest and stored after it.
+	headlinesTTL = 5 * time.Minute
+)
+
+// inTopic scopes headlines to a topic through their source.
+const inTopic = `headlines.source_id IN (SELECT id FROM sources WHERE topic_id = ?)`
+
+var likeEscaper = strings.NewReplacer(`\`, `\\`, `%`, `\%`, `_`, `\_`)
 
 type HeadlinesService struct {
 	raptor.Service
 
-	Scrapers         map[int]utils.Scraper
-	HeadlinesChannel chan models.Headlines
-	Sources          *SourcesService
-	Cache            *CacheService
+	DB      *DatabaseService
+	Cache   *CacheService
+	Topics  *TopicsService
+	Sources *SourcesService
 }
 
-func (s *HeadlinesService) Setup() error {
-	s.HeadlinesChannel = make(chan models.Headlines)
-	s.Scrapers = map[int]utils.Scraper{
-		1:  scrapers.NewKliknihr(s.HeadlinesChannel, s.Log, 1),
-		2:  scrapers.NewMojportalhr(s.HeadlinesChannel, s.Log, 2),
-		3:  scrapers.NewRadioDaruvar(s.HeadlinesChannel, s.Log, 3),
-		4:  scrapers.NewIndexhrCroatia(s.HeadlinesChannel, s.Log, 4),
-		5:  scrapers.NewN1InfoCroatia(s.HeadlinesChannel, s.Log, 5),
-		6:  scrapers.NewIndexhrWorld(s.HeadlinesChannel, s.Log, 6),
-		7:  scrapers.NewN1InfoWorld(s.HeadlinesChannel, s.Log, 7),
-		8:  scrapers.NewHackerNews(s.HeadlinesChannel, s.Log, 8),
-		9:  scrapers.NewBughr(s.HeadlinesChannel, s.Log, 9),
-		10: scrapers.NewTelegram(s.HeadlinesChannel, s.Log, 10),
-		11: scrapers.NewHCL(s.HeadlinesChannel, s.Log, 11),
-	}
-
-	go s.Receive()
-	for _, scraper := range s.Scrapers {
-		scraper.Start()
-	}
-
-	return nil
+func topicHeadlinesKey(topicID int64) string {
+	return fmt.Sprintf("headlines:topic:%d", topicID)
 }
 
-func (s *HeadlinesService) Receive() {
-	for {
-		headlines := <-s.HeadlinesChannel
-		slices.Reverse(headlines)
-		newHeadlines := false
-		for _, headline := range headlines {
-			exists, err := s.Database.Conn().(*bun.DB).
-				NewSelect().
-				Model(&headline).
-				Where("url = ?", headline.URL).
-				Exists(context.Background())
-			if err != nil {
-				s.Log.Error("Error checking headline existence", "error", err.Error())
-				continue
-			}
-
-			if !exists {
-				_, err = s.Database.Conn().(*bun.DB).
-					NewInsert().
-					Model(&headline).
-					Exec(context.Background())
-				if err != nil {
-					s.Log.Error("Error creating headline", "DB", err.Error())
-					continue
-				}
-				newHeadlines = true
-			}
-		}
-		if newHeadlines {
-			source := s.Sources.Get(headlines[0].SourceID)
-			if err := s.allFromDB(source.TopicID, &headlines); err == nil {
-				go s.memstoreSetHeadlinesByTopicID(source.TopicID, &headlines)
-			}
+// List pages through a topic's headlines, newest first. sourceID narrows the list to one of the
+// topic's sources; beforeID continues after the last headline of the previous page (0 for the
+// first page).
+func (s *HeadlinesService) List(topicID int64, sourceID *int64, beforeID int64) (models.Headlines, error) {
+	if err := s.Topics.Verify(topicID); err != nil {
+		return nil, err
+	}
+	if sourceID != nil {
+		if err := s.Sources.VerifyInTopic(*sourceID, topicID); err != nil {
+			return nil, err
 		}
 	}
+
+	load := func() (models.Headlines, error) {
+		return s.page(beforeID, func(q *bun.SelectQuery) *bun.SelectQuery {
+			q = q.Where(inTopic, topicID)
+			if sourceID != nil {
+				q = q.Where("headlines.source_id = ?", *sourceID)
+			}
+			return q
+		})
+	}
+	if sourceID == nil && beforeID == 0 {
+		return cached(s.Cache, topicHeadlinesKey(topicID), headlinesTTL, load)
+	}
+	return load()
 }
 
-func (s *HeadlinesService) All(topicID int64) (models.Headlines, error) {
+// Search pages through the headlines whose title contains query, newest first. LIKE wildcards
+// in the query match themselves.
+func (s *HeadlinesService) Search(query string, beforeID int64) (models.Headlines, error) {
+	pattern := "%" + likeEscaper.Replace(query) + "%"
+	return s.page(beforeID, func(q *bun.SelectQuery) *bun.SelectQuery {
+		return q.Where(`headlines.title ILIKE ? ESCAPE '\'`, pattern)
+	})
+}
+
+func (s *HeadlinesService) page(beforeID int64, filter func(*bun.SelectQuery) *bun.SelectQuery) (models.Headlines, error) {
 	var headlines models.Headlines
-
-	if err := s.memstoreGetHeadlinesByTopicID(topicID, &headlines); err == nil {
-		return headlines, nil
-	}
-
-	if err := s.allFromDB(topicID, &headlines); err != nil {
-		return headlines, errs.NewErrorInternal(err.Error())
-	}
-
-	go s.memstoreSetHeadlinesByTopicID(topicID, &headlines)
-
-	return headlines, nil
-}
-
-func (s *HeadlinesService) allFromDB(topicID int64, headlines *models.Headlines) error {
-	if err := s.Database.Conn().(*bun.DB).
-		NewSelect().
-		Model(headlines).
-		Join("JOIN sources s ON headline.source_id = s.id").
-		Where("s.topic_id = ?", topicID).
-		Order("headline.id desc").
-		Limit(30).
-		Scan(context.Background()); err != nil {
-		s.Log.Error("Error getting headlines", "error", err.Error())
-		return err
-	}
-
-	return nil
-}
-
-func (s *HeadlinesService) AllByLastID(topicID, lastID int64) (models.Headlines, error) {
-	var headlines models.Headlines
-	if err := s.Database.Conn().(*bun.DB).
-		NewSelect().
+	q := s.DB.Conn().NewSelect().
 		Model(&headlines).
-		Join("JOIN sources s ON headline.source_id = s.id").
-		Where("s.topic_id = ?", topicID).
-		Where("headline.id < ?", lastID).
-		Order("headline.id DESC").
-		Limit(30).
-		Scan(context.Background()); err != nil {
-		s.Log.Error("Error getting headlines", "error", err)
-		return headlines, errs.NewErrorInternal(err.Error())
+		Relation("Source")
+	q = filter(q)
+	if beforeID > 0 {
+		q = q.Where("headlines.id < ?", beforeID)
 	}
-
-	return headlines, nil
+	err := q.Order("headlines.id DESC").
+		Limit(headlinesPageSize).
+		Scan(s.DB.Ctx)
+	return headlines, s.DB.HandleError(err)
 }
 
-func (s *HeadlinesService) Search(query string) (models.Headlines, error) {
-	var headlines models.Headlines
-	if err := s.Database.Conn().(*bun.DB).
-		NewSelect().
-		Model(&headlines).
-		Where("title ILIKE ?", "%"+query+"%").
-		Order("id DESC").
-		Limit(100).
-		Scan(context.Background()); err != nil {
-		s.Log.Error("Error searching headlines", "error", err.Error())
-		return headlines, errs.NewErrorInternal(err.Error())
+// CountSince counts a topic's headlines published after since.
+func (s *HeadlinesService) CountSince(topicID int64, since time.Time) (int, error) {
+	if err := s.Topics.Verify(topicID); err != nil {
+		return 0, err
 	}
-
-	return headlines, nil
-}
-
-func (s *HeadlinesService) Count(topicID int64, since time.Time) (int, error) {
-	count, err := s.Database.Conn().(*bun.DB).
-		NewSelect().
+	count, err := s.DB.Conn().NewSelect().
 		Model((*models.Headline)(nil)).
-		Join("JOIN sources s ON headline.source_id = s.id").
-		Where("s.topic_id = ? AND headline.published_at > ?", topicID, since).
-		Count(context.Background())
-	if err != nil {
-		s.Log.Error("Error counting headlines", "error", err.Error())
-		return 0, errs.NewErrorInternal(err.Error())
-	}
-
-	return count, nil
+		Where(inTopic, topicID).
+		Where("headlines.published_at > ?", since).
+		Count(s.DB.Ctx)
+	return count, s.DB.HandleError(err)
 }
 
-func (s *HeadlinesService) memstoreGetHeadlinesByTopicID(topicID int64, headlines *models.Headlines) error {
-	if data, ok := s.Cache.Get(fmt.Sprintf("headlines:%d", topicID)); ok {
-		err := json.Unmarshal(data, headlines)
-		if err != nil {
-			s.Log.Warn("Error unmarshalling headlines from memstore", "topic", topicID, "error", err.Error())
-			return err
+func (s *HeadlinesService) Get(id int64) (*models.Headline, error) {
+	headline := new(models.Headline)
+	err := s.DB.Conn().NewSelect().
+		Model(headline).
+		Relation("Source").
+		Where("headlines.id = ?", id).
+		Scan(s.DB.Ctx)
+	return headline, s.DB.HandleErrorNotFound(err, "Headline not found")
+}
+
+// Ingest stores a scraped batch, skipping headlines whose url is already known, and returns how
+// many were new. Scrapers list the newest first; storing the batch reversed gives newer
+// headlines higher ids, which is the order every list uses.
+func (s *HeadlinesService) Ingest(batch models.Headlines) (int, error) {
+	if len(batch) == 0 {
+		return 0, nil
+	}
+	rows := slices.Clone(batch)
+	slices.Reverse(rows)
+
+	res, err := s.DB.Conn().NewInsert().
+		Model(&rows).
+		On("CONFLICT (url) DO NOTHING").
+		Exec(s.DB.Ctx)
+	if err != nil {
+		return 0, s.DB.HandleError(err)
+	}
+	inserted, err := res.RowsAffected()
+	if err != nil {
+		return 0, s.DB.HandleError(err)
+	}
+	if inserted > 0 {
+		s.invalidateTopicsOf(rows)
+	}
+	return int(inserted), nil
+}
+
+func (s *HeadlinesService) invalidateTopicsOf(headlines models.Headlines) {
+	seen := map[int64]bool{}
+	for _, h := range headlines {
+		if seen[h.SourceID] {
+			continue
 		}
-		return nil
+		seen[h.SourceID] = true
+		source, err := s.Sources.Get(h.SourceID)
+		if err != nil {
+			s.Log.Warn("Ingested headlines of an unknown source", "source", h.SourceID)
+			continue
+		}
+		s.Cache.Invalidate(topicHeadlinesKey(source.TopicID))
 	}
-	s.Log.Warn("Headlines not found in memstore", "topic", topicID)
-	return errors.New("headlines not found in memstore")
-}
-
-func (s *HeadlinesService) memstoreSetHeadlinesByTopicID(topicID int64, headlines *models.Headlines) {
-	data, err := json.Marshal(headlines)
-	if err != nil {
-		s.Log.Warn("Error setting headlines in memstore", "topic", topicID, "error", err.Error())
-	}
-	s.Cache.Set(fmt.Sprintf("headlines:%d", topicID), data)
 }

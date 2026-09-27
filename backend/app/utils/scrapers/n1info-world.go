@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -13,9 +13,9 @@ type N1InfoWorld struct {
 	utils.DefaultScraper
 }
 
-func NewN1InfoWorld(h chan models.Headlines, log *slog.Logger, sourceID int64) *N1InfoWorld {
+func NewN1InfoWorld(sourceID int64) *N1InfoWorld {
 	s := &N1InfoWorld{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"N1",
 			"https://n1info.hr/svijet/",
 			10,
@@ -36,6 +36,6 @@ func NewN1InfoWorld(h chan models.Headlines, log *slog.Logger, sourceID int64) *
 	return s
 }
 
-func (s *N1InfoWorld) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div.article-content-wrapper", "p[data-block-key]", false)
+func (s *N1InfoWorld) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div.article-content-wrapper", "p[data-block-key]", false)
 }

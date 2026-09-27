@@ -3,10 +3,12 @@ package services
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
 	"github.com/go-raptor/raptor/v4"
+	"github.com/h00s/newsfuse/app/utils"
 	"github.com/openai/openai-go/v3"
 	"github.com/openai/openai-go/v3/option"
 	"github.com/openai/openai-go/v3/responses"
@@ -18,35 +20,56 @@ const (
 	summarizeTimeout = 60 * time.Second
 	summarizePrompt  = "Napravi sažetak vijesti bez navoda da se radi o sažetku. " +
 		"Odgovor mora sadržavati samo tekst sažetka vijesti i to do 600 znakova na hrvatskom jeziku."
+
+	// stubSummary is what llm_provider "stub" answers, so tests never reach a paid API.
+	stubSummary = "Sažetak vijesti."
 )
 
 type GenAIService struct {
 	raptor.Service
 
-	openai openai.Client
+	provider string
+	openai   openai.Client
 }
 
+// Setup reads llm_provider: "openai" (the default) needs openai_key and fails boot without it,
+// rather than on a user's first summary; "stub" needs nothing.
 func (s *GenAIService) Setup() error {
-	key := s.Config.AppConfig["openai_key"]
-	if key == "" {
-		return errors.New("openai_key is not set in app config")
+	s.provider = s.Config.AppConfig["llm_provider"]
+	if s.provider == "" {
+		s.provider = "openai"
 	}
-	s.openai = openai.NewClient(option.WithAPIKey(key))
-	return nil
+	switch s.provider {
+	case "stub":
+		return nil
+	case "openai":
+		key := s.Config.AppConfig["openai_key"]
+		if key == "" {
+			return errors.New("openai_key is not set in app config")
+		}
+		s.openai = openai.NewClient(option.WithAPIKey(key))
+		return nil
+	default:
+		return fmt.Errorf("unknown llm_provider %q (want openai or stub)", s.provider)
+	}
 }
 
-func (s *GenAIService) Summarize(story string) (string, error) {
-	replacer := strings.NewReplacer("<p>", "", "</p>", "")
-	story = replacer.Replace(story)
+// Summarize returns a plain-text Croatian summary of story HTML. ctx is the request's, so a
+// client that leaves cancels the call; the timeout bounds a hung one.
+func (s *GenAIService) Summarize(ctx context.Context, story string) (string, error) {
+	text := utils.StoryText(story)
+	if s.provider == "stub" {
+		return stubSummary, nil
+	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), summarizeTimeout)
+	ctx, cancel := context.WithTimeout(ctx, summarizeTimeout)
 	defer cancel()
 
 	result, err := s.openai.Responses.New(ctx, responses.ResponseNewParams{
 		Model:        summarizeModel,
 		Instructions: openai.String(summarizePrompt),
 		Input: responses.ResponseNewParamsInputUnion{
-			OfString: openai.String(story),
+			OfString: openai.String(text),
 		},
 		Reasoning: shared.ReasoningParam{
 			Effort: shared.ReasoningEffortLow,
@@ -63,6 +86,5 @@ func (s *GenAIService) Summarize(story string) (string, error) {
 	if summary == "" {
 		return "", errors.New("empty summary returned")
 	}
-
-	return "<p>" + summary + "</p>", nil
+	return summary, nil
 }

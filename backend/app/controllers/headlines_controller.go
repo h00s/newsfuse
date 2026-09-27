@@ -1,9 +1,8 @@
-// Package controllers contains all HTTP controllers.
 package controllers
 
 import (
-	"strconv"
-	"time"
+	"strings"
+	"unicode/utf8"
 
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
@@ -11,69 +10,91 @@ import (
 	"github.com/h00s/newsfuse/app/services"
 )
 
+const (
+	minSearchLength = 3
+	maxSearchLength = 100
+)
+
 type HeadlinesController struct {
 	raptor.Controller
 
 	Headlines *services.HeadlinesService
+	Stories   *services.StoriesService
 }
 
-func (c *HeadlinesController) All(ctx *raptor.Context) error {
-	topicID, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
-	if err != nil {
-		return errs.NewErrorBadRequest("Invalid Topic ID")
-	}
-
-	var headlines models.Headlines
-	if lastID, err := strconv.ParseInt(ctx.QueryParam("last_id"), 10, 64); err == nil {
-		headlines, err = c.Headlines.AllByLastID(topicID, lastID)
-		if err != nil {
-			return err
-		}
-		return ctx.Data(headlines)
-	}
-
-	headlines, err = c.Headlines.All(topicID)
+// Index pages through a topic's headlines, newest first: ?topicId= is required, ?sourceId=
+// narrows the list to one of the topic's sources, and ?beforeId= continues after a page.
+func (c *HeadlinesController) Index(ctx *raptor.Context) error {
+	topicID, err := requiredQueryID(ctx, "topicId")
 	if err != nil {
 		return err
 	}
-	return ctx.Data(headlines)
+	sourceID, hasSource, err := queryID(ctx, "sourceId")
+	if err != nil {
+		return err
+	}
+	beforeID, _, err := queryID(ctx, "beforeId")
+	if err != nil {
+		return err
+	}
+
+	var source *int64
+	if hasSource {
+		source = &sourceID
+	}
+	headlines, err := c.Headlines.List(topicID, source, beforeID)
+	if err != nil {
+		return err
+	}
+	return ctx.Data(models.NewHeadlineResponses(headlines))
 }
 
+// Search pages through the headlines whose title contains ?query=, newest first.
 func (c *HeadlinesController) Search(ctx *raptor.Context) error {
-	query := ctx.QueryParam("query")
-	if query == "" || len(query) < 3 {
-		return errs.NewErrorBadRequest("Invalid query")
+	query := strings.TrimSpace(ctx.QueryParam("query"))
+	if n := utf8.RuneCountInString(query); n < minSearchLength || n > maxSearchLength {
+		return errs.NewErrorBadRequest("Invalid query",
+			"minLength", minSearchLength, "maxLength", maxSearchLength)
 	}
-
-	var headlines models.Headlines
-	headlines, err := c.Headlines.Search(query)
+	beforeID, _, err := queryID(ctx, "beforeId")
 	if err != nil {
 		return err
 	}
 
-	return ctx.Data(headlines)
+	headlines, err := c.Headlines.Search(query, beforeID)
+	if err != nil {
+		return err
+	}
+	return ctx.Data(models.NewHeadlineResponses(headlines))
 }
 
+// Count is how many of a topic's headlines were published after ?since= (RFC 3339).
 func (c *HeadlinesController) Count(ctx *raptor.Context) error {
-	topicID, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	topicID, err := requiredQueryID(ctx, "topicId")
 	if err != nil {
-		return errs.NewErrorBadRequest("Invalid Topic ID")
+		return err
+	}
+	since, err := queryTime(ctx, "since")
+	if err != nil {
+		return err
 	}
 
-	status := ctx.QueryParam("status")
-	since, err := strconv.Atoi(ctx.QueryParam("since"))
-	if err == nil && status != "" && since != 0 {
-		sinceTime := time.Unix(int64(since/1000), 0)
-		count, err := c.Headlines.Count(topicID, sinceTime)
-		if err != nil {
-			return err
-		}
-		return ctx.Data(
-			map[string]interface{}{
-				"count": count,
-			},
-		)
+	count, err := c.Headlines.CountSince(topicID, since)
+	if err != nil {
+		return err
 	}
+	return ctx.Data(models.HeadlineCountResponse{Count: count})
+}
 
-	return errs.NewErrorBadRequest("Invalid query parameters")
+// Story is the article behind a headline, scraped from its site on the first read.
+func (c *HeadlinesController) Story(ctx *raptor.Context) error {
+	id, err := pathID(ctx)
+	if err != nil {
+		return err
+	}
+	story, err := c.Stories.GetByHeadline(ctx.Request().Context(), id)
+	if err != nil {
+		return err
+	}
+	return ctx.Data(models.NewStoryResponse(story))
 }

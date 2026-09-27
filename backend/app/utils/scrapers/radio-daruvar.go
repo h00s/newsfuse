@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"strings"
 	"time"
 
@@ -14,9 +14,9 @@ type RadioDaruvar struct {
 	utils.DefaultScraper
 }
 
-func NewRadioDaruvar(h chan models.Headlines, log *slog.Logger, sourceID int64) *RadioDaruvar {
+func NewRadioDaruvar(sourceID int64) *RadioDaruvar {
 	s := &RadioDaruvar{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"Radio Daruvar",
 			"https://www.radio-daruvar.hr/",
 			30,
@@ -37,6 +37,6 @@ func NewRadioDaruvar(h chan models.Headlines, log *slog.Logger, sourceID int64) 
 	return s
 }
 
-func (s *RadioDaruvar) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='entry-content entry clearfix']", "p:not([class])", false)
+func (s *RadioDaruvar) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div[class='entry-content entry clearfix']", "p:not([class])", false)
 }

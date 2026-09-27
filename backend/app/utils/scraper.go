@@ -1,11 +1,11 @@
-// Package utils provides utility functions and types for the newsfuse application, including the Scraper interface and its implementation.
+// Package utils provides the scraper base that every news site builds on, and the HTML
+// sanitizing that makes scraped stories safe to render.
 package utils
 
 import (
-	"fmt"
-	"log/slog"
-	"math/rand"
-	"slices"
+	"context"
+	"html"
+	"math/rand/v2"
 	"strings"
 	"time"
 
@@ -13,116 +13,143 @@ import (
 	"github.com/h00s/newsfuse/app/models"
 )
 
+const (
+	requestTimeout     = 15 * time.Second
+	headlinesUserAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
+	storyUserAgent     = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+)
+
+// Scraper is one news site: its front page yields headlines, and each headline's page yields its
+// story. String names the site in logs.
 type Scraper interface {
-	Start()
-	ScrapeStory(url string) (string, error)
+	String() string
+	Schedule() Schedule
+	Scrape(ctx context.Context) (models.Headlines, error)
+	ScrapeStory(ctx context.Context, url string) (string, error)
 }
 
-type DefaultScraper struct {
-	headlinesChannel chan models.Headlines
-	headlines        models.Headlines
+// Schedule is how often a site is scraped: a random wait between MinInterval and MaxInterval,
+// so requests don't arrive like clockwork, and no scraping during OffHours (local hours, 0-23).
+type Schedule struct {
+	MinInterval time.Duration
+	MaxInterval time.Duration
+	OffHours    []int
+}
 
+func (s Schedule) NextWait() time.Duration {
+	if s.MaxInterval <= s.MinInterval {
+		return s.MinInterval
+	}
+	return s.MinInterval + rand.N(s.MaxInterval-s.MinInterval)
+}
+
+type headlineRule struct {
+	selector string
+	callback colly.HTMLCallback
+}
+
+// DefaultScraper does the fetching; each site adds its headline rules with ScrapeHeadline and
+// its story selectors in ScrapeStory. Scrape is not safe for concurrent use: the site's rules
+// collect into the running scrape's batch through AddHeadline.
+type DefaultScraper struct {
 	Name string
 	URL  string
 
-	MinRefreshInterval int
-	MaxRefreshInterval int
-
-	OffHours []int
-
-	log       *slog.Logger
-	collector *colly.Collector
+	schedule Schedule
+	rules    []headlineRule
+	batch    models.Headlines
 }
 
-func NewScraper(headlinesChannel chan models.Headlines, log *slog.Logger, name, url string, minRefreshInterval, maxRefreshInterval int, offHours []int) *DefaultScraper {
+// NewScraper takes the refresh interval in minutes.
+func NewScraper(name, url string, minRefreshInterval, maxRefreshInterval int, offHours []int) *DefaultScraper {
 	return &DefaultScraper{
-		headlinesChannel: headlinesChannel,
-		headlines:        nil,
-
 		Name: name,
 		URL:  url,
-
-		MinRefreshInterval: minRefreshInterval,
-		MaxRefreshInterval: maxRefreshInterval,
-
-		OffHours: offHours,
-
-		log:       log,
-		collector: colly.NewCollector(),
+		schedule: Schedule{
+			MinInterval: time.Duration(minRefreshInterval) * time.Minute,
+			MaxInterval: time.Duration(maxRefreshInterval) * time.Minute,
+			OffHours:    offHours,
+		},
 	}
 }
 
+func (s *DefaultScraper) String() string {
+	return s.Name
+}
+
+func (s *DefaultScraper) Schedule() Schedule {
+	return s.schedule
+}
+
+// ScrapeHeadline registers a rule: callback runs for every element matching selector on the
+// front page, and calls AddHeadline for each headline it finds.
+func (s *DefaultScraper) ScrapeHeadline(selector string, callback colly.HTMLCallback) {
+	s.rules = append(s.rules, headlineRule{selector: selector, callback: callback})
+}
+
+// AddHeadline adds a headline to the running scrape, skipping one without a title.
 func (s *DefaultScraper) AddHeadline(h models.Headline) {
 	title := strings.TrimSpace(h.Title)
-	if title != "" {
-		h.Title = title
-		h.URL = strings.TrimSpace(h.URL)
-		s.headlines = append(s.headlines, h)
+	if title == "" {
+		return
 	}
+	h.Title = title
+	h.URL = strings.TrimSpace(h.URL)
+	s.batch = append(s.batch, h)
 }
 
-func (s *DefaultScraper) ScrapeHeadline(selector string, callback func(e *colly.HTMLElement)) {
-	s.collector.OnHTML(selector, callback)
+// Scrape fetches the front page once and returns its headlines in page order, newest first on
+// every site scraped today.
+func (s *DefaultScraper) Scrape(ctx context.Context) (models.Headlines, error) {
+	c := colly.NewCollector(colly.StdlibContext(ctx))
+	c.SetRequestTimeout(requestTimeout)
+	c.OnRequest(func(r *colly.Request) {
+		r.Headers.Set("User-Agent", headlinesUserAgent)
+	})
+	for _, rule := range s.rules {
+		c.OnHTML(rule.selector, rule.callback)
+	}
+
+	s.batch = nil
+	defer func() { s.batch = nil }()
+	if err := c.Visit(s.URL); err != nil {
+		return nil, err
+	}
+	return s.batch, nil
 }
 
-func (s *DefaultScraper) ScrapeStory(url, element, childElement string, html bool) (string, error) {
-	var story string
+// ScrapeStoryFrom fetches a story page and joins the childElement paragraphs inside element into
+// sanitized HTML. With html false each paragraph is its text, escaped; with html true it is the
+// paragraph's inner HTML, which the sanitizer reduces to plain formatting and safe links.
+func (s *DefaultScraper) ScrapeStoryFrom(ctx context.Context, url, element, childElement string, html bool) (string, error) {
+	var story strings.Builder
 
-	c := colly.NewCollector()
-	c.UserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
-
+	c := colly.NewCollector(colly.StdlibContext(ctx))
+	c.UserAgent = storyUserAgent
+	c.SetRequestTimeout(requestTimeout)
 	c.OnHTML(element, func(e *colly.HTMLElement) {
-		var contents string
 		e.ForEach(childElement, func(_ int, el *colly.HTMLElement) {
+			var contents string
 			if html {
-				contentsHTML, err := el.DOM.Html()
+				inner, err := el.DOM.Html()
 				if err != nil {
-					s.log.Error("Error getting HTML", "error", err.Error())
-					contents = ""
-				} else {
-					contents = strings.TrimSpace(contentsHTML)
+					return
 				}
+				contents = strings.TrimSpace(inner)
 			} else {
-				contents = strings.TrimSpace(el.Text)
+				contents = escape(strings.TrimSpace(el.Text))
 			}
-			story += fmt.Sprintf("<p>%s</p>", contents)
+			if contents != "" {
+				story.WriteString("<p>" + contents + "</p>")
+			}
 		})
 	})
 
-	err := c.Visit(url)
-	if err != nil {
+	if err := c.Visit(url); err != nil {
 		return "", err
 	}
-
-	return story, nil
+	return SanitizeStory(story.String()), nil
 }
 
-func (s *DefaultScraper) Start() {
-	// s.collector.DisableCookies()
-	s.collector.AllowURLRevisit = true
-
-	s.collector.OnRequest(func(r *colly.Request) {
-		r.Headers.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0")
-		s.headlines = models.Headlines{}
-	})
-
-	s.collector.OnScraped(func(r *colly.Response) {
-		s.headlinesChannel <- s.headlines
-		s.log.Info("Finished scraping", "scraper", s.Name)
-	})
-
-	go func() {
-		for {
-			s.log.Info("Started scraping", "scraper", s.Name)
-			if !slices.Contains(s.OffHours, time.Now().Hour()) {
-				s.collector.Visit(s.URL)
-				s.collector.Wait()
-			} else {
-				s.log.Info("Skipping scraping", "scraper", s.Name, "hour", time.Now().Hour())
-			}
-			waitTime := rand.Intn(s.MaxRefreshInterval-s.MinRefreshInterval) + s.MinRefreshInterval
-			s.log.Info("Waiting for next scraping", "scraper", s.Name, "minutes", waitTime)
-			time.Sleep(time.Duration(waitTime) * time.Minute)
-		}
-	}()
-}
+// escape is html.EscapeString, named so the html parameter above doesn't shadow the package.
+var escape = html.EscapeString

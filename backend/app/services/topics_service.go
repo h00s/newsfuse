@@ -1,56 +1,44 @@
 package services
 
 import (
-	"context"
-	"encoding/json"
-	"errors"
+	"slices"
+	"time"
 
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/uptrace/bun"
 )
+
+// Topics and sources change only through migrations, so they stay cached for a long time.
+const referenceDataTTL = time.Hour
 
 type TopicsService struct {
 	raptor.Service
 
+	DB    *DatabaseService
 	Cache *CacheService
 }
 
-func (s *TopicsService) All() (models.Topics, error) {
-	var topics models.Topics
-
-	if err := s.memstoreGetTopics(&topics); err == nil {
-		return topics, nil
-	}
-
-	err := s.Database.Conn().(*bun.DB).
-		NewSelect().
-		Model(&topics).
-		Order("id").
-		Scan(context.Background())
-	if err != nil {
-		s.Log.Error("Error geting topics", "Error", err.Error())
-		return topics, errs.NewErrorInternal(err.Error())
-	}
-
-	go s.memstoreSetTopics(&topics)
-	return topics, nil
+func (s *TopicsService) List() (models.Topics, error) {
+	return cached(s.Cache, "topics", referenceDataTTL, func() (models.Topics, error) {
+		var topics models.Topics
+		err := s.DB.Conn().NewSelect().
+			Model(&topics).
+			Order("topics.id").
+			Scan(s.DB.Ctx)
+		return topics, s.DB.HandleError(err)
+	})
 }
 
-func (s *TopicsService) memstoreGetTopics(topics *models.Topics) error {
-	if data, ok := s.Cache.Get("topics"); ok {
-		json.Unmarshal(data, topics)
-		return nil
-	}
-	s.Log.Warn("Topics not found in memstore")
-	return errors.New("topics not found in memstore")
-}
-
-func (s *TopicsService) memstoreSetTopics(topics *models.Topics) {
-	data, err := json.Marshal(*topics)
+// Verify is what lists filtered by topic call first, so an unknown topic is a 404 rather than
+// an empty list.
+func (s *TopicsService) Verify(id int64) error {
+	topics, err := s.List()
 	if err != nil {
-		s.Log.Warn("Error setting topics in memstore", "error", err.Error())
+		return err
 	}
-	s.Cache.Set("topics", data)
+	if !slices.ContainsFunc(topics, func(t models.Topic) bool { return t.ID == id }) {
+		return errs.NewErrorNotFound("Topic not found")
+	}
+	return nil
 }

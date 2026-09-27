@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"strings"
 	"time"
 
@@ -14,9 +14,9 @@ type IndexhrWorld struct {
 	utils.DefaultScraper
 }
 
-func NewIndexhrWorld(h chan models.Headlines, log *slog.Logger, sourceID int64) *IndexhrWorld {
+func NewIndexhrWorld(sourceID int64) *IndexhrWorld {
 	s := &IndexhrWorld{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"Index.hr",
 			"https://www.index.hr/vijesti/rubrika/hrvatska/23.aspx",
 			5,
@@ -42,6 +42,6 @@ func NewIndexhrWorld(h chan models.Headlines, log *slog.Logger, sourceID int64) 
 	return s
 }
 
-func (s *IndexhrWorld) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='text-holder']", "p:not([class])", false)
+func (s *IndexhrWorld) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div[class='text-holder']", "p:not([class])", false)
 }

@@ -1,10 +1,8 @@
 package controllers
 
 import (
-	"strconv"
-
 	"github.com/go-raptor/raptor/v4"
-	"github.com/go-raptor/raptor/v4/errs"
+	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/services"
 )
 
@@ -14,30 +12,15 @@ type StoriesController struct {
 	Stories *services.StoriesService
 }
 
-func (c *StoriesController) Get(ctx *raptor.Context) error {
-	headlineID, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
-	if err != nil {
-		return errs.NewErrorBadRequest("Invalid Headline ID")
-	}
-
-	story, err := c.Stories.Get(headlineID)
-	if err != nil {
-		return errs.NewErrorNotFound("Story not found")
-	}
-
-	return ctx.Data(story)
-}
-
+// Summarize summarizes a story with the LLM, once; later calls return the stored summary.
 func (c *StoriesController) Summarize(ctx *raptor.Context) error {
-	storyID, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	id, err := pathID(ctx)
 	if err != nil {
-		return errs.NewErrorBadRequest("Invalid Story ID")
+		return err
 	}
-
-	story, err := c.Stories.Summarize(storyID)
+	story, err := c.Stories.Summarize(ctx.Request().Context(), id)
 	if err != nil {
-		return errs.NewErrorNotFound("Story not found")
+		return err
 	}
-
-	return ctx.Data(story)
+	return ctx.Data(models.NewStoryResponse(story))
 }

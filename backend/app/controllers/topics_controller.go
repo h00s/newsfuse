@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/go-raptor/raptor/v4"
+	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/services"
 )
 
@@ -11,11 +12,10 @@ type TopicsController struct {
 	Topics *services.TopicsService
 }
 
-func (c *TopicsController) All(ctx *raptor.Context) error {
-	topics, err := c.Topics.All()
+func (c *TopicsController) Index(ctx *raptor.Context) error {
+	topics, err := c.Topics.List()
 	if err != nil {
 		return err
 	}
-
-	return ctx.Data(topics)
+	return ctx.Data(models.NewTopicResponses(topics))
 }

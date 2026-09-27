@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"strings"
 	"time"
 
@@ -14,9 +14,9 @@ type IndexhrCroatia struct {
 	utils.DefaultScraper
 }
 
-func NewIndexhrCroatia(h chan models.Headlines, log *slog.Logger, sourceID int64) *IndexhrCroatia {
+func NewIndexhrCroatia(sourceID int64) *IndexhrCroatia {
 	s := &IndexhrCroatia{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"Index.hr",
 			"https://www.index.hr/vijesti/rubrika/hrvatska/22.aspx",
 			5,
@@ -42,6 +42,6 @@ func NewIndexhrCroatia(h chan models.Headlines, log *slog.Logger, sourceID int64
 	return s
 }
 
-func (s *IndexhrCroatia) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class='text-holder']", "p:not([class])", false)
+func (s *IndexhrCroatia) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div[class='text-holder']", "p:not([class])", false)
 }

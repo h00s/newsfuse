@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -13,9 +13,9 @@ type Telegram struct {
 	utils.DefaultScraper
 }
 
-func NewTelegram(h chan models.Headlines, log *slog.Logger, sourceID int64) *Telegram {
+func NewTelegram(sourceID int64) *Telegram {
 	s := &Telegram{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"Telegram",
 			"https://www.telegram.hr/vijesti",
 			15,
@@ -36,6 +36,6 @@ func NewTelegram(h chan models.Headlines, log *slog.Logger, sourceID int64) *Tel
 	return s
 }
 
-func (s *Telegram) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[id='article-content']", "p:not([class])", false)
+func (s *Telegram) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div[id='article-content']", "p:not([class])", false)
 }

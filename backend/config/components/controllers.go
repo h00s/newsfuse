@@ -12,9 +12,6 @@ func Controllers() raptor.Controllers {
 		&controllers.SourcesController{},
 		&controllers.StoriesController{},
 		&controllers.TopicsController{},
-		spa.NewSPAController(spa.SPAConfig{
-			Directory: "public",
-			Optional:  true,
-		}),
+		&spa.SPAController{}, // serves public/; spa_optional in the dev and test configs
 	}
 }

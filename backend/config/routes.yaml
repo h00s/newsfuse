@@ -1,26 +1,20 @@
 routes:
   /api/v1:
     /topics:
-      /:
-        GET: Topics.All
-      /{id}/headlines:
-        GET: Headlines.All
-      /{id}/headlines/count:
-        GET: Headlines.Count
-
-    /headlines:
-      /{id}/story:
-        GET: Stories.Get
-      /search:
-        GET: Headlines.Search
-
+      GET: Topics.Index
     /sources:
-      /:
-        GET: Sources.All
-
+      GET: Sources.Index              # ?topicId= filters
+    /headlines:
+      GET: Headlines.Index            # ?topicId= (required) &sourceId= &beforeId=
+      /search:
+        GET: Headlines.Search         # ?query= &beforeId=
+      /count:
+        GET: Headlines.Count          # ?topicId= &since= (RFC 3339)
+      /{id}/story:
+        GET: Headlines.Story          # scraped on the first read, then served from the database
     /stories:
       /{id}/summarize:
-        GET: Stories.Summarize
-  
-  /:
-    ANY: SPA.Index
+        POST: Stories.Summarize
+    /{path...}: Errors.NotFound       # unknown API paths get a JSON 404, not the SPA shell
+
+  /: SPA.Index                        # the frontend: every other path gets the SPA shell

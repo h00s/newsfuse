@@ -1,92 +1,70 @@
 package services
 
 import (
-	"context"
-	"encoding/json"
-	"errors"
-	"fmt"
-
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/uptrace/bun"
 )
 
 type SourcesService struct {
 	raptor.Service
 
-	Cache *CacheService
+	DB     *DatabaseService
+	Cache  *CacheService
+	Topics *TopicsService
 }
 
-func (s *SourcesService) All() (models.Sources, error) {
-	var sources models.Sources
+func (s *SourcesService) List() (models.Sources, error) {
+	return cached(s.Cache, "sources", referenceDataTTL, func() (models.Sources, error) {
+		var sources models.Sources
+		err := s.DB.Conn().NewSelect().
+			Model(&sources).
+			Order("sources.id").
+			Scan(s.DB.Ctx)
+		return sources, s.DB.HandleError(err)
+	})
+}
 
-	if err := s.memstoreGetSources(&sources); err == nil {
-		return sources, nil
+// ListByTopic verifies the topic first, so an unknown one is a 404 rather than an empty list.
+func (s *SourcesService) ListByTopic(topicID int64) (models.Sources, error) {
+	if err := s.Topics.Verify(topicID); err != nil {
+		return nil, err
 	}
-
-	err := s.Database.Conn().(*bun.DB).
-		NewSelect().
-		Model(&sources).
-		Scan(context.Background())
+	sources, err := s.List()
 	if err != nil {
-		s.Log.Error(err.Error())
-		return sources, errs.NewErrorInternal(err.Error())
+		return nil, err
 	}
-
-	go s.memstoreSetSources(&sources)
-	return sources, nil
+	var inTopic models.Sources
+	for _, source := range sources {
+		if source.TopicID == topicID {
+			inTopic = append(inTopic, source)
+		}
+	}
+	return inTopic, nil
 }
 
-func (s *SourcesService) Get(id int64) models.Source {
-	var source models.Source
-
-	if err := s.memstoreGetSource(id, &source); err == nil {
-		return source
-	}
-
-	s.Database.Conn().(*bun.DB).
-		NewSelect().
-		Model(&source).
-		Where("id = ?", id).
-		Scan(context.Background())
-
-	go s.memstoreSetSource(&source)
-	return source
-}
-
-func (s *SourcesService) memstoreGetSources(sources *models.Sources) error {
-	if data, ok := s.Cache.Get("sources"); ok {
-		json.Unmarshal(data, sources)
-		return nil
-	}
-
-	s.Log.Warn("Sources not found in memstore")
-	return errors.New("sources not found in memstore")
-}
-
-func (s *SourcesService) memstoreSetSources(sources *models.Sources) {
-	data, err := json.Marshal(*sources)
+func (s *SourcesService) Get(id int64) (*models.Source, error) {
+	sources, err := s.List()
 	if err != nil {
-		s.Log.Warn("Error setting sources in memstore", "error", err.Error())
+		return nil, err
 	}
-	s.Cache.Set("sources", data)
+	for i := range sources {
+		if sources[i].ID == id {
+			source := sources[i] // a copy: the cached list is shared
+			return &source, nil
+		}
+	}
+	return nil, errs.NewErrorNotFound("Source not found")
 }
 
-func (s *SourcesService) memstoreGetSource(id int64, source *models.Source) error {
-	if data, ok := s.Cache.Get(fmt.Sprintf("sources:%d", id)); ok {
-		json.Unmarshal(data, source)
-		return nil
-	}
-
-	s.Log.Warn("Source not found in memstore", "source", id)
-	return errors.New("source not found in memstore")
-}
-
-func (s *SourcesService) memstoreSetSource(source *models.Source) {
-	data, err := json.Marshal(*source)
+// VerifyInTopic answers 404 for a source that doesn't exist or belongs to another topic.
+func (s *SourcesService) VerifyInTopic(sourceID, topicID int64) error {
+	source, err := s.Get(sourceID)
 	if err != nil {
-		s.Log.Warn("Error setting source in memstore", "error", err.Error())
+		return err
 	}
-	s.Cache.Set(fmt.Sprintf("sources:%d", source.ID), data)
+	if source.TopicID != topicID {
+		return errs.NewErrorNotFound("Source not found")
+	}
+	return nil
 }

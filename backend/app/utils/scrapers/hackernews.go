@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"time"
 
 	"github.com/gocolly/colly/v2"
@@ -13,9 +13,9 @@ type HackerNews struct {
 	utils.DefaultScraper
 }
 
-func NewHackerNews(h chan models.Headlines, log *slog.Logger, sourceID int64) *HackerNews {
+func NewHackerNews(sourceID int64) *HackerNews {
 	s := &HackerNews{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"Hacker News",
 			"https://news.ycombinator.com/",
 			10,
@@ -38,6 +38,6 @@ func NewHackerNews(h chan models.Headlines, log *slog.Logger, sourceID int64) *H
 	return s
 }
 
-func (s *HackerNews) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "td[class='title']", "span[class='titleline']", true)
+func (s *HackerNews) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "td[class='title']", "span[class='titleline']", true)
 }

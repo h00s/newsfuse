@@ -2,7 +2,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"strings"
 	"time"
 
@@ -15,9 +15,9 @@ type Bughr struct {
 	utils.DefaultScraper
 }
 
-func NewBughr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Bughr {
+func NewBughr(sourceID int64) *Bughr {
 	s := &Bughr{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"Bug",
 			"https://www.bug.hr",
 			10,
@@ -52,6 +52,6 @@ func NewBughr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Bughr 
 	return s
 }
 
-func (s *Bughr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div[class^='post-full__content']", "p:not([class])", false)
+func (s *Bughr) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div[class^='post-full__content']", "p:not([class])", false)
 }

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/go-raptor/raptor/v4"
+	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/services"
 )
 
@@ -11,11 +12,21 @@ type SourcesController struct {
 	Sources *services.SourcesService
 }
 
-func (c *SourcesController) All(ctx *raptor.Context) error {
-	sources, err := c.Sources.All()
+// Index lists every source, or one topic's when ?topicId= is given.
+func (c *SourcesController) Index(ctx *raptor.Context) error {
+	topicID, filtered, err := queryID(ctx, "topicId")
 	if err != nil {
 		return err
 	}
 
-	return ctx.Data(sources)
+	var sources models.Sources
+	if filtered {
+		sources, err = c.Sources.ListByTopic(topicID)
+	} else {
+		sources, err = c.Sources.List()
+	}
+	if err != nil {
+		return err
+	}
+	return ctx.Data(models.NewSourceResponses(sources))
 }

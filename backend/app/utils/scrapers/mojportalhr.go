@@ -1,7 +1,7 @@
 package scrapers
 
 import (
-	"log/slog"
+	"context"
 	"strings"
 	"time"
 
@@ -15,9 +15,9 @@ type Mojportalhr struct {
 	Source models.Source
 }
 
-func NewMojportalhr(h chan models.Headlines, log *slog.Logger, sourceID int64) *Mojportalhr {
+func NewMojportalhr(sourceID int64) *Mojportalhr {
 	s := &Mojportalhr{
-		DefaultScraper: *utils.NewScraper(h, log,
+		DefaultScraper: *utils.NewScraper(
 			"MojPortal.hr",
 			"https://www.mojportal.hr/",
 			15,
@@ -38,6 +38,6 @@ func NewMojportalhr(h chan models.Headlines, log *slog.Logger, sourceID int64) *
 	return s
 }
 
-func (s *Mojportalhr) ScrapeStory(url string) (string, error) {
-	return s.DefaultScraper.ScrapeStory(url, "div.se-article--text", "p:not([class])", false)
+func (s *Mojportalhr) ScrapeStory(ctx context.Context, url string) (string, error) {
+	return s.ScrapeStoryFrom(ctx, url, "div.se-article--text", "p:not([class])", false)
 }
