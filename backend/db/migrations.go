@@ -1,13 +1,18 @@
-// Package db provides database access and management for the newsfuse application.
-// This file defines the MigrationsFS function, which is intended to return a filesystem containing the database migration files.
+// Package db embeds the Goose SQL migrations handed to the database connector.
 package db
 
 import (
+	"embed"
 	"io/fs"
-
-	_ "github.com/h00s/newsfuse/db/migrations"
 )
 
+//go:embed all:migrations
+var migrationsFS embed.FS
+
 func MigrationsFS() fs.FS {
-	return nil
+	sub, err := fs.Sub(migrationsFS, "migrations")
+	if err != nil {
+		panic(err)
+	}
+	return sub
 }
