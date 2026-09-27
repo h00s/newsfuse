@@ -8,14 +8,15 @@
 
   const chip = (active: boolean) => [
     "btn btn-sm shrink-0 gap-2 rounded-full font-medium whitespace-nowrap",
-    active ? "btn-primary" : "border-base-300 bg-base-200 text-base-content/80 btn-ghost hover:text-base-content",
+    active ? "px-3 btn-primary" : "border-base-300 bg-base-200 px-1.5 text-base-content/80 btn-ghost hover:text-base-content sm:px-3",
   ];
 </script>
 
 <!-- Links rather than toggles: the filter lives in the URL, so it survives a reload and can be
-     shared, and switching it replaces the history entry instead of piling them up. -->
+     shared, and switching it replaces the history entry instead of piling them up. Phones show
+     the logos only; the chosen source keeps its name. -->
 {#if sources.length > 1}
-  <nav aria-label="Izvori" class="-mx-3 overflow-x-auto px-3 sm:mx-0 sm:px-0">
+  <nav aria-label="Izvori" class="-mx-3 mb-2 overflow-x-auto px-3 sm:mx-0 sm:mb-4 sm:px-0">
     <ul class="flex gap-2 py-1">
       <li>
         <a
@@ -26,21 +27,24 @@
           data-sveltekit-noscroll
           data-sveltekit-keepfocus
         >
-          Svi izvori
+          <span class="sm:hidden">Svi</span>
+          <span class="hidden sm:inline">Svi izvori</span>
         </a>
       </li>
       {#each sources as source (source.id)}
+        {@const active = activeSourceId === source.id}
         <li>
           <a
             href={topicPath(topicId, source.id)}
-            class={chip(activeSourceId === source.id)}
-            aria-current={activeSourceId === source.id ? "page" : undefined}
+            class={chip(active)}
+            aria-label={source.name}
+            aria-current={active ? "page" : undefined}
             data-sveltekit-replacestate
             data-sveltekit-noscroll
             data-sveltekit-keepfocus
           >
             <SourceAvatar {source} class="size-5 rounded-md" />
-            {source.name}
+            <span class={[!active && "hidden sm:inline"]}>{source.name}</span>
           </a>
         </li>
       {/each}

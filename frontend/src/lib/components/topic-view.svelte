@@ -7,6 +7,7 @@
   import NewHeadlinesBanner from "$lib/components/new-headlines-banner.svelte";
   import SourceFilter from "$lib/components/source-filter.svelte";
   import { HeadlineFeed } from "$lib/feeds/headline-feed.svelte";
+  import { scrollBehavior } from "$lib/helpers/motion";
   import { fetchHeadlines } from "$lib/services/headlines";
   import { newCounts } from "$lib/stores/new-counts.svelte";
   import { reading } from "$lib/stores/reading.svelte";
@@ -35,11 +36,11 @@
     reading.markSeen(topic.id);
     newCounts.seen(topic.id);
     await refreshAll();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: scrollBehavior() });
   }
 </script>
 
-<div class="space-y-4">
+<div>
   <SourceFilter topicId={topic.id} {sources} activeSourceId={sourceId} />
   <NewHeadlinesBanner count={newCounts.count(topic.id)} onShow={showNew} />
   <HeadlineList {feed} {seenBefore}>
