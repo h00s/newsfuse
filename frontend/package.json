@@ -2,25 +2,31 @@
   "name": "frontend",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "test": "vitest run"
   },
   "devDependencies": {
+    "@lucide/svelte": "^1.48.0",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "^2.70.3",
-    "@sveltejs/vite-plugin-svelte": "^7.3.0",
-    "autoprefixer": "^10.5.4",
-    "daisyui": "^4.12.24",
-    "postcss": "^8.5.26",
-    "svelte": "^5.56.10",
-    "tailwindcss": "^3.4.19",
-    "vite": "^8.2.2"
-  },
-  "dependencies": {
-    "svelte-inview": "^4.0.4",
-    "svelte-persisted-store": "^0.12.0"
-  },
-  "type": "module"
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.3",
+    "daisyui": "^5.7.46",
+    "svelte": "^5.57.1",
+    "svelte-check": "^4.7.6",
+    "svelte-sonner": "^1.2.1",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2",
+    "zod": "^4.6.5"
+  }
 }

@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "daisyui" {
+  themes: false;
+}
+
+/* One dark theme: the navy and sky of the original FusedNews, with slate text instead of blue
+   so headlines read as text and sky marks only what is interactive or new. Surfaces get lighter
+   as they rise: page (base-100) < list (base-200) < hover and borders (base-300). */
+@plugin "daisyui/theme" {
+  name: "fusednews";
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: oklch(20.8% 0.042 265.755);
+  --color-base-200: oklch(24.3% 0.042 263);
+  --color-base-300: oklch(27.9% 0.041 260.031);
+  --color-base-content: oklch(92.9% 0.013 255.508);
+  --color-primary: oklch(74.6% 0.16 232.661);
+  --color-primary-content: oklch(29.3% 0.066 243.157);
+  --color-secondary: oklch(67.3% 0.182 276.935);
+  --color-secondary-content: oklch(25.7% 0.09 281.288);
+  --color-accent: oklch(70.2% 0.183 293.541);
+  --color-accent-content: oklch(28.3% 0.141 291.089);
+  --color-neutral: oklch(37.2% 0.044 257.287);
+  --color-neutral-content: oklch(96.8% 0.007 247.896);
+  --color-info: oklch(78.9% 0.154 211.53);
+  --color-info-content: oklch(30.2% 0.056 229.695);
+  --color-success: oklch(76.5% 0.177 163.223);
+  --color-success-content: oklch(26.2% 0.051 172.552);
+  --color-warning: oklch(82.8% 0.189 84.429);
+  --color-warning-content: oklch(27.9% 0.077 45.635);
+  --color-error: oklch(71.2% 0.194 13.428);
+  --color-error-content: oklch(27.1% 0.105 12.094);
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+  body {
+    @apply bg-base-100 text-base-content antialiased;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+}
