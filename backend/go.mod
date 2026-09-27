@@ -13,7 +13,7 @@ require (
 	github.com/go-raptor/controllers/spa/v2 v2.1.0
 	github.com/go-raptor/middlewares/csrf v1.0.0
 	github.com/go-raptor/middlewares/limiter v1.0.3
-	github.com/go-raptor/middlewares/logger v1.1.0
+	github.com/go-raptor/middlewares/logger v1.2.0
 	github.com/go-raptor/raptor/v4 v4.4.0
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/jackc/pgx/v5 v5.10.0

@@ -39,8 +39,8 @@ github.com/go-raptor/middlewares/csrf v1.0.0 h1:XhFRLnpJGMbxY6syGSevELYNEDM+XlUl
 github.com/go-raptor/middlewares/csrf v1.0.0/go.mod h1:61cGy/LWKIbwMAe8UKcoljSALwr9JDqr2YYY7LQx5cs=
 github.com/go-raptor/middlewares/limiter v1.0.3 h1:RERN1foTqDACv/Vih/M1LInclpDYxDGFQbe/8V9dkKQ=
 github.com/go-raptor/middlewares/limiter v1.0.3/go.mod h1:dm+4S0rIZ5k+3K5dFvKWTcp2DhR3jmNqFmKVkOYBERQ=
-github.com/go-raptor/middlewares/logger v1.1.0 h1:zRgpPpxIAe7mUwplwEbdPmemzSQPSUsMTUGKsTo7uKM=
-github.com/go-raptor/middlewares/logger v1.1.0/go.mod h1:EmsMioF0OjbcNOJwK/YLCjogpHgMII4ZgnRnMMbT3ZI=
+github.com/go-raptor/middlewares/logger v1.2.0 h1:pk1Lg/qE4iRWbgRvWlTQGixqkonqGc2Pyl0PTIE5NYY=
+github.com/go-raptor/middlewares/logger v1.2.0/go.mod h1:EmsMioF0OjbcNOJwK/YLCjogpHgMII4ZgnRnMMbT3ZI=
 github.com/go-raptor/raptor/v4 v4.4.0 h1:c3oMTZpt+ZaVMlppdGiMuayznBVAf7ZMTN+wlQYxOLk=
 github.com/go-raptor/raptor/v4 v4.4.0/go.mod h1:QBCZFYuM0SHuBfoaAmAbbnF6uLUHPTJA8gvnGl/7Jp0=
 github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
