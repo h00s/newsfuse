@@ -114,3 +114,28 @@ func TestScheduleNextWait(t *testing.T) {
 		t.Errorf("OffHours = %v, want [3]", ranged.OffHours)
 	}
 }
+
+// klikni.hr lazy-loads article images: a placeholder img with a data: SVG in the page, and the
+// real one inside <noscript>, which the HTML parser keeps as raw text.
+func TestScrapeStoryKeepsImagesInTextParagraphs(t *testing.T) {
+	url := servePage(t, `<html><body><div class="article">
+		<p>Prvi odlomak.</p>
+		<p><a href="https://example.test/full.jpg"><img src="data:image/svg+xml,%3Csvg%3E" data-lazy-src="https://example.test/a.jpg" alt="" width="640" height="302"></a><noscript><img src="https://example.test/a.jpg" alt="Muzej" width="640" height="302"></noscript></p>
+		<p>Tekst s <a href="https://example.test/x">poveznicom</a> i <b>naglaskom</b>.</p>
+	</div></body></html>`)
+	s := utils.NewScraper("test", url, 1, 2, nil)
+
+	got, err := s.ScrapeStoryFrom(t.Context(), url, "div.article", "p", false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Count(got, "<img") != 1 || !strings.Contains(got, `src="https://example.test/a.jpg"`) || !strings.Contains(got, `alt="Muzej"`) {
+		t.Errorf("ScrapeStoryFrom = %q, want exactly the one real image", got)
+	}
+	if strings.Contains(got, "&lt;img") || strings.Contains(got, "data:") {
+		t.Errorf("ScrapeStoryFrom = %q, kept image markup as text or the placeholder", got)
+	}
+	if strings.Contains(got, "<a") || strings.Contains(got, "<b>") || !strings.Contains(got, "<p>Tekst s poveznicom i naglaskom.</p>") {
+		t.Errorf("ScrapeStoryFrom = %q, want text paragraphs without links or formatting", got)
+	}
+}

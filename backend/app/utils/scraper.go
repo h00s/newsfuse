@@ -4,11 +4,11 @@ package utils
 
 import (
 	"context"
-	"html"
 	"math/rand/v2"
 	"strings"
 	"time"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 )
@@ -119,8 +119,8 @@ func (s *DefaultScraper) Scrape(ctx context.Context) (models.Headlines, error) {
 }
 
 // ScrapeStoryFrom fetches a story page and joins the childElement paragraphs inside element into
-// sanitized HTML. With html false each paragraph is its text, escaped; with html true it is the
-// paragraph's inner HTML, which the sanitizer reduces to plain formatting and safe links.
+// sanitized HTML. With html false each paragraph keeps its text and images; with html true it
+// keeps its inner HTML, which the sanitizer reduces to plain formatting, images and safe links.
 func (s *DefaultScraper) ScrapeStoryFrom(ctx context.Context, url, element, childElement string, html bool) (string, error) {
 	var story strings.Builder
 
@@ -129,15 +129,14 @@ func (s *DefaultScraper) ScrapeStoryFrom(ctx context.Context, url, element, chil
 	c.SetRequestTimeout(requestTimeout)
 	c.OnHTML(element, func(e *colly.HTMLElement) {
 		e.ForEach(childElement, func(_ int, el *colly.HTMLElement) {
-			var contents string
-			if html {
-				inner, err := el.DOM.Html()
-				if err != nil {
-					return
-				}
-				contents = strings.TrimSpace(inner)
-			} else {
-				contents = escape(strings.TrimSpace(el.Text))
+			unwrapNoscript(el.DOM)
+			inner, err := el.DOM.Html()
+			if err != nil {
+				return
+			}
+			contents := strings.TrimSpace(inner)
+			if !html {
+				contents = paragraphText(inner)
 			}
 			if contents != "" {
 				story.WriteString("<p>" + contents + "</p>")
@@ -151,5 +150,10 @@ func (s *DefaultScraper) ScrapeStoryFrom(ctx context.Context, url, element, chil
 	return SanitizeStory(story.String()), nil
 }
 
-// escape is html.EscapeString, named so the html parameter above doesn't shadow the package.
-var escape = html.EscapeString
+// unwrapNoscript turns <noscript> content back into elements. Lazy-loading sites put the real
+// image there, and the HTML parser keeps that content as raw text.
+func unwrapNoscript(s *goquery.Selection) {
+	s.Find("noscript").Each(func(_ int, noscript *goquery.Selection) {
+		noscript.ReplaceWithHtml(noscript.Text())
+	})
+}

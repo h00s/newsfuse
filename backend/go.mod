@@ -7,6 +7,7 @@ go 1.27
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
 require (
+	github.com/PuerkitoBio/goquery v1.12.0
 	github.com/dgraph-io/ristretto/v2 v2.4.2
 	github.com/go-raptor/connectors/bun/postgres v1.2.0
 	github.com/go-raptor/controllers/spa/v2 v2.1.0
@@ -25,7 +26,6 @@ require (
 )
 
 require (
-	github.com/PuerkitoBio/goquery v1.12.0 // indirect
 	github.com/andybalholm/brotli v1.2.2 // indirect
 	github.com/andybalholm/cascadia v1.3.4 // indirect
 	github.com/antchfx/htmlquery v1.3.6 // indirect

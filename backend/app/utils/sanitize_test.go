@@ -42,3 +42,27 @@ func TestStoryTextIsPlainText(t *testing.T) {
 		t.Errorf("StoryText lost text: %q", got)
 	}
 }
+
+func TestSanitizeStoryKeepsImages(t *testing.T) {
+	got := utils.SanitizeStory(`<p><img decoding="async" class="aligncenter" src="https://example.test/a.jpg" alt="Slika" width="640" height="480" srcset="https://example.test/a-300.jpg 300w"></p>`)
+	for _, want := range []string{`src="https://example.test/a.jpg"`, `alt="Slika"`, `width="640"`, `height="480"`} {
+		if !strings.Contains(got, want) {
+			t.Errorf("SanitizeStory(img) = %q, missing %s", got, want)
+		}
+	}
+	for _, unwanted := range []string{"class=", "srcset", "decoding"} {
+		if strings.Contains(got, unwanted) {
+			t.Errorf("SanitizeStory(img) = %q, kept %s", got, unwanted)
+		}
+	}
+}
+
+func TestSanitizeStoryDropsUnsafeImages(t *testing.T) {
+	got := utils.SanitizeStory(`<p><img src="javascript:alert(1)"><img src="data:image/svg+xml,%3Csvg%3E" alt="x"><img src="https://example.test/b.jpg" onerror="steal()"></p>`)
+	if strings.Contains(got, "javascript") || strings.Contains(got, "data:") || strings.Contains(got, "onerror") {
+		t.Errorf("SanitizeStory kept an unsafe image: %q", got)
+	}
+	if strings.Count(got, "<img") != 1 {
+		t.Errorf("SanitizeStory = %q, want only the https image, and no image left without a source", got)
+	}
+}
