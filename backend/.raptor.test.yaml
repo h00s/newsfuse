@@ -1,0 +1,20 @@
+general:
+  log_level: error
+
+server:
+  address: localhost
+  port: 3001
+
+database:
+  host: dev-postgres
+  port: 5432
+  username: dev
+  # The password comes from DATABASE_PASSWORD; keep credentials out of tracked files.
+  name: newsfuse_test
+
+app:
+  # Tests have no frontend build.
+  spa_optional: "true"
+  # Tests never reach the news sites or a paid LLM.
+  scrapers_enabled: "false"
+  llm_provider: "stub"
