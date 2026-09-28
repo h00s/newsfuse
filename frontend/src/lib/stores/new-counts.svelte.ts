@@ -6,15 +6,28 @@ import { reading } from "$lib/stores/reading.svelte";
 
 const POLL_MS = 2 * 60 * 1000;
 
-/** How many headlines each topic has gained since this browser last opened it: the tab badges
- *  and the open topic's "new headlines" banner. Polls only while a consumer is mounted and the
- *  tab is visible, with a chained timeout so a slow response never stacks requests. */
+/** The topic being read, and the moment its news counts from: what was new when it opened. */
+interface Visit {
+  topicId: number;
+  since: number;
+}
+
+/** New-headline counts for the tab badges and the open topic's banner. Polls only while a
+ *  consumer is mounted and the tab is visible, with a chained timeout so a slow response never
+ *  stacks requests.
+ *  - Every topic: headlines since this browser last opened it. For the open topic that is what
+ *    arrived during the visit, which the banner offers to load.
+ *  - The open topic: headlines since the visit began, the ones marked Novo, which its own tab
+ *    shows until the reader moves to another topic. */
 function createNewCountsStore() {
   const counts = new SvelteMap<number, number>();
+  let visit = $state.raw<Visit | null>(null);
+  let visitCount = $state(0);
   let topicIds: number[] = [];
   let timer: ReturnType<typeof setTimeout> | null = null;
   let consumers = 0;
   let running = false;
+  let again = false;
 
   function stop() {
     if (timer !== null) clearTimeout(timer);
@@ -33,11 +46,15 @@ function createNewCountsStore() {
 
   async function tick() {
     timer = null;
-    if (running) return;
+    if (running) {
+      again = true; // asked for fresh numbers mid-poll: run once more right after
+      return;
+    }
     running = true;
+    const current = untrack(() => visit);
     try {
-      await Promise.all(
-        topicIds.map(async (id) => {
+      await Promise.all([
+        ...topicIds.map(async (id) => {
           const since = reading.lastSeen(id);
           if (since === undefined) return; // never opened: nothing to compare against
           try {
@@ -48,22 +65,46 @@ function createNewCountsStore() {
             // no toast for a background poll: the next one retries
           }
         }),
-      );
+        (async () => {
+          if (!current) return;
+          try {
+            const { count } = await countHeadlinesSince(current.topicId, new Date(current.since));
+            if (untrack(() => visit) === current) visitCount = count;
+          } catch {
+            // as above
+          }
+        })(),
+      ]);
     } finally {
       running = false;
-      schedule(POLL_MS);
+      schedule(again ? 0 : POLL_MS);
+      again = false;
     }
   }
 
   if (browser) document.addEventListener("visibilitychange", () => schedule(0));
 
   return {
+    /** Headlines since the topic was last opened. */
     count(topicId: number): number {
       return counts.get(topicId) ?? 0;
     },
-    /** The topic was just opened or refreshed: nothing in it is new any more. */
-    seen(topicId: number) {
+    /** The open topic's headlines since its visit began; 0 for any other topic. */
+    visitCount(topicId: number): number {
+      return visit?.topicId === topicId ? visitCount : 0;
+    },
+    /** The reader opened the topic, or refreshed it, with everything after since marked new. */
+    open(topicId: number, since: number) {
       counts.set(topicId, 0);
+      visit = { topicId, since };
+      visitCount = 0;
+      schedule(0);
+    },
+    /** The reader moved on: the topic's news has been seen. */
+    close(topicId: number) {
+      if (untrack(() => visit)?.topicId !== topicId) return;
+      visit = null;
+      visitCount = 0;
     },
     /** `$effect(() => newCounts.subscribe(ids))` polls these topics while the component lives. */
     subscribe(ids: number[]): () => void {

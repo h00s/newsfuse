@@ -12,8 +12,9 @@
   <div class="tabs flex-nowrap tabs-border">
     {#each topics as topic (topic.id)}
       {@const active = topic.id === activeTopicId}
-      <!-- The open topic shows its news in the banner instead. -->
-      {@const count = active ? 0 : newCounts.count(topic.id)}
+      <!-- The open topic counts what is marked Novo in it; the others what arrived since they were
+           last opened. -->
+      {@const count = active ? newCounts.visitCount(topic.id) : newCounts.count(topic.id)}
       <a
         href={topicPath(topic.id)}
         class={[

@@ -26,15 +26,18 @@
     new HeadlineFeed(headlines, (beforeId) => fetchHeadlines({ topicId: topic.id, sourceId, beforeId })),
   );
 
+  // The visit is recorded when the topic opens, so what counts as new stays right even if the app
+  // is closed rather than left. Its tab keeps showing that count until the reader moves on.
   onMount(() => {
     reading.markSeen(topic.id);
-    newCounts.seen(topic.id);
+    newCounts.open(topic.id, seenBefore);
+    return () => newCounts.close(topic.id);
   });
 
   async function showNew() {
     seenBefore = reading.lastSeen(topic.id) ?? Date.now();
     reading.markSeen(topic.id);
-    newCounts.seen(topic.id);
+    newCounts.open(topic.id, seenBefore);
     await refreshAll();
     window.scrollTo({ top: 0, behavior: scrollBehavior() });
   }
