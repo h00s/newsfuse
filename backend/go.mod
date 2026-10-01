@@ -9,14 +9,14 @@ go 1.27
 require (
 	github.com/PuerkitoBio/goquery v1.12.0
 	github.com/dgraph-io/ristretto/v2 v2.4.2
-	github.com/go-raptor/connectors/bun/postgres v1.2.0
+	github.com/go-raptor/connectors/bun/postgres v1.4.0
 	github.com/go-raptor/controllers/spa/v2 v2.1.0
-	github.com/go-raptor/middlewares/csrf v1.0.0
-	github.com/go-raptor/middlewares/limiter v1.0.3
-	github.com/go-raptor/middlewares/logger v1.2.0
-	github.com/go-raptor/raptor/v4 v4.4.0
+	github.com/go-raptor/middlewares/csrf v1.1.0
+	github.com/go-raptor/middlewares/limiter v1.1.0
+	github.com/go-raptor/middlewares/logger v1.4.0
+	github.com/go-raptor/raptor/v4 v4.6.0
 	github.com/gocolly/colly/v2 v2.3.0
-	github.com/jackc/pgx/v5 v5.10.0
+	github.com/jackc/pgx/v5 v5.11.0
 	github.com/lmittmann/tint v1.2.0
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/openai/openai-go/v3 v3.52.0
@@ -26,7 +26,7 @@ require (
 )
 
 require (
-	github.com/andybalholm/brotli v1.2.2 // indirect
+	github.com/andybalholm/brotli v1.2.3 // indirect
 	github.com/andybalholm/cascadia v1.3.4 // indirect
 	github.com/antchfx/htmlquery v1.3.6 // indirect
 	github.com/antchfx/xmlquery v1.5.1 // indirect
@@ -34,7 +34,6 @@ require (
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/bits-and-blooms/bitset v1.25.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/go-raptor/connectors v1.1.0 // indirect
 	github.com/go-raptor/connectors/goosemigrator v1.1.1 // indirect
@@ -49,8 +48,7 @@ require (
 	github.com/kennygrant/sanitize v1.2.4 // indirect
 	github.com/mfridman/interpolate v0.0.2 // indirect
 	github.com/nlnwa/whatwg-url v0.6.2 // indirect
-	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
-	github.com/pressly/goose/v3 v3.27.3 // indirect
+	github.com/pressly/goose/v3 v3.28.0 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/sethvargo/go-retry v0.4.0 // indirect
@@ -67,7 +65,7 @@ require (
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/net v0.58.0 // indirect
 	golang.org/x/sys v0.47.0 // indirect
-	golang.org/x/text v0.41.0 // indirect
+	golang.org/x/text v0.42.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
 )

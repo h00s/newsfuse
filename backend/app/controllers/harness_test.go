@@ -2,9 +2,7 @@ package controllers_test
 
 import (
 	"context"
-	"encoding/json/v2"
 	"fmt"
-	"net/http/httptest"
 	"strconv"
 	"sync/atomic"
 	"testing"
@@ -85,22 +83,9 @@ func newClient() raptor.TestRequestOption {
 	return raptor.WithRemoteAddr(fmt.Sprintf("10.%d.%d.%d", byte(n>>16), byte(n>>8), byte(n)))
 }
 
-// decode asserts the status, then decodes the body into T.
-func decode[T any](t *testing.T, rec *httptest.ResponseRecorder, want int) T {
-	t.Helper()
-	if rec.Code != want {
-		t.Fatalf("status = %d, want %d; body %s", rec.Code, want, rec.Body)
-	}
-	var v T
-	if err := json.Unmarshal(rec.Body.Bytes(), &v); err != nil {
-		t.Fatalf("decode %T: %v; body %s", v, err, rec.Body)
-	}
-	return v
-}
-
 func get[T any](t *testing.T, path string, want int) T {
 	t.Helper()
-	return decode[T](t, app.TestGet(path, newClient()), want)
+	return raptor.DecodeJSON[T](t, app.TestGet(path, newClient()), want)
 }
 
 var suffixes atomic.Uint64

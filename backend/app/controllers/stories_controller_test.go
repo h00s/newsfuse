@@ -17,7 +17,7 @@ func TestSummarizeStoresThePlainTextSummary(t *testing.T) {
 	headline := seedHeadlines(t, sourceBug, 1)[0]
 	stored := seedStory(t, headline.ID, "<p>Prvi odlomak.</p><p>Drugi odlomak.</p>")
 
-	story := decode[storyJSON](t, app.TestPost(summarizePath(stored.ID), nil, newClient()), http.StatusOK)
+	story := raptor.DecodeJSON[storyJSON](t, app.TestPost(summarizePath(stored.ID), nil, newClient()), http.StatusOK)
 
 	if story.Summary == "" || story.ID != stored.ID {
 		t.Fatalf("story = %+v, want a summary for story %d", story, stored.ID)
@@ -30,14 +30,14 @@ func TestSummarizeStoresThePlainTextSummary(t *testing.T) {
 		t.Errorf("stored summary = %q, want %q", row.Summary, story.Summary)
 	}
 
-	again := decode[storyJSON](t, app.TestPost(summarizePath(stored.ID), nil, newClient()), http.StatusOK)
+	again := raptor.DecodeJSON[storyJSON](t, app.TestPost(summarizePath(stored.ID), nil, newClient()), http.StatusOK)
 	if again.Summary != story.Summary {
 		t.Errorf("second summary = %q, want the stored %q", again.Summary, story.Summary)
 	}
 }
 
 func TestSummarizeUnknownStoryIs404(t *testing.T) {
-	decode[errorJSON](t, app.TestPost(summarizePath(999999999), nil, newClient()), http.StatusNotFound)
+	raptor.DecodeJSON[errorJSON](t, app.TestPost(summarizePath(999999999), nil, newClient()), http.StatusNotFound)
 }
 
 // A GET must never spend an LLM call. The /api/v1/{path...} catch-all answers it, so the status
@@ -46,7 +46,7 @@ func TestSummarizeIsNotAGet(t *testing.T) {
 	headline := seedHeadlines(t, sourceBug, 1)[0]
 	stored := seedStory(t, headline.ID, "<p>Tekst.</p>")
 
-	decode[errorJSON](t, app.TestGet(summarizePath(stored.ID), newClient()), http.StatusNotFound)
+	raptor.DecodeJSON[errorJSON](t, app.TestGet(summarizePath(stored.ID), newClient()), http.StatusNotFound)
 
 	var row models.Story
 	if err := db(t).NewSelect().Model(&row).Where("id = ?", stored.ID).Scan(t.Context()); err != nil {
