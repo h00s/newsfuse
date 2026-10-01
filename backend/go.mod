@@ -14,6 +14,8 @@ require (
 	github.com/go-raptor/middlewares/csrf v1.1.0
 	github.com/go-raptor/middlewares/limiter v1.1.0
 	github.com/go-raptor/middlewares/logger v1.4.0
+	github.com/go-raptor/middlewares/requestid v1.0.0
+	github.com/go-raptor/middlewares/secure v1.0.0
 	github.com/go-raptor/raptor/v4 v4.6.0
 	github.com/gocolly/colly/v2 v2.3.0
 	github.com/jackc/pgx/v5 v5.11.0
