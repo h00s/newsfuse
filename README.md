@@ -46,7 +46,7 @@ database:
 app:
   spa_optional: "true" # boot without a frontend build
   openai_key: …
-  # scrapers_enabled: "false" # don't scrape the news sites
+  # scrapers_enabled: "false" # a boolean: don't scrape the news sites
   # llm_provider: "stub"      # summarize without calling OpenAI
 ```
 
@@ -72,8 +72,12 @@ The Docker image builds both halves; the Go binary serves the frontend build fro
 | `DATABASE_AUTO_MIGRATE=true` | apply pending migrations at boot |
 | `APP_OPENAI_KEY` | required: the server won't start without it |
 | `SERVER_IP_EXTRACTOR=x-forwarded-for` | behind a reverse proxy, so rate limits see client addresses |
+| `SERVER_SHUTDOWN_DELAY` | seconds to keep serving, with `/readyz` failing, before draining on stop; the image sets 2 |
+| `APP_SECURE_HSTS_MAX_AGE` | HSTS max-age in seconds; the image sets 300, raise it to 31536000 once HTTPS is settled |
 
 Serve it over HTTPS, or keep the `Host` header at the proxy: the server rejects cross-origin writes by comparing `Origin` with `Host`.
+
+`GET /healthz` answers 200 while the process runs. `GET /readyz` answers 503 once shutdown begins, or when the database doesn't answer within 2 seconds; give a readiness probe a timeout of at least 3 seconds. Every response carries an `X-Request-Id`, which the log lines repeat as `request_id`.
 
 ## Contributing
 
