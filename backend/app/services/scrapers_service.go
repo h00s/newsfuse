@@ -21,7 +21,6 @@ type ScrapersService struct {
 	Headlines *HeadlinesService
 
 	scrapers map[int64]utils.Scraper
-	cancel   context.CancelFunc
 	running  sync.WaitGroup
 }
 
@@ -45,27 +44,30 @@ func (s *ScrapersService) Setup() error {
 		return nil
 	}
 
-	ctx, cancel := context.WithCancel(context.Background())
-	s.cancel = cancel
 	for _, scraper := range s.scrapers {
-		s.running.Go(func() { s.run(ctx, scraper) })
+		s.running.Go(func() { s.run(scraper) })
 	}
 	return nil
 }
 
-// Cleanup stops every loop and waits for them. A scrape in flight is canceled through its
-// context; an ingest in flight finishes first, because the database outlives this service.
+// Cleanup waits for the loops, which return once the app context is cancelled; a scrape or an
+// ingest in flight is cancelled with it. Waiting matters because an ingest invalidates the
+// cache, which is cleaned up after this service.
 func (s *ScrapersService) Cleanup() error {
-	if s.cancel != nil {
-		s.cancel()
-	}
 	s.running.Wait()
 	return nil
 }
 
-func (s *ScrapersService) run(ctx context.Context, scraper utils.Scraper) {
+// run scrapes on the site's schedule until the app context is cancelled at shutdown.
+func (s *ScrapersService) run(scraper utils.Scraper) {
+	ctx := s.AppContext()
 	schedule := scraper.Schedule()
 	for {
+		// Checked first: when the timer and the cancellation are both ready, select picks either,
+		// and no scrape may start after shutdown.
+		if ctx.Err() != nil {
+			return
+		}
 		if hour := time.Now().Hour(); slices.Contains(schedule.OffHours, hour) {
 			s.Log.Debug("Skipping scrape in off-hours", "scraper", scraper.String(), "hour", hour)
 		} else {
@@ -92,7 +94,10 @@ func (s *ScrapersService) scrape(ctx context.Context, scraper utils.Scraper) {
 	}
 	inserted, err := s.Headlines.Ingest(headlines)
 	if err != nil {
-		s.Log.Error("Could not store headlines", "scraper", scraper.String(), "error", err)
+		// Shutdown cancels an ingest in flight, and the next boot scrapes those headlines again.
+		if ctx.Err() == nil {
+			s.Log.Error("Could not store headlines", "scraper", scraper.String(), "error", err)
+		}
 		return
 	}
 	s.Log.Info("Scraped", "scraper", scraper.String(), "headlines", len(headlines), "new", inserted)

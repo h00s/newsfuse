@@ -15,13 +15,15 @@ import (
 type DatabaseService struct {
 	raptor.Service
 
-	// Ctx is the context CRUD queries run on. It is background on purpose: work that should stop
-	// when the client disconnects takes a context.Context parameter instead.
+	// Ctx is the context CRUD queries run on: the app's context, live while requests run and
+	// drain, and cancelled at shutdown so a query that outlives its request stops instead of
+	// holding the pool open. Work that should stop when the client disconnects takes a
+	// context.Context parameter instead.
 	Ctx context.Context
 }
 
 func (s *DatabaseService) Setup() error {
-	s.Ctx = context.Background()
+	s.Ctx = s.AppContext()
 	return nil
 }
 
