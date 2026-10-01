@@ -77,3 +77,7 @@ func TestSummarizeIsRateLimited(t *testing.T) {
 		t.Errorf("sixth request = %d, want 429", rec.Code)
 	}
 }
+
+func TestSummarizeNonPositiveIDIs404(t *testing.T) {
+	raptor.DecodeJSON[errorJSON](t, app.TestPost(summarizePath(0), nil, newClient()), http.StatusNotFound)
+}

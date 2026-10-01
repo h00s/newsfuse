@@ -73,10 +73,25 @@ func TestHeadlinesIndexUnknownTopicIs404(t *testing.T) {
 }
 
 func TestHeadlinesIndexRejectsInvalidParameters(t *testing.T) {
-	for _, query := range []string{"", "?topicId=tech", "?topicId=0", "?topicId=-1", "?topicId=4&beforeId=x", "?topicId=4&sourceId=x"} {
+	for _, query := range []string{"", "?topicId=", "?topicId=tech", "?topicId=99999999999999999999", "?topicId=4&beforeId=x", "?topicId=4&sourceId=x"} {
 		rec := app.TestGet("/api/v1/headlines"+query, newClient())
 		if rec.Code != http.StatusBadRequest {
 			t.Errorf("GET /api/v1/headlines%s = %d, want 400", query, rec.Code)
+		}
+	}
+}
+
+// Ids are parsed, not range-checked: an id no row can have is unknown like any other, and an
+// empty or non-positive beforeId is the first page.
+func TestHeadlinesIndexTreatsNonPositiveIDsAsUnknown(t *testing.T) {
+	seedHeadlines(t, sourceBug, 2)
+	for _, query := range []string{"?topicId=0", "?topicId=-1", "?topicId=4&sourceId=0"} {
+		get[errorJSON](t, "/api/v1/headlines"+query, http.StatusNotFound)
+	}
+	first := ids(get[[]headlineJSON](t, "/api/v1/headlines?topicId=4", http.StatusOK))
+	for _, query := range []string{"?topicId=4&beforeId=0", "?topicId=4&beforeId=-1", "?topicId=4&beforeId=", "?topicId=4&sourceId="} {
+		if got := ids(get[[]headlineJSON](t, "/api/v1/headlines"+query, http.StatusOK)); !slices.Equal(got, first) {
+			t.Errorf("%s ids = %v, want the first page %v", query, got, first)
 		}
 	}
 }
@@ -183,5 +198,11 @@ func TestHeadlineStoryOfUnknownHeadlineIs404(t *testing.T) {
 }
 
 func TestHeadlineStoryInvalidIDIs400(t *testing.T) {
-	get[errorJSON](t, "/api/v1/headlines/abc/story", http.StatusBadRequest)
+	for _, id := range []string{"abc", "99999999999999999999"} {
+		get[errorJSON](t, "/api/v1/headlines/"+id+"/story", http.StatusBadRequest)
+	}
+}
+
+func TestHeadlineStoryOfNonPositiveIDIs404(t *testing.T) {
+	get[errorJSON](t, "/api/v1/headlines/0/story", http.StatusNotFound)
 }

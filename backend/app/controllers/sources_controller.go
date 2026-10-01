@@ -14,16 +14,16 @@ type SourcesController struct {
 
 // Index lists every source, or one topic's when ?topicId= is given.
 func (c *SourcesController) Index(ctx *raptor.Context) error {
-	topicID, filtered, err := queryID(ctx, "topicId")
-	if err != nil {
-		return err
-	}
-
 	var sources models.Sources
-	if filtered {
-		sources, err = c.Sources.ListByTopic(topicID)
-	} else {
+	var err error
+	if ctx.QueryParam("topicId") == "" {
 		sources, err = c.Sources.List()
+	} else {
+		var topicID int64
+		if topicID, err = ctx.QueryInt64("topicId"); err != nil {
+			return err
+		}
+		sources, err = c.Sources.ListByTopic(topicID)
 	}
 	if err != nil {
 		return err

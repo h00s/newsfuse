@@ -14,7 +14,7 @@ type StoriesController struct {
 
 // Summarize summarizes a story with the LLM, once; later calls return the stored summary.
 func (c *StoriesController) Summarize(ctx *raptor.Context) error {
-	id, err := pathID(ctx)
+	id, err := ctx.ParamInt64("id")
 	if err != nil {
 		return err
 	}

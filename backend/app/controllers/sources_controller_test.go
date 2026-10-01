@@ -37,3 +37,7 @@ func TestSourcesIndexUnknownTopicIs404(t *testing.T) {
 func TestSourcesIndexInvalidTopicIs400(t *testing.T) {
 	get[errorJSON](t, "/api/v1/sources?topicId=tech", http.StatusBadRequest)
 }
+
+func TestSourcesIndexNonPositiveTopicIs404(t *testing.T) {
+	get[errorJSON](t, "/api/v1/sources?topicId=0", http.StatusNotFound)
+}
