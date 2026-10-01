@@ -35,15 +35,12 @@ type GenAIService struct {
 // Setup reads llm_provider: "openai" (the default) needs openai_key and fails boot without it,
 // rather than on a user's first summary; "stub" needs nothing.
 func (s *GenAIService) Setup() error {
-	s.provider = s.Config.AppConfig["llm_provider"]
-	if s.provider == "" {
-		s.provider = "openai"
-	}
+	s.provider = s.Config.AppString("llm_provider", "openai")
 	switch s.provider {
 	case "stub":
 		return nil
 	case "openai":
-		key := s.Config.AppConfig["openai_key"]
+		key := s.Config.AppString("openai_key", "")
 		if key == "" {
 			return errors.New("openai_key is not set in app config")
 		}

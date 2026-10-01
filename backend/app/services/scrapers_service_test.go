@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"strings"
 	"sync/atomic"
 	"testing"
 	"time"
@@ -45,5 +46,21 @@ func TestScraperLoopStopsWithTheApp(t *testing.T) {
 	}
 	if n := scraper.scrapes.Load(); n != 0 {
 		t.Errorf("scraped %d times after shutdown, want 0", n)
+	}
+}
+
+func TestScrapersRejectAnUnparseableSwitch(t *testing.T) {
+	res, shutdown := testResources()
+	res.Config.AppConfig = map[string]string{"scrapers_enabled": "nope"}
+	shutdown() // should the loops start anyway, they return before scraping
+	s := &ScrapersService{}
+	if err := s.Init(res); err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { _ = s.Cleanup() })
+
+	err := s.Setup()
+	if err == nil || !strings.Contains(err.Error(), "scrapers_enabled") {
+		t.Errorf("Setup = %v, want an error naming scrapers_enabled", err)
 	}
 }

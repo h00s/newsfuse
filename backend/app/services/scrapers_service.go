@@ -39,7 +39,11 @@ func (s *ScrapersService) Setup() error {
 		11: scrapers.NewHCL(11),
 	}
 
-	if s.Config.AppConfig["scrapers_enabled"] == "false" {
+	enabled, err := s.Config.AppBool("scrapers_enabled", true)
+	if err != nil {
+		return err
+	}
+	if !enabled {
 		s.Log.Info("Scrapers are disabled (scrapers_enabled: false)")
 		return nil
 	}
