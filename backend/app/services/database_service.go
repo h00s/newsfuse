@@ -38,6 +38,12 @@ func (s *DatabaseService) HandleError(err error) error {
 	if err == nil || errors.Is(err, sql.ErrNoRows) {
 		return nil
 	}
+	// Shutdown cancelled the app context, or the client went away: not a database fault, so not
+	// an error line. A deadline is a slow query, and falls through to the error below.
+	if errors.Is(err, context.Canceled) {
+		s.Log.Debug("Database call cancelled", "error", err)
+		return errs.NewErrorServiceUnavailable("Database call cancelled")
+	}
 	if pgErr, ok := errors.AsType[*pgconn.PgError](err); ok {
 		return s.handlePostgresError(pgErr)
 	}
