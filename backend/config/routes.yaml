@@ -1,4 +1,8 @@
 routes:
+  /healthz:
+    GET: Health.Live                  # built in: the process serves requests
+  /readyz:
+    GET: Health.Ready                 # built in: 503 once shutdown begins or without the database
   /api/v1:
     /topics:
       GET: Topics.Index
