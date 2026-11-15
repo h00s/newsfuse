@@ -89,7 +89,7 @@ func (s *HeadlinesService) page(beforeID int64, filter func(*bun.SelectQuery) *b
 }
 
 // CountSince counts a topic's headlines published after since.
-func (s *HeadlinesService) CountSince(topicID int64, since time.Time) (int, error) {
+func (s *HeadlinesService) CountSince(topicID int64, since time.Time) (int64, error) {
 	if err := s.Topics.Verify(topicID); err != nil {
 		return 0, err
 	}

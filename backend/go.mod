@@ -40,7 +40,7 @@ require (
 	github.com/dustin/go-humanize v1.1.0 // indirect
 	github.com/go-raptor/connectors v1.1.0 // indirect
 	github.com/go-raptor/connectors/goosemigrator v1.1.1 // indirect
-	github.com/gobwas/glob v1.1.0 // indirect
+	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/gorilla/css v1.0.1 // indirect
