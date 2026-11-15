@@ -40,7 +40,7 @@ require (
 	github.com/dustin/go-humanize v1.1.0 // indirect
 	github.com/go-raptor/connectors v1.1.1 // indirect
 	github.com/go-raptor/connectors/goosemigrator v1.1.2 // indirect
-	github.com/gobwas/glob v1.1.0 // indirect
+	github.com/gobwas/glob v0.2.3 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/gorilla/css v1.0.1 // indirect
@@ -71,4 +71,16 @@ require (
 	golang.org/x/text v0.44.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/protobuf v1.36.12 // indirect
+)
+
+// gobwas/glob v1 changed its API (glob.Glob was removed) but kept the same
+// module path, so `go get -u` picks it up and breaks colly, which needs v0.2.x.
+// nlnwa/whatwg-url v0.8+ was renamed to github.com/nationallibraryofnorway/whatwg-url
+// and can't be loaded under the old path; excluding it stops the warnings.
+exclude (
+	github.com/gobwas/glob v1.0.0
+	github.com/gobwas/glob v1.1.0-rc.1
+	github.com/gobwas/glob v1.1.0
+	github.com/nlnwa/whatwg-url v0.8.0
+	github.com/nlnwa/whatwg-url v0.9.0
 )

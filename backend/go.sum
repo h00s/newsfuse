@@ -50,8 +50,8 @@ github.com/go-raptor/middlewares/secure v1.0.1 h1:tla32UJ7g4WLYKFlsZdxJVhKUpvJsz
 github.com/go-raptor/middlewares/secure v1.0.1/go.mod h1:8AU4bmKwSvdhTPd1wQBQz7w8ZLoxHnQi7+4vePJhQxw=
 github.com/go-raptor/raptor/v4 v4.7.0 h1:+l0XiGEJxyok8rtabGX5W2E7zXup+gmeYpkZHztLABo=
 github.com/go-raptor/raptor/v4 v4.7.0/go.mod h1:QBCZFYuM0SHuBfoaAmAbbnF6uLUHPTJA8gvnGl/7Jp0=
-github.com/gobwas/glob v1.1.0 h1:CS8tIr7+5fu50N+tKsQy3osOU5jmhjHv0/ildcKAn2Q=
-github.com/gobwas/glob v1.1.0/go.mod h1:5OYLTTNYHcww+D/XwWAjGpmIE8sD41kWneKyzWkK7/k=
+github.com/gobwas/glob v0.2.3 h1:A4xDbljILXROh+kObIiy5kIaPYD8e96x1tgBhUI5J+Y=
+github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gocolly/colly v1.2.0 h1:qRz9YAn8FIH0qzgNUw+HT9UN7wm1oF9OBAilwEWpyrI=
 github.com/gocolly/colly/v2 v2.3.0 h1:HSFh0ckbgVd2CSGRE+Y/iA4goUhGROJwyQDCMXGFBWM=
 github.com/gocolly/colly/v2 v2.3.0/go.mod h1:Qp54s/kQbwCQvFVx8KzKCSTXVJ1wWT4QeAKEu33x1q8=
