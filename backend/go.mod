@@ -1,15 +1,15 @@
 module github.com/h00s/newsfuse
 
-go 1.27
+go 1.27.0
 
 // replace github.com/go-raptor/raptor/v4 => ../../go-raptor/raptor/v4
 
 // replace github.com/go-raptor/components => ../../go-raptor/components
 
 require (
-	github.com/PuerkitoBio/goquery v1.13.0
+	github.com/PuerkitoBio/goquery v1.14.0
 	github.com/dgraph-io/ristretto/v2 v2.4.2
-	github.com/go-raptor/connectors/bun/postgres v1.4.0
+	github.com/go-raptor/connectors/bun/postgres v1.4.1
 	github.com/go-raptor/controllers/spa/v2 v2.1.0
 	github.com/go-raptor/middlewares/csrf v1.1.1
 	github.com/go-raptor/middlewares/limiter v1.2.0
@@ -38,9 +38,9 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/coder/websocket v1.8.15 // indirect
 	github.com/dustin/go-humanize v1.1.0 // indirect
-	github.com/go-raptor/connectors v1.1.0 // indirect
-	github.com/go-raptor/connectors/goosemigrator v1.1.1 // indirect
-	github.com/gobwas/glob v0.2.3 // indirect
+	github.com/go-raptor/connectors v1.1.1 // indirect
+	github.com/go-raptor/connectors/goosemigrator v1.1.2 // indirect
+	github.com/gobwas/glob v1.1.0 // indirect
 	github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/gorilla/css v1.0.1 // indirect
