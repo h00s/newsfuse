@@ -14,9 +14,11 @@ import (
 )
 
 const (
-	requestTimeout     = 15 * time.Second
-	headlinesUserAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
-	storyUserAgent     = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+	requestTimeout = 15 * time.Second
+	// userAgent is a regular browser's, for headlines and stories alike. Sites behind bot
+	// protection reject a Googlebot user agent that doesn't come from Google's network: Hacker
+	// News answers 419, for one.
+	userAgent = "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"
 )
 
 // Scraper is one news site: its front page yields headlines, and each headline's page yields its
@@ -101,7 +103,7 @@ func (s *DefaultScraper) AddHeadline(h models.Headline) {
 // Scrape fetches the front page once and returns its headlines in page order, newest first on
 // every site scraped today.
 func (s *DefaultScraper) Scrape(ctx context.Context) (models.Headlines, error) {
-	c := collector.New(collector.UserAgent(headlinesUserAgent), collector.Timeout(requestTimeout))
+	c := collector.New(collector.UserAgent(userAgent), collector.Timeout(requestTimeout))
 	for _, rule := range s.rules {
 		c.OnHTML(rule.selector, rule.callback)
 	}
@@ -120,7 +122,7 @@ func (s *DefaultScraper) Scrape(ctx context.Context) (models.Headlines, error) {
 func (s *DefaultScraper) ScrapeStoryFrom(ctx context.Context, url, element, childElement string, html bool) (string, error) {
 	var story strings.Builder
 
-	c := collector.New(collector.UserAgent(storyUserAgent), collector.Timeout(requestTimeout))
+	c := collector.New(collector.UserAgent(userAgent), collector.Timeout(requestTimeout))
 	c.OnHTML(element, func(e *collector.HTMLElement) {
 		e.ForEach(childElement, func(_ int, el *collector.HTMLElement) {
 			unwrapNoscript(el.DOM)
