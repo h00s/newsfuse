@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 func servePage(t *testing.T, body string) string {
@@ -66,7 +66,7 @@ func TestScrapeCollectsHeadlines(t *testing.T) {
 		<h3><a href="https://example.test/3">Treći naslov</a></h3>
 	</body></html>`)
 	s := utils.NewScraper("test", url, 1, 2, nil)
-	s.ScrapeHeadline("h3", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("h3", func(e *collector.HTMLElement) {
 		s.AddHeadline(models.Headline{SourceID: 7, Title: e.ChildText("a"), URL: e.ChildAttr("a", "href")})
 	})
 

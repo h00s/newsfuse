@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 type RadioDaruvar struct {
@@ -25,7 +25,7 @@ func NewRadioDaruvar(sourceID int64) *RadioDaruvar {
 		),
 	}
 
-	s.ScrapeHeadline("li[class='news-item'],h2[class='post-title']", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("li[class='news-item'],h2[class='post-title']", func(e *collector.HTMLElement) {
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       strings.TrimSpace(e.ChildText("a")),

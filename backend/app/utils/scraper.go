@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 const (
@@ -45,7 +45,7 @@ func (s Schedule) NextWait() time.Duration {
 
 type headlineRule struct {
 	selector string
-	callback colly.HTMLCallback
+	callback collector.HTMLCallback
 }
 
 // DefaultScraper does the fetching; each site adds its headline rules with ScrapeHeadline and
@@ -83,7 +83,7 @@ func (s *DefaultScraper) Schedule() Schedule {
 
 // ScrapeHeadline registers a rule: callback runs for every element matching selector on the
 // front page, and calls AddHeadline for each headline it finds.
-func (s *DefaultScraper) ScrapeHeadline(selector string, callback colly.HTMLCallback) {
+func (s *DefaultScraper) ScrapeHeadline(selector string, callback collector.HTMLCallback) {
 	s.rules = append(s.rules, headlineRule{selector: selector, callback: callback})
 }
 
@@ -101,18 +101,14 @@ func (s *DefaultScraper) AddHeadline(h models.Headline) {
 // Scrape fetches the front page once and returns its headlines in page order, newest first on
 // every site scraped today.
 func (s *DefaultScraper) Scrape(ctx context.Context) (models.Headlines, error) {
-	c := colly.NewCollector(colly.StdlibContext(ctx))
-	c.SetRequestTimeout(requestTimeout)
-	c.OnRequest(func(r *colly.Request) {
-		r.Headers.Set("User-Agent", headlinesUserAgent)
-	})
+	c := collector.New(collector.UserAgent(headlinesUserAgent), collector.Timeout(requestTimeout))
 	for _, rule := range s.rules {
 		c.OnHTML(rule.selector, rule.callback)
 	}
 
 	s.batch = nil
 	defer func() { s.batch = nil }()
-	if err := c.Visit(s.URL); err != nil {
+	if err := c.Visit(ctx, s.URL); err != nil {
 		return nil, err
 	}
 	return s.batch, nil
@@ -124,11 +120,9 @@ func (s *DefaultScraper) Scrape(ctx context.Context) (models.Headlines, error) {
 func (s *DefaultScraper) ScrapeStoryFrom(ctx context.Context, url, element, childElement string, html bool) (string, error) {
 	var story strings.Builder
 
-	c := colly.NewCollector(colly.StdlibContext(ctx))
-	c.UserAgent = storyUserAgent
-	c.SetRequestTimeout(requestTimeout)
-	c.OnHTML(element, func(e *colly.HTMLElement) {
-		e.ForEach(childElement, func(_ int, el *colly.HTMLElement) {
+	c := collector.New(collector.UserAgent(storyUserAgent), collector.Timeout(requestTimeout))
+	c.OnHTML(element, func(e *collector.HTMLElement) {
+		e.ForEach(childElement, func(_ int, el *collector.HTMLElement) {
 			unwrapNoscript(el.DOM)
 			inner, err := el.DOM.Html()
 			if err != nil {
@@ -144,7 +138,7 @@ func (s *DefaultScraper) ScrapeStoryFrom(ctx context.Context, url, element, chil
 		})
 	})
 
-	if err := c.Visit(url); err != nil {
+	if err := c.Visit(ctx, url); err != nil {
 		return "", err
 	}
 	return SanitizeStory(story.String()), nil

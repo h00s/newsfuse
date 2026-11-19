@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 type Bughr struct {
@@ -26,7 +26,7 @@ func NewBughr(sourceID int64) *Bughr {
 		),
 	}
 
-	s.ScrapeHeadline("h2[class='post-listing__title'] > a", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("h2[class='post-listing__title'] > a", func(e *collector.HTMLElement) {
 		// skip premium articles
 		if e.DOM.Find("svg").Length() > 0 {
 			return

@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 type IndexhrCroatia struct {
@@ -25,7 +25,7 @@ func NewIndexhrCroatia(sourceID int64) *IndexhrCroatia {
 		),
 	}
 
-	s.ScrapeHeadline("a[class='vijesti-text-hover scale-img-hover']", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("a[class='vijesti-text-hover scale-img-hover']", func(e *collector.HTMLElement) {
 		url := e.Attr("href")
 		if index := strings.Index(url, "?"); index != -1 {
 			url = url[:index]

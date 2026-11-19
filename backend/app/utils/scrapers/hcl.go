@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 type HCL struct {
@@ -25,9 +25,9 @@ func NewHCL(sourceID int64) *HCL {
 		),
 	}
 
-	s.ScrapeHeadline("div.articles div[id^='post-']", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("div.articles div[id^='post-']", func(e *collector.HTMLElement) {
 		var title string
-		e.ForEach("div.text h2 a", func(_ int, el *colly.HTMLElement) {
+		e.ForEach("div.text h2 a", func(_ int, el *collector.HTMLElement) {
 			sel := el.DOM.Clone()
 			sel.Find("span.title").Remove()
 			title = strings.TrimSpace(sel.Text())

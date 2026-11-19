@@ -5,9 +5,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 type Mojportalhr struct {
@@ -26,7 +26,7 @@ func NewMojportalhr(sourceID int64) *Mojportalhr {
 		),
 	}
 
-	s.ScrapeHeadline("a.se-card--link", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("a.se-card--link", func(e *collector.HTMLElement) {
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       strings.TrimSpace(e.ChildText("div.se-card--head")),

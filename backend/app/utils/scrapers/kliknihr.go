@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 type Kliknihr struct {
@@ -24,7 +24,7 @@ func NewKliknihr(sourceID int64) *Kliknihr {
 		),
 	}
 
-	s.ScrapeHeadline("h3.jeg_post_title", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("h3.jeg_post_title", func(e *collector.HTMLElement) {
 		s.AddHeadline(models.Headline{
 			SourceID:    sourceID,
 			Title:       e.ChildText("a"),

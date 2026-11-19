@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/gocolly/colly/v2"
 	"github.com/h00s/newsfuse/app/models"
 	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/collector"
 )
 
 type HackerNews struct {
@@ -24,7 +24,7 @@ func NewHackerNews(sourceID int64) *HackerNews {
 		),
 	}
 
-	s.ScrapeHeadline("tr[class^='athing']", func(e *colly.HTMLElement) {
+	s.ScrapeHeadline("tr[class^='athing']", func(e *collector.HTMLElement) {
 		url := s.URL + "item?id=" + e.Attr("id")
 		anchor := e.DOM.Find("span[class='titleline'] > a").First()
 		s.AddHeadline(models.Headline{
