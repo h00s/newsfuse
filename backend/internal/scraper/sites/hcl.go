@@ -1,22 +1,20 @@
-package scrapers
+package sites
 
 import (
 	"context"
 	"strings"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type HCL struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewHCL(sourceID int64) *HCL {
+func NewHCL() *HCL {
 	s := &HCL{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"HCL",
 			"https://www.hcl.hr/",
 			10,
@@ -38,11 +36,9 @@ func NewHCL(sourceID int64) *HCL {
 			return
 		}
 
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       title,
-			URL:         url,
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: title,
+			URL:   url,
 		})
 	})
 

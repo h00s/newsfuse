@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/go-raptor/raptor/v4"
-	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/sanitize"
 	"github.com/openai/openai-go/v3"
 	"github.com/openai/openai-go/v3/option"
 	"github.com/openai/openai-go/v3/responses"
@@ -54,7 +54,7 @@ func (s *GenAIService) Setup() error {
 // Summarize returns a plain-text Croatian summary of story HTML. ctx is the request's, so a
 // client that leaves cancels the call; the timeout bounds a hung one.
 func (s *GenAIService) Summarize(ctx context.Context, story string) (string, error) {
-	text := utils.StoryText(story)
+	text := sanitize.PlainText(story)
 	if s.provider == "stub" {
 		return stubSummary, nil
 	}

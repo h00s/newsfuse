@@ -1,21 +1,19 @@
-package scrapers
+package sites
 
 import (
 	"context"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type Kliknihr struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewKliknihr(sourceID int64) *Kliknihr {
+func NewKliknihr() *Kliknihr {
 	s := &Kliknihr{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"klikni.hr",
 			"https://www.klikni.hr",
 			15,
@@ -25,11 +23,9 @@ func NewKliknihr(sourceID int64) *Kliknihr {
 	}
 
 	s.ScrapeHeadline("h3.jeg_post_title", func(e *collector.HTMLElement) {
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       e.ChildText("a"),
-			URL:         e.ChildAttr("a", "href"),
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: e.ChildText("a"),
+			URL:   e.ChildAttr("a", "href"),
 		})
 	})
 

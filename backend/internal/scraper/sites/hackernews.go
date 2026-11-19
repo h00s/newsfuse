@@ -1,21 +1,19 @@
-package scrapers
+package sites
 
 import (
 	"context"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type HackerNews struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewHackerNews(sourceID int64) *HackerNews {
+func NewHackerNews() *HackerNews {
 	s := &HackerNews{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"Hacker News",
 			"https://news.ycombinator.com/",
 			10,
@@ -27,11 +25,9 @@ func NewHackerNews(sourceID int64) *HackerNews {
 	s.ScrapeHeadline("tr[class^='athing']", func(e *collector.HTMLElement) {
 		url := s.URL + "item?id=" + e.Attr("id")
 		anchor := e.DOM.Find("span[class='titleline'] > a").First()
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       anchor.Text(),
-			URL:         url,
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: anchor.Text(),
+			URL:   url,
 		})
 	})
 

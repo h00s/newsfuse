@@ -1,22 +1,20 @@
-package scrapers
+package sites
 
 import (
 	"context"
 	"strings"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type RadioDaruvar struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewRadioDaruvar(sourceID int64) *RadioDaruvar {
+func NewRadioDaruvar() *RadioDaruvar {
 	s := &RadioDaruvar{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"Radio Daruvar",
 			"https://www.radio-daruvar.hr/",
 			30,
@@ -26,11 +24,9 @@ func NewRadioDaruvar(sourceID int64) *RadioDaruvar {
 	}
 
 	s.ScrapeHeadline("li[class='news-item'],h2[class='post-title']", func(e *collector.HTMLElement) {
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       strings.TrimSpace(e.ChildText("a")),
-			URL:         strings.TrimSpace(e.ChildAttr("a", "href")),
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: strings.TrimSpace(e.ChildText("a")),
+			URL:   strings.TrimSpace(e.ChildAttr("a", "href")),
 		})
 	})
 

@@ -1,21 +1,19 @@
-package scrapers
+package sites
 
 import (
 	"context"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type N1InfoCroatia struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewN1InfoCroatia(sourceID int64) *N1InfoCroatia {
+func NewN1InfoCroatia() *N1InfoCroatia {
 	s := &N1InfoCroatia{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"N1",
 			"https://n1info.hr/vijesti/",
 			10,
@@ -25,11 +23,9 @@ func NewN1InfoCroatia(sourceID int64) *N1InfoCroatia {
 	}
 
 	s.ScrapeHeadline("h3[data-testid='article-title']", func(e *collector.HTMLElement) {
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       e.ChildText("a"),
-			URL:         "https://n1info.hr" + e.ChildAttr("a", "href"),
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: e.ChildText("a"),
+			URL:   "https://n1info.hr" + e.ChildAttr("a", "href"),
 		})
 	})
 

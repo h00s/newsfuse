@@ -1,23 +1,21 @@
-// Package scrapers implmements all scrapers for different news sources.
-package scrapers
+// Package sites implements the scraper for each news source.
+package sites
 
 import (
 	"context"
 	"strings"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type Bughr struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewBughr(sourceID int64) *Bughr {
+func NewBughr() *Bughr {
 	s := &Bughr{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"Bug",
 			"https://www.bug.hr",
 			10,
@@ -41,11 +39,9 @@ func NewBughr(sourceID int64) *Bughr {
 			url = s.URL + url
 		}
 
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       e.Text,
-			URL:         url,
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: e.Text,
+			URL:   url,
 		})
 	})
 

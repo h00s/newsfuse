@@ -1,4 +1,4 @@
-package utils_test
+package scraper_test
 
 import (
 	"context"
@@ -8,9 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 func servePage(t *testing.T, body string) string {
@@ -29,7 +28,7 @@ func TestScrapeStoryEscapesTextParagraphs(t *testing.T) {
 		<p>   </p>
 		<p>Drugi</p>
 	</div></body></html>`)
-	s := utils.NewScraper("test", url, 1, 2, nil)
+	s := scraper.New("test", url, 1, 2, nil)
 
 	got, err := s.ScrapeStoryFrom(t.Context(), url, "div.article", "p", false)
 	if err != nil {
@@ -45,7 +44,7 @@ func TestScrapeStorySanitizesHTMLParagraphs(t *testing.T) {
 	url := servePage(t, `<html><body><table><tr><td class="title"><span class="titleline">
 		<a href="https://example.test/a" onclick="steal()">Naslov</a><script>steal()</script>
 	</span></td></tr></table></body></html>`)
-	s := utils.NewScraper("test", url, 1, 2, nil)
+	s := scraper.New("test", url, 1, 2, nil)
 
 	got, err := s.ScrapeStoryFrom(t.Context(), url, "td.title", "span.titleline", true)
 	if err != nil {
@@ -65,16 +64,16 @@ func TestScrapeCollectsHeadlines(t *testing.T) {
 		<h3><a href="https://example.test/2">   </a></h3>
 		<h3><a href="https://example.test/3">Treći naslov</a></h3>
 	</body></html>`)
-	s := utils.NewScraper("test", url, 1, 2, nil)
+	s := scraper.New("test", url, 1, 2, nil)
 	s.ScrapeHeadline("h3", func(e *collector.HTMLElement) {
-		s.AddHeadline(models.Headline{SourceID: 7, Title: e.ChildText("a"), URL: e.ChildAttr("a", "href")})
+		s.AddHeadline(scraper.Headline{Title: e.ChildText("a"), URL: e.ChildAttr("a", "href")})
 	})
 
 	got, err := s.Scrape(t.Context())
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(got) != 2 || got[0].Title != "Prvi naslov" || got[1].URL != "https://example.test/3" || got[0].SourceID != 7 {
+	if len(got) != 2 || got[0].Title != "Prvi naslov" || got[1].URL != "https://example.test/3" {
 		t.Errorf("Scrape = %+v, want the two non-empty headlines in page order", got)
 	}
 
@@ -89,7 +88,7 @@ func TestScrapeCollectsHeadlines(t *testing.T) {
 
 func TestScrapeStopsWhenCanceled(t *testing.T) {
 	url := servePage(t, `<html><body><h3>Naslov</h3></body></html>`)
-	s := utils.NewScraper("test", url, 1, 2, nil)
+	s := scraper.New("test", url, 1, 2, nil)
 	ctx, cancel := context.WithCancel(t.Context())
 	cancel()
 
@@ -99,12 +98,12 @@ func TestScrapeStopsWhenCanceled(t *testing.T) {
 }
 
 func TestScheduleNextWait(t *testing.T) {
-	fixed := utils.NewScraper("test", "https://example.test", 15, 15, nil).Schedule()
+	fixed := scraper.New("test", "https://example.test", 15, 15, nil).Schedule()
 	if got := fixed.NextWait(); got != 15*time.Minute {
 		t.Errorf("NextWait with min == max = %v, want 15m", got)
 	}
 
-	ranged := utils.NewScraper("test", "https://example.test", 10, 20, []int{3}).Schedule()
+	ranged := scraper.New("test", "https://example.test", 10, 20, []int{3}).Schedule()
 	for range 100 {
 		if got := ranged.NextWait(); got < 10*time.Minute || got >= 20*time.Minute {
 			t.Fatalf("NextWait = %v, want within [10m, 20m)", got)
@@ -123,7 +122,7 @@ func TestScrapeStoryKeepsImagesInTextParagraphs(t *testing.T) {
 		<p><a href="https://example.test/full.jpg"><img src="data:image/svg+xml,%3Csvg%3E" data-lazy-src="https://example.test/a.jpg" alt="" width="640" height="302"></a><noscript><img src="https://example.test/a.jpg" alt="Muzej" width="640" height="302"></noscript></p>
 		<p>Tekst s <a href="https://example.test/x">poveznicom</a> i <b>naglaskom</b>.</p>
 	</div></body></html>`)
-	s := utils.NewScraper("test", url, 1, 2, nil)
+	s := scraper.New("test", url, 1, 2, nil)
 
 	got, err := s.ScrapeStoryFrom(t.Context(), url, "div.article", "p", false)
 	if err != nil {

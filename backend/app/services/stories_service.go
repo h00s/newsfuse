@@ -9,7 +9,7 @@ import (
 	"github.com/go-raptor/raptor/v4"
 	"github.com/go-raptor/raptor/v4/errs"
 	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
+	"github.com/h00s/newsfuse/internal/sanitize"
 	"golang.org/x/sync/singleflight"
 )
 
@@ -35,7 +35,7 @@ func (s *StoriesService) Get(id int64) (*models.Story, error) {
 	if err != nil {
 		return nil, s.DB.HandleErrorNotFound(err, "Story not found")
 	}
-	story.Content = utils.SanitizeStory(story.Content)
+	story.Content = sanitize.Story(story.Content)
 	return story, nil
 }
 
@@ -69,7 +69,7 @@ func (s *StoriesService) findByHeadline(headlineID int64) (*models.Story, error)
 	if err != nil {
 		return nil, s.DB.HandleError(err)
 	}
-	story.Content = utils.SanitizeStory(story.Content)
+	story.Content = sanitize.Story(story.Content)
 	return story, nil
 }
 
@@ -142,6 +142,6 @@ func (s *StoriesService) summarize(ctx context.Context, story *models.Story) (*m
 	if err := s.DB.HandleAffected(res, err, "Story not found"); err != nil {
 		return nil, err
 	}
-	updated.Content = utils.SanitizeStory(updated.Content)
+	updated.Content = sanitize.Story(updated.Content)
 	return updated, nil
 }

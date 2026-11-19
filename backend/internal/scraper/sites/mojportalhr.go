@@ -1,24 +1,22 @@
-package scrapers
+package sites
 
 import (
 	"context"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 // mojportalURL is the site's canonical host; www.mojportal.hr redirects here.
 const mojportalURL = "https://mojportal.hr"
 
 type Mojportalhr struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewMojportalhr(sourceID int64) *Mojportalhr {
+func NewMojportalhr() *Mojportalhr {
 	s := &Mojportalhr{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"MojPortal.hr",
 			mojportalURL+"/",
 			15,
@@ -30,11 +28,9 @@ func NewMojportalhr(sourceID int64) *Mojportalhr {
 	// News cards only: the front page also lists event-calendar cards (se-card--event) and
 	// classifieds (se-card--classified). Links are site-relative.
 	s.ScrapeHeadline("article.se-card--news:not(.se-card--event) > a.se-card__wrap", func(e *collector.HTMLElement) {
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       e.ChildText(".se-card__head"),
-			URL:         mojportalURL + e.Attr("href"),
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: e.ChildText(".se-card__head"),
+			URL:   mojportalURL + e.Attr("href"),
 		})
 	})
 

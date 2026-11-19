@@ -1,4 +1,5 @@
-package utils
+// Package sanitize makes scraped HTML safe to render, and reduces it to text.
+package sanitize
 
 import (
 	"html"
@@ -44,9 +45,9 @@ var paragraphTextPolicy = func() *bluemonday.Policy {
 
 var textPolicy = bluemonday.StrictPolicy()
 
-// SanitizeStory makes scraped story HTML safe to render as HTML. An image whose source was
+// Story makes scraped story HTML safe to render as HTML. An image whose source was
 // removed (a lazy-loading placeholder, an unsafe URL) goes too, and so does a paragraph left empty.
-func SanitizeStory(content string) string {
+func Story(content string) string {
 	clean := storyPolicy.Sanitize(content)
 	if !strings.Contains(clean, "<img") {
 		return clean
@@ -70,13 +71,13 @@ func dropEmptyImages(fragment string) string {
 	return out
 }
 
-// paragraphText is a text-mode paragraph: its text, escaped, and its images.
-func paragraphText(innerHTML string) string {
+// ParagraphText is a text-mode paragraph: its text, escaped, and its images.
+func ParagraphText(innerHTML string) string {
 	return strings.TrimSpace(paragraphTextPolicy.Sanitize(innerHTML))
 }
 
-// StoryText reduces story HTML to plain text, one paragraph per line, for the summarizer.
-func StoryText(content string) string {
+// PlainText reduces story HTML to plain text, one paragraph per line, for the summarizer.
+func PlainText(content string) string {
 	content = strings.ReplaceAll(content, "</p>", "</p>\n")
 	return strings.TrimSpace(html.UnescapeString(textPolicy.Sanitize(content)))
 }

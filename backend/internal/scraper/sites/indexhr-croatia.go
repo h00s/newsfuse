@@ -1,22 +1,20 @@
-package scrapers
+package sites
 
 import (
 	"context"
 	"strings"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type IndexhrCroatia struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewIndexhrCroatia(sourceID int64) *IndexhrCroatia {
+func NewIndexhrCroatia() *IndexhrCroatia {
 	s := &IndexhrCroatia{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"Index.hr",
 			"https://www.index.hr/vijesti/rubrika/hrvatska/22.aspx",
 			5,
@@ -31,11 +29,9 @@ func NewIndexhrCroatia(sourceID int64) *IndexhrCroatia {
 			url = url[:index]
 		}
 
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       e.ChildText(".title"),
-			URL:         "https://www.index.hr" + url,
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: e.ChildText(".title"),
+			URL:   "https://www.index.hr" + url,
 		})
 	})
 

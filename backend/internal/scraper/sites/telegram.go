@@ -1,21 +1,19 @@
-package scrapers
+package sites
 
 import (
 	"context"
-	"time"
 
-	"github.com/h00s/newsfuse/app/models"
-	"github.com/h00s/newsfuse/app/utils"
 	"github.com/h00s/newsfuse/internal/collector"
+	"github.com/h00s/newsfuse/internal/scraper"
 )
 
 type Telegram struct {
-	utils.DefaultScraper
+	scraper.Base
 }
 
-func NewTelegram(sourceID int64) *Telegram {
+func NewTelegram() *Telegram {
 	s := &Telegram{
-		DefaultScraper: *utils.NewScraper(
+		Base: *scraper.New(
 			"Telegram",
 			"https://www.telegram.hr/vijesti",
 			15,
@@ -25,11 +23,9 @@ func NewTelegram(sourceID int64) *Telegram {
 	}
 
 	s.ScrapeHeadline("a[role='article']", func(e *collector.HTMLElement) {
-		s.AddHeadline(models.Headline{
-			SourceID:    sourceID,
-			Title:       e.ChildText("h2"),
-			URL:         "https://www.telegram.hr" + e.Attr("href"),
-			PublishedAt: time.Now(),
+		s.AddHeadline(scraper.Headline{
+			Title: e.ChildText("h2"),
+			URL:   "https://www.telegram.hr" + e.Attr("href"),
 		})
 	})
 

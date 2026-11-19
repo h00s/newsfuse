@@ -1,11 +1,11 @@
-package scrapers_test
+package sites_test
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/h00s/newsfuse/app/utils/scrapers"
+	"github.com/h00s/newsfuse/internal/scraper/sites"
 )
 
 func servePage(t *testing.T, body string) string {
@@ -44,7 +44,7 @@ func TestMojportalhrHeadlines(t *testing.T) {
 			</a>
 		</article>
 	</body></html>`)
-	s := scrapers.NewMojportalhr(7)
+	s := sites.NewMojportalhr()
 	s.URL = url
 
 	got, err := s.Scrape(t.Context())
@@ -59,8 +59,8 @@ func TestMojportalhrHeadlines(t *testing.T) {
 		t.Fatalf("Scrape = %+v, want the %d news cards only", got, len(want))
 	}
 	for i, w := range want {
-		if got[i].Title != w.title || got[i].URL != w.url || got[i].SourceID != 7 {
-			t.Errorf("headline %d = %q %q (source %d), want %q %q (source 7)", i, got[i].Title, got[i].URL, got[i].SourceID, w.title, w.url)
+		if got[i].Title != w.title || got[i].URL != w.url {
+			t.Errorf("headline %d = %q %q, want %q %q", i, got[i].Title, got[i].URL, w.title, w.url)
 		}
 	}
 }
@@ -74,7 +74,7 @@ func TestMojportalhrStory(t *testing.T) {
 		<p><em><strong>Dobijte informaciju odmah, zapratite nas na <a href="https://www.facebook.com/MojPortal.hr">Facebooku </a>i <a href="https://www.tiktok.com/@mojportal.hr">TikToku</a>!</strong></em></p>
 	</div></body></html>`)
 
-	got, err := scrapers.NewMojportalhr(7).ScrapeStory(t.Context(), url)
+	got, err := sites.NewMojportalhr().ScrapeStory(t.Context(), url)
 	if err != nil {
 		t.Fatal(err)
 	}
